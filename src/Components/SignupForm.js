@@ -8,6 +8,7 @@ import {
   Message,
   Segment,
   Divider,
+  Header,
   Icon
 } from 'semantic-ui-react'
 
@@ -33,28 +34,31 @@ class LoginForm extends React.Component {
           <Grid.Column style={{ maxWidth: 400 }}>
             <GlobalFonts />
             <FormHeaderCustom>Altgram</FormHeaderCustom>
-            <Form size='large'>
-              <Segment>
-                <Form.Input fluid placeholder='E-mail address' />
-                <Form.Input fluid placeholder='Password' type='password' />
-
-                <Button color='blue' fluid size='large'>
-                  Log in
-                </Button>
-              </Segment>
-            </Form>
-            <Divider horizontal>Or</Divider>
-            <div className='login-facebook-btn-div'>
-              <Button color='white'>
-                <Icon name='facebook square' color='blue'></Icon>Log in with
+            <Header size='large'>
+              Sign up to see photos from your friends
+            </Header>
+            <div className='register-facebook-btn-div'>
+              <Button fluid color='blue'>
+                <Icon name='facebook square' color='white'></Icon>Log in with
                 Facebook
               </Button>
             </div>
-            <div className='forgot-password-btn-div'>
-              <Button className='forgot-password-btn' color='white'>
-                Forgot Password?
-              </Button>
-            </div>
+            <Divider horizontal>Or</Divider>
+            <Form size='large'>
+              <Segment>
+                <Form.Input fluid placeholder='E-mail address' />
+                <Form.Input fluid placeholder='Full Name' />
+                <Form.Input fluid placeholder='Username' />
+                <Form.Input fluid placeholder='Password' type='password' />
+
+                <Button color='blue' fluid size='large'>
+                  Sign up
+                </Button>
+              </Segment>
+            </Form>
+           
+
+            <p className='signup-form-tnc'>By Signing up, you agree to our <span>Terms</span>, <span>Data Policy</span> and <span>Cookies Polity</span></p>
             <Message>
               Don't have an account? <Button>Sign Up</Button>
             </Message>

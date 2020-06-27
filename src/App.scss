@@ -140,27 +140,60 @@ table {
       }
     }
   }
-  .diversion{
+  .diversion {
     width: 100%;
-    min-height: 2rem;
+    // min-height: 2rem;
     color: #fafafa;
   }
-  .divider{
+  .divider {
     padding: 1em;
   }
-  .login-facebook-btn-div{
-    .button{
+  .login-facebook-btn-div,
+  .forgot-password-btn-div,
+  .message {
+    .button {
       background-color: transparent;
       font-size: 1.25rem;
       font-weight: 500;
-      color: 
-      &:active{
+      color: #2e394f;
+      &:active {
         background-color: transparent;
       }
-      &:active{
+      &:hover {
+        background-color: transparent;
+      }
+      &:visited {
+        background-color: transparent;
+      }
+      &:focus {
         background-color: transparent;
       }
     }
+    .forgot-password-btn {
+      font-size: 1rem;
+    }
   }
-  // display: inline-block;
+  .message {
+    font-size: 1rem;
+    .button {
+      font-weight: 500;
+      color: #2185d0;
+    }
+  }
+  .register-facebook-btn-div {
+    padding: 0 1em;
+    .button {
+      background-color: transparent;
+      font-size: 1.25rem;
+      font-weight: 500;
+      // margin: 0 1em;
+      color: #2e394f;
+    }
+  }
+  .signup-form-tnc{
+    color: #8e8e8e;
+    span{
+      font-weight: 600;
+    }
+  }
 }
