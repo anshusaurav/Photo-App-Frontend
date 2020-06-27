@@ -190,10 +190,42 @@ table {
       color: #2e394f;
     }
   }
-  .signup-form-tnc{
+  .signup-form-tnc {
     color: #8e8e8e;
-    span{
+    span {
       font-weight: 600;
     }
+  }
+}
+.full-container{
+  width: 100%;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.header-nav {
+  width: 100%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1px;
+  background: white;
+  // border-bottom: 1px solid #989EA4;
+  // border-top: 1px solid #717D85;
+  color: black;
+  margin: 0;
+  padding: 2px 0 0 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  height: 54px;
+  h1 {
+    justify-self: center;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    justify-content: space-evenly;
   }
 }
