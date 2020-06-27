@@ -32,7 +32,7 @@ class LoginForm extends React.Component {
         >
           <Grid.Column style={{ maxWidth: 400 }}>
             <GlobalFonts />
-            <FormHeaderCustom>Altgram</FormHeaderCustom>
+            <FormHeaderCustom>Instagram</FormHeaderCustom>
             <Form size='large'>
               <Segment>
                 <Form.Input fluid placeholder='E-mail address' />

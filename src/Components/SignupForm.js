@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
         >
           <Grid.Column style={{ maxWidth: 400 }}>
             <GlobalFonts />
-            <FormHeaderCustom>Altgram</FormHeaderCustom>
+            <FormHeaderCustom>Instagram</FormHeaderCustom>
             <Header size='large'>
               Sign up to see photos from your friends
             </Header>
@@ -58,7 +58,7 @@ class LoginForm extends React.Component {
             </Form>
            
 
-            <p className='signup-form-tnc'>By Signing up, you agree to our <span>Terms</span>, <span>Data Policy</span> and <span>Cookies Polity</span></p>
+            <p className='signup-form-tnc'>By Signing up, you agree to our <span>Terms</span>, <span>Data Policy</span> and <span>Cookies Policy</span></p>
             <Message>
               Don't have an account? <Button>Sign Up</Button>
             </Message>

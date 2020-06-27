@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
-// import LoginForm from './components/LoginForm'
-// import SignupForm from './components/SignupForm'
+import LoginForm from './components/LoginForm'
+import SignupForm from './components/SignupForm'
 import ExplorePage from './components/ExplorePage'
 import 'semantic-ui-css/semantic.min.css'
 function App() {

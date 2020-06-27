@@ -197,14 +197,19 @@ table {
     }
   }
 }
-.full-container{
+
+
+.full-container {
   width: 100%;
 }
 .container {
-  max-width: 900px;
+  max-width: 975px;
+  width: 100%;
   margin: 0 auto;
 }
+
 .header-nav {
+  border-bottom: 1px solid rgb(219, 219, 219);
   width: 100%;
   position: -webkit-sticky;
   position: sticky;
@@ -213,19 +218,76 @@ table {
   // border-bottom: 1px solid #989EA4;
   // border-top: 1px solid #717D85;
   color: black;
-  margin: 0;
-  padding: 2px 0 0 12px;
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  height: 54px;
-  h1 {
-    justify-self: center;
+  justify-content: center;
+  .header-inner-div {
+    max-width: 975px;
+    width: 100%;
+    margin: 0;
+    padding: 2px 0 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    height: 52px;
+    h1 {
+      justify-self: center;
+    }
+    ul {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 1rem;
+      justify-content: space-evenly;
+    }
   }
-  ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1rem;
-    justify-content: space-evenly;
+}
+.explore-img-div {
+  width: 975px;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 25px;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 292px;
+  padding: 10px;
+  // counter-reset: div;
+
+.explore-item:nth-child(18n - 7),
+.explore-item:nth-child(18n + 1) {
+  grid-column: auto /span 2;
+  grid-row: auto /span 2;
+}
+.explore-item {
+  // border: solid;
+  display: flex;
+  // background: linear-gradient(to bottom right, rgba(0,0,0,0.4), transparent, rgba(255,255,255,0.4) ) turquoise;
+  img{
+    width: 100%;
+    object-fit: contain;
   }
+}
+.explore-item:before {
+  // counter-increment: div;
+  // content: counter(div);
+  margin: auto;
+  font-size: 40px;
+}
+
+// .explore-item:nth-child(2n) {
+//   background-color: #f39;
+// }
+// .item:nth-child(3n) {
+//   background-color: #39f;
+// }
+// .item:nth-child(4n) {
+//   background-color: #9f3;
+// }
+// .item:nth-child(5n) {
+//   background-color: maroon;
+// }
+// .item:nth-child(6n) {
+//   background-color: salmon;
+// }
+// .item:nth-child(7n) {
+//   background-color: gold;
+// }
 }
