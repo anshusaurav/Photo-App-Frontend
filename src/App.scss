@@ -189,13 +189,12 @@ table {
     }
   }
   .signup-form-tnc {
-    
     color: #8e8e8e;
     span {
       font-weight: 600;
     }
   }
-  .ui.message{
+  .ui.message {
     font-size: 16px;
   }
 }
@@ -341,4 +340,41 @@ table {
   .fadeIn-bottom {
     top: 80%;
   }
+}
+
+//Profile page
+
+.profile-user-details {
+  padding-top: 30px;
+  padding-bottom: 44px;
+  .profile-user-inner-div {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 25px;
+    .profile-picture-inner-div {
+      width: 150px;
+      height: 150px;
+      img{
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+    .profile-details-outer-div {
+      display: grid;
+      grid-template-columns: 1fr;
+      .profile-details-div-one {
+        h2 {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+}
+.profile-img-div{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  
 }
