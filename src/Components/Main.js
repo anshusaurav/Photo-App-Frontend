@@ -8,17 +8,16 @@ class Main extends React.Component{
 
         render(){
             return (
-            // <Router>
-            //     <Switch>
-            //         <Route path='/login'>
-            //         <LoginForm/>
-            //         </Route>
-            //         <Route path='/signup'>
-            //             <SignupForm/>
-            //         </Route>
-            //     </Switch>
-            // </Router>
-            <ExplorePage/>
+            <Router>
+                <Switch>
+                    <Route path='/login'>
+                    <LoginForm/>
+                    </Route>
+                    <Route path='/signup'>
+                        <SignupForm/>
+                    </Route>
+                </Switch>
+            </Router>
             )
         }
 }

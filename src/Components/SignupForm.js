@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import GlobalFonts from './../fonts/fonts'
 import FormHeaderCustom from './FormHeaderCustom'
 import {
@@ -10,8 +10,9 @@ import {
   Divider,
   Header,
   Icon
-} from 'semantic-ui-react';
-import {withRouter, Link} from 'react-router-dom'
+} from 'semantic-ui-react'
+import { withRouter, Link } from 'react-router-dom';
+import {Debounce} from 'react-throttle'
 
 class SignupForm extends React.Component {
   //   state = { name: '', email: '', submittedName: '', submittedEmail: '' }
@@ -34,18 +35,28 @@ class SignupForm extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.contextRef = createRef()
   }
   handleChange (event, { name, value }) {
     this.setState({ [name]: value })
+    console.log(this.checkValidUser());
+    if(this.checkValidUser().result){
+      this.setState({isSubmitable: true});
+    }
+    else{
+      this.setState({isSubmitable: false});
+    }
   }
   handleSubmit (event) {
-    event.preventDefault();
-    this.submitUser();
+    event.preventDefault()
+    this.submitUser()
   }
+
   async submitUser () {
-    const {email, password, username, fullname} = this.state;
-    const user = { user: {email, password, username, fullname} };
-    console.log(JSON.stringify(user));
+    console.log(this.contextRef.current)
+    const { email, password, username, fullname } = this.state
+    const user = { user: { email, password, username, fullname } }
+    console.log(JSON.stringify(user))
     const url = 'http://localhost:4000/api/users/'
 
     try {
@@ -54,14 +65,42 @@ class SignupForm extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
       })
-      let data = await response.json();
-      console.log(data);
+      let data = await response.json()
+      console.log(data)
     } catch (error) {
       console.error('Error:', error)
     }
   }
+  checkValidUser () {
+    const { email, fullname, username, password } = this.state;
+    console.log('Email: ', email, 'Password: ',password);
+    let data = []
+    // const emailRegex = '/\S+@\S+\.\S+/';
+    const found = email.match('/@/')
+    let res = true
+    if(email.length < 5 || email.indexOf('@')<=0) {
+      res = false
+      data.push('email')
+    }
+    if (fullname.length === 0) {
+      res = false
+      data.push('fullname')
+    }
+    if (username.length === 0) {
+      res = false
+      data.push('username')
+    }
+    if (password.length === 0) {
+      res = false
+      data.push('password')
+    }
+    if(res)
+    return { result: true, data };
+    
+    return { result: false, data };
+  }
   render () {
-    const { email, fullname, username } = this.state;
+    const { email, fullname, username } = this.state
     return (
       <div className='form-container'>
         <Grid
@@ -77,8 +116,7 @@ class SignupForm extends React.Component {
             </Header>
             <div className='register-facebook-btn-div'>
               <Button fluid color='blue'>
-                <Icon name='facebook square'></Icon>Log in with
-                Facebook
+                <Icon name='facebook square'></Icon>Log in with Facebook
               </Button>
             </div>
             <Divider horizontal>Or</Divider>
@@ -112,7 +150,12 @@ class SignupForm extends React.Component {
                   onChange={this.handleChange}
                 />
 
-                <Button color='blue' fluid size='large' onClick={this.handleSubmit}>
+                <Button
+                  color={this.state.isSubmitable ? 'blue' : 'grey'}
+                  fluid
+                  size='large'
+                  onClick={this.handleSubmit}
+                >
                   Sign up
                 </Button>
               </Segment>
@@ -123,7 +166,10 @@ class SignupForm extends React.Component {
               <span>Data Policy</span> and <span>Cookies Policy</span>
             </p>
             <Message>
-              Have an account? <Link to='login'><Button>Log in</Button></Link>
+              Have an account?{' '}
+              <Link to='login'>
+                <Button ref={this.contextRef}>Log in</Button>
+              </Link>
             </Message>
           </Grid.Column>
         </Grid>
