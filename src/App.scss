@@ -247,7 +247,6 @@ table {
   grid-auto-flow: dense;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 292px;
-  // padding: 10px;
 
   .explore-item:nth-child(18n - 7),
   .explore-item:nth-child(18n + 1) {
@@ -255,11 +254,14 @@ table {
     grid-row: auto / span 2;
   }
   .explore-item {
-    border: solid;
+    // border: solid;
     display: flex;
+    overflow: hidden;
     img {
       width: 100%;
+      max-height: 100%;
       object-fit: contain;
+      overflow: hidden;
     }
   }
   .explore-item:before {
@@ -267,8 +269,9 @@ table {
     font-size: 40px;
   }
   .content {
+    // border:  solid;
     position: relative;
-    width: 90%;
+    // width: 90%;
     // max-width: 400px;
     margin: auto;
     overflow: hidden;
@@ -277,7 +280,7 @@ table {
 .content .content-overlay {
   background: rgba(0,0,0,0.7);
   position: absolute;
-  height: 100%;
+  // height:  9%;
   width: 100%;
   left: 0;
   top: 0;

@@ -11,6 +11,7 @@ import {
   Icon
 } from 'semantic-ui-react'
 
+import {withRouter, Link} from 'react-router-dom'
 class LoginForm extends React.Component {
   //   state = { name: '', email: '', submittedName: '', submittedEmail: '' }
 
@@ -56,7 +57,7 @@ class LoginForm extends React.Component {
               </Button>
             </div>
             <Message>
-              Don't have an account? <Button>Sign Up</Button>
+              Don't have an account? <Link to ='/signup'><Button>Sign Up</Button></Link>
             </Message>
           </Grid.Column>
         </Grid>
@@ -65,4 +66,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm
+export default withRouter(LoginForm)

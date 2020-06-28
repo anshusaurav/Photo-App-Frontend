@@ -3,6 +3,16 @@ import GlobalFonts from './../fonts/fonts'
 import PageHeaderCustom from './PageHeaderCustom'
 import { Icon } from 'semantic-ui-react'
 class ExplorePage extends React.Component {
+  //   state = { name: '', email: '', username: '', fullname: '', password:'' }
+
+  //   handleChange = (e, { name, value }) => this.setState({ [name]: value })
+
+  //   handleSubmit = () => {
+  //     const { name, email } = this.state;
+
+  //     this.setState({ submittedName: name, submittedEmail: email })
+  //   }
+  
   render () {
     return (
       <div className='full-container'>
@@ -35,7 +45,7 @@ class ExplorePage extends React.Component {
                 <i aria-hidden='true' className='compass large icon'></i>
               </li>
               <li>
-                <i aria-hidden='true' className='cloud upload large icon'></i>
+                <i aria-hidden='true' className='photo large icon'></i>
               </li>
               <li>
                 <i aria-hidden='true' className='user circle large icon'></i>
@@ -48,20 +58,16 @@ class ExplorePage extends React.Component {
             <div class='explore-item'>
               <div class='content'>
                 <a href='#' target='_blank'>
-                  <div className='content-overlay'></div>
                   <img src='https://images.pexels.com/photos/3088778/pexels-photo-3088778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'></img>
+                  <div className='content-overlay'></div>
                   <div className='content-details fadeIn-bottom'>
                     <h2 className='content-title'>
-                      {' '}
-                      <i aria-hidden='true' className='like large icon'></i> 456
+                      
+                      <i aria-hidden='true' className='like icon'></i> 456
                     </h2>
                     <h2 className='content-title'>
-                      {' '}
-                      <i
-                        aria-hidden='true'
-                        className='comment large icon'
-                      ></i>{' '}
-                      123
+                      
+                      <i aria-hidden='true' className='comment  icon'></i> 123
                     </h2>
                   </div>
                 </a>
@@ -74,16 +80,12 @@ class ExplorePage extends React.Component {
                   <img src='https://images.pexels.com/photos/1628233/pexels-photo-1628233.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'></img>
                   <div className='content-details fadeIn-bottom'>
                     <h2 className='content-title'>
-                      {' '}
-                      <i aria-hidden='true' className='like large icon'></i> 116
+                     
+                      <i aria-hidden='true' className='like icon'></i> 116
                     </h2>
                     <h2 className='content-title'>
-                      {' '}
-                      <i
-                        aria-hidden='true'
-                        className='comment large icon'
-                      ></i>{' '}
-                      123
+                      
+                      <i aria-hidden='true' className='comment icon'></i> 123
                     </h2>
                   </div>
                 </a>
@@ -96,16 +98,12 @@ class ExplorePage extends React.Component {
                   <img src='https://images.pexels.com/photos/1051075/pexels-photo-1051075.jpeg?cs=srgb&dl=person-pointing-at-black-and-gray-film-camera-near-macbook-1051075.jpg&fm=jpg'></img>
                   <div className='content-details fadeIn-bottom'>
                     <h2 className='content-title'>
-                      {' '}
-                      <i aria-hidden='true' className='like large icon'></i> 456
+                      
+                      <i aria-hidden='true' className='like icon'></i> 456
                     </h2>
                     <h2 className='content-title'>
-                      {' '}
-                      <i
-                        aria-hidden='true'
-                        className='comment large icon'
-                      ></i>{' '}
-                      123
+                      
+                      <i aria-hidden='true' className='comment icon'></i> 123
                     </h2>
                   </div>
                 </a>
