@@ -16,6 +16,9 @@ class Main extends React.Component{
                     <Route path='/signup'>
                         <SignupForm/>
                     </Route>
+                    <Route path='/explore'>
+                        <ExplorePage/>
+                    </Route>
                 </Switch>
             </Router>
             )

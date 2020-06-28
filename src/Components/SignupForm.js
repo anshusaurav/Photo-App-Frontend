@@ -11,19 +11,10 @@ import {
   Header,
   Icon
 } from 'semantic-ui-react'
-import { withRouter, Link } from 'react-router-dom';
-import {Debounce} from 'react-throttle'
+import { withRouter, Link } from 'react-router-dom'
 
 class SignupForm extends React.Component {
-  //   state = { name: '', email: '', submittedName: '', submittedEmail: '' }
-
-  //   handleChange = (e, { name, value }) => this.setState({ [name]: value })
-
-  //   handleSubmit = () => {
-  //     const { name, email } = this.state
-
-  //     this.setState({ submittedName: name, submittedEmail: email })
-  //   }
+  
   constructor (props) {
     super(props)
     this.state = {
@@ -39,12 +30,10 @@ class SignupForm extends React.Component {
   }
   handleChange (event, { name, value }) {
     this.setState({ [name]: value })
-    console.log(this.checkValidUser());
-    if(this.checkValidUser().result){
-      this.setState({isSubmitable: true});
-    }
-    else{
-      this.setState({isSubmitable: false});
+    if (this.checkValidUser().result) {
+      this.setState({ isSubmitable: true })
+    } else {
+      this.setState({ isSubmitable: false })
     }
   }
   handleSubmit (event) {
@@ -56,7 +45,7 @@ class SignupForm extends React.Component {
     console.log(this.contextRef.current)
     const { email, password, username, fullname } = this.state
     const user = { user: { email, password, username, fullname } }
-    console.log(JSON.stringify(user))
+    // console.log(JSON.stringify(user))
     const url = 'http://localhost:4000/api/users/'
 
     try {
@@ -66,19 +55,18 @@ class SignupForm extends React.Component {
         body: JSON.stringify(user)
       })
       let data = await response.json()
-      console.log(data)
+      // console.log(data)
     } catch (error) {
       console.error('Error:', error)
     }
   }
   checkValidUser () {
     const { email, fullname, username, password } = this.state;
-    console.log('Email: ', email, 'Password: ',password);
     let data = []
     // const emailRegex = '/\S+@\S+\.\S+/';
     const found = email.match('/@/')
     let res = true
-    if(email.length < 5 || email.indexOf('@')<=0) {
+    if (email.length < 5 || email.indexOf('@') <= 0) {
       res = false
       data.push('email')
     }
@@ -90,17 +78,12 @@ class SignupForm extends React.Component {
       res = false
       data.push('username')
     }
-    if (password.length === 0) {
-      res = false
-      data.push('password')
-    }
-    if(res)
-    return { result: true, data };
-    
-    return { result: false, data };
+    if (res) return { result: true, data }
+
+    return { result: false, data }
   }
   render () {
-    const { email, fullname, username } = this.state
+    const { email, fullname, username, password } = this.state
     return (
       <div className='form-container'>
         <Grid
@@ -128,6 +111,7 @@ class SignupForm extends React.Component {
                   name='email'
                   value={email}
                   onChange={this.handleChange}
+                  required
                 />
                 <Form.Input
                   fluid
@@ -135,6 +119,7 @@ class SignupForm extends React.Component {
                   name='fullname'
                   value={fullname}
                   onChange={this.handleChange}
+                  required
                 />
                 <Form.Input
                   fluid
@@ -142,19 +127,25 @@ class SignupForm extends React.Component {
                   name='username'
                   value={username}
                   onChange={this.handleChange}
+                  required
                 />
                 <Form.Input
                   fluid
                   placeholder='Password'
                   type='password'
+                  name='password'
+                  minlength='4'
+                  defaultValue={password}
                   onChange={this.handleChange}
+                  required
                 />
 
                 <Button
-                  color={this.state.isSubmitable ? 'blue' : 'grey'}
+                  color='blue'
                   fluid
                   size='large'
                   onClick={this.handleSubmit}
+                  disabled={!this.state.isSubmitable}
                 >
                   Sign up
                 </Button>
@@ -165,7 +156,7 @@ class SignupForm extends React.Component {
               By Signing up, you agree to our <span>Terms</span>,{' '}
               <span>Data Policy</span> and <span>Cookies Policy</span>
             </p>
-            <Message>
+            <Message >
               Have an account?{' '}
               <Link to='login'>
                 <Button ref={this.contextRef}>Log in</Button>
