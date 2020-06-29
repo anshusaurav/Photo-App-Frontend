@@ -378,3 +378,30 @@ table {
   grid-template-columns: repeat(3,1fr);
   
 }
+
+
+//Profile CSS ends here
+
+
+//Upload form CSS
+
+.upload-form-container{
+  padding-top: 30px;
+  min-height: calc(100vh-54px);
+  padding-bottom: 44px;
+  .upload-icon-div{
+    margin-bottom: 1rem;
+  }
+  
+  .file-select-input-div{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    input#file-upload-button{
+      justify-self: center;
+    }
+  }
+}
+
+
+//Upload form CSS
