@@ -46,7 +46,7 @@ class SignupForm extends React.Component {
     const { email, password, username, fullname } = this.state
     const user = { user: { email, password, username, fullname } }
     // console.log(JSON.stringify(user))
-    const url = 'http://localhost:4000/api/users/'
+    const url = 'http://localhost:4000/api/users/';
 
     try {
       const response = await fetch(url, {
