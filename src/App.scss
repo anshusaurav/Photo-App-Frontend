@@ -386,18 +386,38 @@ table {
 //Upload form CSS
 
 .upload-form-container{
+  // height: 100vh;
   padding-top: 30px;
-  min-height: calc(100vh-54px);
+  height: calc(100vh - 54px);
   padding-bottom: 44px;
   .upload-icon-div{
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .upload-img-container{
+      min-width: 300px;
+      min-height: 300px;
+      max-width: 300px;
+      max-height: 300px;
+      display: flex;
+    }
+    img{
+      width: 100%;
+      object-fit: contain;
+      
+    }
   }
   
   .file-select-input-div{
     display: grid;
     justify-content: center;
     align-items: center;
+    // background-color:olivedrab;
     
+    input{
+      align-self: center;
+    }
   }
 }
 
