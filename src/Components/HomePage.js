@@ -1,8 +1,10 @@
 import React from 'react'
 import GlobalFonts from './../fonts/fonts'
 import PageHeaderCustom from './PageHeaderCustom'
+import { Card, Icon, Image, Form, Input, Button } from 'semantic-ui-react'
+
 // import { Icon } from 'semantic-ui-react'
-class ExplorePage extends React.Component {
+class HomePage extends React.Component {
   //   state = { name: '', email: '', username: '', fullname: '', password:'' }
 
   //   handleChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -91,26 +93,76 @@ class ExplorePage extends React.Component {
           </div>
         </div>
         <div>
-          <div className='explore-img-div container'>
+          <div className='container'>
+            <div className='home-page-'></div>
             {arr.map(img => {
               return (
-                <div className='explore-item'>
-                  <div className='content'>
-                    <a className='link-img' href='#' target='_blank'>
-                      <img src={img} alt></img>
-                      <div className='content-overlay'></div>
-                      <div className='content-details fadeIn-bottom'>
-                        <h2 className='content-title'>
-                          <i aria-hidden='true' className='like icon'></i> 456
-                        </h2>
-                        <h2 className='content-title'>
-                          <i aria-hidden='true' className='comment  icon'></i>{' '}
-                          123
-                        </h2>
-                      </div>
-                    </a>
-                  </div>
-                </div>
+                <Card>
+                  <Card.Content>
+                    <Image
+                      src='https://instagram.fdel27-1.fna.fbcdn.net/v/t51.2885-19/s320x320/50517569_544196982755555_8719396859195424768_n.jpg?_nc_ht=instagram.fdel27-1.fna.fbcdn.net&_nc_ohc=wJTNT5XGR9oAX8_wWx8&oh=3af2bd6593403a95bf4f6d6818ed1e63&oe=5F21F5F3'
+                      size='mini'
+                      circular
+                    />
+                    <span>anshusaurav</span>
+                    <span>
+                      {' '}
+                      <Icon name='ellipsis horizontal' />{' '}
+                    </span>
+                  </Card.Content>
+                  <Image
+                    src='https://images.pexels.com/photos/955241/pexels-photo-955241.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+                    wrapped
+                    ui={false}
+                  />
+                  <Card.Content>
+                    <Card.Header>
+                      <span>
+                        {' '}
+                        <Icon name='heart outline' />{' '}
+                      </span>
+                      <span>
+                        {' '}
+                        <Icon name='comment outline' />{' '}
+                      </span>
+                      <span>
+                        {' '}
+                        <Icon name='send outline' />{' '}
+                      </span>
+                      <span>
+                        {' '}
+                        <Icon name='bookmark outline' />{' '}
+                      </span>
+                    </Card.Header>
+                    <Card.Header>1,022 likes</Card.Header>
+                    <Card.Meta>View All 106 comments</Card.Meta>
+                    <Card.Description>
+                      <strong>Daniel </strong>
+                      Why everyone linking this pic..??
+                    </Card.Description>
+                    <Card.Description>
+                      <strong>Sunny </strong>
+                      Bela paisagem! !! Vamos segui? SDV!
+                    </Card.Description>
+                    <Card.Description>
+                      <strong>Leone </strong>
+                      is a comedian living in Nashville.
+                    </Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <Card.Meta>2 days ago</Card.Meta>
+                  </Card.Content>
+                  <Form>
+                    <Form.Group inline>
+                      <Form.Field>
+                        <Input placeholder='(xxx)' />
+                      </Form.Field>
+                      <span>
+                        <Button>POST</Button>
+                      </span>
+                    </Form.Group>
+                  </Form>
+                </Card>
               )
             })}
           </div>
@@ -120,4 +172,4 @@ class ExplorePage extends React.Component {
   }
 }
 
-export default ExplorePage
+export default HomePage

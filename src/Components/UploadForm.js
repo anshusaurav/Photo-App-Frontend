@@ -127,7 +127,7 @@ class UploadForm extends React.Component {
                 <i aria-hidden='true' className='compass large icon'></i>
               </li>
               <li>
-                <i aria-hidden='true' className='photo large icon'></i>
+                <i aria-hidden='true' className='camera retro large icon'></i>
               </li>
               <li>
                 <i aria-hidden='true' className='user circle large icon'></i>

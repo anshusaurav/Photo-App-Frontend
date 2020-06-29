@@ -75,7 +75,7 @@ class ProfilePage extends React.Component {
                 <i aria-hidden='true' className='compass large icon'></i>
               </li>
               <li>
-                <i aria-hidden='true' className='photo large icon'></i>
+                <i aria-hidden='true' className='camera retro large icon'></i>
               </li>
               <li>
                 <i aria-hidden='true' className='user circle large icon'></i>
@@ -94,9 +94,7 @@ class ProfilePage extends React.Component {
             <div className='profile-details-outer-div'>
               <div className='profile-details-div-one'>
                 <h2>anshusaurav</h2>
-                <Button>
-      Edit Profile
-    </Button>
+                <Button>Edit Profile</Button>
               </div>
               <div className='profile-details-div-one'>
                 <p className='first-p'>
@@ -110,8 +108,7 @@ class ProfilePage extends React.Component {
                 </p>
               </div>
               <div className='profile-details-div-one'>
-                <h2>Anshu Saurabh</h2>
-                
+                <h2 className='profile-fullname'>Anshu Saurabh</h2>
               </div>
             </div>
           </div>

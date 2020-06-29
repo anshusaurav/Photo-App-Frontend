@@ -351,7 +351,7 @@ table {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-gap: 25px;
-    .profile-picture-outer-div{
+    .profile-picture-outer-div {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -359,14 +359,14 @@ table {
     .profile-picture-inner-div {
       width: 150px;
       height: 150px;
-      img{
+      img {
         width: 100%;
         border-radius: 50%;
       }
     }
     .profile-details-outer-div {
       display: grid;
-      grid-template-columns: 1fr; 
+      grid-template-columns: 1fr;
       .profile-details-div-one {
         padding: 0.75rem;
         display: flex;
@@ -378,38 +378,42 @@ table {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          font-weight: 300;
+          font-weight: 400;
           align-self: center;
         }
-        button{
+        button {
           margin-left: 1.35rem;
           font-weight: 500;
           font-size: 1.05rem;
-           padding-top: 0.25rem !important;
-           padding-bottom: 0.25rem !important;
-           border: 1px solid;
+          padding-top: 0.25rem !important;
+          padding-bottom: 0.25rem !important;
+          border: 1px solid;
         }
-      p{
-        margin: 0 1rem;
-        font-size: 1.2rem;
-        font-weight: 500;
-        align-self: flex-start;
-        span{
+        p {
+          margin: 0 1rem;
+          font-size: 1.2rem;
+          font-weight: 500;
+          align-self: flex-start;
+          span {
+            font-weight: 600;
+          }
+        }
+        .first-p {
+          margin-left: 0;
+        }
+        .profile-fullname{
+          font-size: 1.2rem;
           font-weight: 600;
         }
-      }
-      .first-p{
-        margin-left: 0;
-      }
       }
     }
   }
 }
-.profile-img-div{
+.profile-img-div {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   width: 975px;
-  border-top:1px solid #DBDBDB;
+  border-top: 1px solid #dbdbdb;
   padding-top: 30px;
   margin: 0 auto;
   display: grid;
@@ -506,47 +510,52 @@ table {
   }
 }
 
-
 //Profile CSS ends here
-
 
 //Upload form CSS
 
-.upload-form-container{
+.upload-form-container {
   // height: 100vh;
   padding-top: 30px;
   height: calc(100vh - 54px);
   padding-bottom: 44px;
-  .upload-icon-div{
+  .upload-icon-div {
     margin-bottom: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    .upload-img-container{
+    .upload-img-container {
       min-width: 300px;
       min-height: 300px;
       max-width: 300px;
       max-height: 300px;
       display: flex;
     }
-    img{
+    img {
       width: 100%;
       object-fit: contain;
-      
     }
   }
-  
-  .file-select-input-div{
+
+  .file-select-input-div {
     display: grid;
     justify-content: center;
     align-items: center;
     // background-color:olivedrab;
-    
-    input{
+
+    input {
       align-self: center;
     }
   }
 }
 
-
 //Upload form CSS
+
+
+//homepage cSs starts
+
+.home-page-div{
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+}

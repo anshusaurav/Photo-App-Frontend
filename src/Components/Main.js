@@ -3,7 +3,8 @@ import ExplorePage from './ExplorePage'
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import ProfilePage from './ProfilePage';
-import UploadForm from './UploadForm'
+import UploadForm from './UploadForm';
+import HomePage from './HomePage'
 import {BrowserRouter as Router, Route, Switch}  from 'react-router-dom';
 
 class Main extends React.Component{
@@ -26,6 +27,9 @@ class Main extends React.Component{
                     </Router>
                     <Router path='/upload'>
                         <UploadForm/>
+                    </Router>
+                    <Router path='/home'>
+                        <HomePage/>
                     </Router>
                 </Switch>
             </Router>
