@@ -1,56 +1,78 @@
 import React from 'react'
 import GlobalFonts from './../fonts/fonts'
 import PageHeaderCustom from './PageHeaderCustom'
-import { Form, Button, Checkbox, Icon } from 'semantic-ui-react';
+import { Form, Button, Checkbox, Icon } from 'semantic-ui-react'
 import axios from 'axios'
 class UploadForm extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      file: null,
+      filename: null,
       description: '',
-      tags: '',
+      tagList: '',
       location: '',
-      isSubmitable: false,
-    };
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onSubmitHandler = this.onSubmitHandler.bind(this);
+      isSubmitable: false
+    }
+    this.onChangeHandler = this.onChangeHandler.bind(this)
+    this.onSubmitHandler = this.onSubmitHandler.bind(this)
   }
   
-  onChangeHandler(event) {
+  onChangeHandler (event) {
     
-    switch(event.target.name) {
-    case 'file':
-      this.setState({
-        file: event.target.files[0].name,
-        loaded: 0
-    }, function(){
-        if(this.state.file)
-            this.setState({isSubmitable: true});
-        else
-            this.setState({isSubmitable: false})
-    })
-    break;
+    switch (event.target.name) {
+      case 'filename':  
+          this.setState(
+            {
+              filename: event.target.files[0],
+            },
+            function () {
+              if (this.state.filename) this.setState({ isSubmitable: true })
+              else this.setState({ isSubmitable: false })
+            }
+          )
+        break
+      case 'description':
+        this.setState({description: event.target.value})
+        break;
+      case 'location':
+        this.setState({location: event.target.value});
+        break;
+      case 'tags':
+        const tagList = event.target.value.split(' ');
+        this.setState({tagList: tagList});
+      default:
+        console.log('Invalid target');
+
+
+    }
   }
-  } 
-  onSubmitHandler(event){
-    const url = 'http://localhost:4000/api/p/';
-    const imagepost ={imagepost: {filename:'fname', description:'Hello', location:'Dharamshala', tags:['Tag1']}};
-    // const p =
+  onSubmitHandler (event) {
+    const url = 'http://localhost:4000/api/p/'
+    const formData = new FormData();
+    const {filename, description, location, tagList} = this.state;
+    formData.append('description', description);
+    formData.append('location', location);
+    formData.append('tags', JSON.stringify(tagList));
+    formData.append('filename', filename);
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
     const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjg2MGY0M2ViNTBhODAzMmEzYzM0MCIsInVzZXJuYW1lIjoic2V0dXNhdXJhYmgiLCJleHAiOjE1OTg1OTgzODgsImlhdCI6MTU5MzQxNDM4OH0.eD1BeSYNFMs4qC6yRewczB_hOFipMKwkUtoQM55yscc'
-        
-      }
-    // imagepost.append('filename', this.state.file);
-    axios.post(url, JSON.stringify(imagepost),{
+      'Content-Type': 'multipart/form-data',
+      'Authorization':
+        'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjg2MGY0M2ViNTBhODAzMmEzYzM0MCIsInVzZXJuYW1lIjoic2V0dXNhdXJhYmgiLCJleHAiOjE1OTg1OTgzODgsImlhdCI6MTU5MzQxNDM4OH0.eD1BeSYNFMs4qC6yRewczB_hOFipMKwkUtoQM55yscc'
+    }
+    axios
+      .post(url, formData, {
         headers: headers
-    })
-    .then(res =>{
-        console.log(res.statusText);
-    })
+      })
+      .then(res => {
+        console.log(res.statusText)
+      })
   }
+
   render () {
+    const { filename, description, location, tagList } = this.state;
     return (
       <div className='full-container '>
         <div className='header-nav'>
@@ -59,10 +81,7 @@ class UploadForm extends React.Component {
             <PageHeaderCustom>Instagram</PageHeaderCustom>
             <div className='ui search'>
               <div className='ui icon input'>
-                <input
-                  type='text'
-                  value=''
-                />
+                <input type='text' />
                 <i aria-hidden='true' className='search icon'></i>
               </div>
               <div className='results transition'>
@@ -98,21 +117,31 @@ class UploadForm extends React.Component {
                 <div className='ui horizontal divider'>OR</div>
 
                 <div className='file-select-input-div'>
-                  <input className='input-file-elem' name='file' type='file' onChange = {this.onChangeHandler}></input>
+                  <input
+                    className='input-file-elem'
+                    name='filename'
+                    type='file'
+                    onChange={this.onChangeHandler}
+                  ></input>
                 </div>
               </div>
 
               <Form.Field>
-                <input placeholder='Description' name='description' />
+                <input placeholder='Description' name='description' value={description} onChange={this.onChangeHandler}/>
               </Form.Field>
               <Form.Field>
-                <input placeholder='Location' name='location' />
+                <input placeholder='Location' name='location' value={location} onChange={this.onChangeHandler}/>
               </Form.Field>
               <Form.Field>
-                <input placeholder='Tags' name='tags' />
+                <input placeholder='Tags' name='tags' value={tagList ? tagList.join(' ') : ''} onChange={this.onChangeHandler}/>
               </Form.Field>
 
-              <Button fluid type='submit' disabled={!this.state.isSubmitable} color='blue'>
+              <Button
+                fluid
+                type='submit'
+                disabled={!this.state.isSubmitable}
+                color='blue'
+              >
                 Upload
               </Button>
             </Form>

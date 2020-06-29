@@ -45,7 +45,6 @@ class SignupForm extends React.Component {
     console.log(this.contextRef.current)
     const { email, password, username, fullname } = this.state
     const user = { user: { email, password, username, fullname } }
-    // console.log(JSON.stringify(user))
     const url = 'http://localhost:4000/api/users/';
 
     try {
@@ -55,15 +54,13 @@ class SignupForm extends React.Component {
         body: JSON.stringify(user)
       })
       let data = await response.json()
-      // console.log(data)
     } catch (error) {
       console.error('Error:', error)
     }
   }
   checkValidUser () {
     const { email, fullname, username, password } = this.state;
-    let data = []
-    // const emailRegex = '/\S+@\S+\.\S+/';
+    let data = [];
     const found = email.match('/@/')
     let res = true
     if (email.length < 5 || email.indexOf('@') <= 0) {
