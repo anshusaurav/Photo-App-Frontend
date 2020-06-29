@@ -22,61 +22,42 @@ class UploadForm extends React.Component {
     this.onSubmitHandler = this.onSubmitHandler.bind(this)
   }
   async onImageChange (event) {
-    event.preventDefault();
-    const imageFile = event.target.files[0];
-  console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-  console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
- 
-  const options = {
-    maxSizeMB: 1,
-    maxWidthOrHeight: 1920,
-    useWebWorker: true
-  }
-  try {
-    const compressedFile = await imageCompression(imageFile, options);
-    console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-    console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
-    let reader = new FileReader()
-    let file = compressedFile;
-    this.setState({ imagePreviewUrl: '' })
-    this.setState(prevState => ({ visible: !prevState.visible }))
-    reader.onloadend = () => {
-      this.setState(
-        {
-          filename: file,
-          imagePreviewUrl: reader.result
-        },
-        function () {
-          this.setState(prevState => ({ visible: !prevState.visible }))
-        }
-      )
+    event.preventDefault()
+    const imageFile = event.target.files[0]
+    // console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+    // console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true
+    }
+    try {
+      const compressedFile = await imageCompression(imageFile, options)
+      // console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+      // console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+      let reader = new FileReader()
+      let file = compressedFile
+      
+      this.setState(prevState => ({ visible: !prevState.visible }));
+      this.setState({ imagePreviewUrl: '' });
+      reader.onloadend = () => {
+        this.setState(
+          {
+            filename: file,
+            imagePreviewUrl: reader.result
+          },
+          function () {
+            this.setState(prevState => ({ visible: !prevState.visible }))
+          }
+        )
+      }
+
+      reader.readAsDataURL(file)
+    } catch (error) {
+      console.log(error)
     }
 
-    reader.readAsDataURL(file)
-    // await uploadToServer(compressedFile); // write your own logic
-  } catch (error) {
-    console.log(error);
-  }
-
-
-
-    // let reader = new FileReader()
-    // let file = event.target.files[0]
-    // this.setState({ imagePreviewUrl: '' })
-    // this.setState(prevState => ({ visible: !prevState.visible }))
-    // reader.onloadend = () => {
-    //   this.setState(
-    //     {
-    //       filename: file,
-    //       imagePreviewUrl: reader.result
-    //     },
-    //     function () {
-    //       this.setState(prevState => ({ visible: !prevState.visible }))
-    //     }
-    //   )
-    // }
-
-    // reader.readAsDataURL(file)
   }
   onChangeHandler (event) {
     switch (event.target.name) {

@@ -1,20 +1,12 @@
 import React from 'react'
 import GlobalFonts from './../fonts/fonts'
 import PageHeaderCustom from './PageHeaderCustom'
-// import { Icon } from 'semantic-ui-react'
+
+import { Icon, Button, Label } from 'semantic-ui-react'
 class ProfilePage extends React.Component {
-  //   state = { name: '', email: '', username: '', fullname: '', password:'' }
-
-  //   handleChange = (e, { name, value }) => this.setState({ [name]: value })
-
-  //   handleSubmit = () => {
-  //     const { name, email } = this.state;
-
-  //     this.setState({ submittedName: name, submittedEmail: email })
-  //   }
-
   render () {
-    var profilePicture = 'https://instagram.fdel27-1.fna.fbcdn.net/v/t51.2885-19/s320x320/50517569_544196982755555_8719396859195424768_n.jpg?_nc_ht=instagram.fdel27-1.fna.fbcdn.net&_nc_ohc=Q5RDkiY_kooAX-vLlHl&oh=a70d626e97089535362d002e8a46004f&oe=5F21F5F3'
+    var profilePicture =
+      'https://instagram.fdel27-1.fna.fbcdn.net/v/t51.2885-19/s320x320/50517569_544196982755555_8719396859195424768_n.jpg?_nc_ht=instagram.fdel27-1.fna.fbcdn.net&_nc_ohc=Q5RDkiY_kooAX-vLlHl&oh=a70d626e97089535362d002e8a46004f&oe=5F21F5F3'
     var arr = [
       'https://images.pexels.com/photos/3088778/pexels-photo-3088778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       'https://images.pexels.com/photos/1628233/pexels-photo-1628233.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
@@ -100,11 +92,28 @@ class ProfilePage extends React.Component {
               </div>
             </div>
             <div className='profile-details-outer-div'>
-                <div className='profile-details-div-one'>
-                  <h2>anshusaurav</h2>
-                </div>
+              <div className='profile-details-div-one'>
+                <h2>anshusaurav</h2>
+                <Button>
+      Edit Profile
+    </Button>
+              </div>
+              <div className='profile-details-div-one'>
+                <p className='first-p'>
+                  <span>89</span> posts
+                </p>
+                <p>
+                  <span>274</span> followers
+                </p>
+                <p>
+                  <span>335</span> following
+                </p>
+              </div>
+              <div className='profile-details-div-one'>
+                <h2>Anshu Saurabh</h2>
+                
+              </div>
             </div>
-
           </div>
         </div>
         <div>
