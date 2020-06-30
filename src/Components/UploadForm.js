@@ -25,8 +25,8 @@ class UploadForm extends React.Component {
   async onImageChange (event) {
     event.preventDefault()
     const imageFile = event.target.files[0]
-    // console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-    // console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
 
     const options = {
       maxSizeMB: 1,
@@ -35,8 +35,8 @@ class UploadForm extends React.Component {
     }
     try {
       const compressedFile = await imageCompression(imageFile, options)
-      // console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-      // console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
       let reader = new FileReader()
       let file = compressedFile
 

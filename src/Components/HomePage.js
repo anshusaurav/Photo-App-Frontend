@@ -41,7 +41,12 @@ class HomePage extends React.Component {
       'https://images.pexels.com/photos/3636074/pexels-photo-3636074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-    ]
+    ];
+    var suggestions = [{image:'https://react.semantic-ui.com/images/avatar/small/veronika.jpg',name:'veronicsossi'},
+    {image:'https://react.semantic-ui.com/images/avatar/small/lindsay.png',name:'lindsay'},
+    {image:'https://react.semantic-ui.com/images/avatar/small/matthew.png',name:'methhew'},
+    {image:'https://react.semantic-ui.com/images/avatar/small/jenny.jpg',name:'jennihess'},
+    {image:'https://react.semantic-ui.com/images/avatar/small/rachel.png',name:'rachael'}]
     return (
       <div className='full-container'>
         <div className='header-nav'>
@@ -184,13 +189,14 @@ class HomePage extends React.Component {
                             style={{
                               border: 0,
                               overflow: 'hidden',
-                              width: '100%'
+                              width: '100%',
+                              resize: 'none'
                             }}
                           />
 
                           <Button
                             class='feed-elem-add-comment-btn'
-                            disabled={true}
+                            // disabled={true}
                             style={{ background: 'none', color: '#0095f6' }}
                           >
                             POST
@@ -204,10 +210,10 @@ class HomePage extends React.Component {
               <div className='feed-suggestions-div'>
                 <div className='feed-suggestion-inner-div'>
                   <div className='feed-profile-div'>
-                    <Card>
+                    {/* <Card>
                       <Card.Content>
                         <Image
-                        className='feed-profile-picture-img'
+                          className='feed-profile-picture-img'
                           floated='right'
                           size='mini'
                           src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
@@ -215,10 +221,33 @@ class HomePage extends React.Component {
                         <Card.Header>anshusaurav</Card.Header>
                         <Card.Meta>Anshu Saurabh</Card.Meta>
                       </Card.Content>
-                    </Card>
+                    </Card> */}
+                    <div className='feed-profile-inner-div'>
+
+                    </div>
                   </div>
                   <div className='feed-sugg-user-div'>
                     <h4>Suggestions for you</h4>
+                  </div>
+                  <div className='feed-suggestion-profile-div'>
+                    {suggestions.map(elem => {
+
+                      return (
+                        <div className='feed-suggestion-profile-inner-div'>
+                      <div className='feed-sugg-profile-user'>
+                        <div className='feed-sugg-profile-img-div'>
+                          <img src={elem.image}></img>
+                        </div>
+                        <p>{elem.name}</p>
+                      </div>
+                      <div>
+                        <Button color='blue'>Follow</Button>
+                      </div>
+                    </div>
+                      )
+                    })
+                    
+                    }
                   </div>
                 </div>
               </div>

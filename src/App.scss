@@ -641,6 +641,21 @@ table {
     }
     .feed-elem-add-comment-btn{
       background-color: transparent;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #2e394f;
+      &:active {
+        background-color: transparent;
+      }
+      &:hover {
+        background-color: transparent;
+      }
+      &:visited {
+        background-color: transparent;
+      }
+      &:focus {
+        background-color: transparent;
+      }
       // color: blue;
     }
     
@@ -652,7 +667,56 @@ table {
     }
     .feed-sugg-user-div{
       h4{
-        color: rgb(38, 38, 38);
+        color: rgba(38, 38, 38,0.75);
+      }
+    }
+    .feed-suggestion-profile-div{
+      padding:0.5rem;
+      display: grid;
+      grid-gap: 0.75rem;
+    }
+    .feed-suggestion-profile-inner-div{
+      display: grid;
+      grid-gap: 0.75rem;
+      align-items: center;
+      grid-template-columns: auto auto;
+      justify-content: space-between;
+      .feed-sugg-profile-img-div{
+        width: 32px;
+        height: 32px;
+        img{
+          width: 100%;
+          border-radius: 50%;
+        }
+      }
+      .feed-sugg-profile-user{
+        display: flex;
+        p{
+          margin-left: 0.5rem;
+          align-self: center;
+          font-weight: 600;
+          padding: 0 0.25rem;
+        }
+      }
+      .button{
+        background-color: transparent;
+        color: #2185D0;
+        &:active {
+          color: #104065;
+          background-color: transparent;
+        }
+        &:hover {
+          color: #545f67;
+          background-color: transparent;
+        }
+        &:visited {
+          color: #545f67;
+          background-color: transparent;
+        }
+        &:focus {
+          color: #545f67;
+          background-color: transparent;
+        }
       }
     }
   }
