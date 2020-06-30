@@ -1,7 +1,7 @@
 import React from 'react'
 import GlobalFonts from './../fonts/fonts'
 import PageHeaderCustom from './PageHeaderCustom'
-import { Card, Icon, Image, Form, Input, Button } from 'semantic-ui-react'
+import { Card, Icon, Image, Form, TextArea, Button } from 'semantic-ui-react'
 
 class HomePage extends React.Component {
   render () {
@@ -122,29 +122,44 @@ class HomePage extends React.Component {
                           <div className='feed-image-action-div'>
                             <span>
                               {' '}
-                              <Icon className='action-elem' name='heart outline large' />{' '}
+                              <Icon
+                                className='action-elem'
+                                name='heart outline large'
+                              />{' '}
                             </span>
                             <span>
                               {' '}
-                              <Icon className='action-elem' name='comment outline large' />{' '}
+                              <Icon
+                                className='action-elem'
+                                name='comment outline large'
+                              />{' '}
                             </span>
                             <span>
                               {' '}
-                              <Icon className='action-elem' name='send outline large' />{' '}
+                              <Icon
+                                className='action-elem'
+                                name='send outline large'
+                              />{' '}
                             </span>
                           </div>
 
                           <div>
-                          <span>
-                            {' '}
-                            <Icon className='action-elem' name='bookmark outline large' />{' '}
-                          </span>
+                            <span>
+                              {' '}
+                              <Icon
+                                className='action-elem'
+                                name='bookmark outline large'
+                              />{' '}
+                            </span>
                           </div>
                         </Card.Description>
-                        <Card.Description> <p className='feed-image-like-count'>1,022 likes</p></Card.Description>
+                        <Card.Description>
+                          {' '}
+                          <p className='feed-image-like-count'>1,022 likes</p>
+                        </Card.Description>
                         <Card.Meta>View All 106 comments</Card.Meta>
                         <Card.Description>
-                          <strong>Daniel </strong>
+                          <strong>anshusaurav </strong>
                           Why everyone linking this pic..??
                         </Card.Description>
                         <Card.Description>
@@ -155,18 +170,19 @@ class HomePage extends React.Component {
                           <strong>Leone </strong>
                           is a comedian living in Nashville.
                         </Card.Description>
+
+                        <Card.Description className='feed-image-elem-date'>
+                          2 days ago
+                        </Card.Description>
                       </Card.Content>
-                      <Card.Content>
-                        <Card.Meta>2 days ago</Card.Meta>
-                      </Card.Content>
-                      <Form>
-                        <Form.Group inline>
-                          <Form.Field>
-                            <Input placeholder='(xxx)' />
+                      <Form className='add-comment-form'>
+                        <Form.Group className='add-comment-form-inner-div'>
+                          <Form.Field className='add-comment-text-div'>
+                            <TextArea rows={1} class='add-comment-input-text' placeholder='Add a comment...' style={{border: 0}}/>
                           </Form.Field>
-                          <span>
-                            <Button>POST</Button>
-                          </span>
+                          <Form.Field>
+                            <Button class='feed-elem-add-comment-btn' disabled={true} style={{background: 'none', color: 'blue'}}>POST</Button>
+                          </Form.Field>
                         </Form.Group>
                       </Form>
                     </Card>

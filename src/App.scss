@@ -603,13 +603,40 @@ table {
         }
         
       }
+      
     }
     .feed-image-like-count{
       font-size: 1.05rem;
       font-weight: 600;
       color: rgba(0,0,0,.85)
     }
+    .feed-image-elem-date{
+      margin: 0.25rem 0;
+    }
+    .add-comment-form{
+      border-top: 1px solid #efefef;
+      padding-top: 1rem;
+      width: 100%;
+      .add-comment-form-inner-div{
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+        justify-content: space-between;
+        .add-comment-text-div{
+          align-self: stretch;
+          
+        }
+        
+      }
+      
+    }
+    .feed-elem-add-comment-btn{
+      background-color: transparent;
+      color: blue;
+    }
+    
   }
+  
   .feed-suggestions-div {
   }
 }
