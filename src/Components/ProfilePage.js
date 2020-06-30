@@ -1,7 +1,7 @@
 import React from 'react'
 import GlobalFonts from './../fonts/fonts'
 import PageHeaderCustom from './PageHeaderCustom'
-
+import HeaderUl from './common/HeaderUl'
 import { Icon, Button, Label } from 'semantic-ui-react'
 class ProfilePage extends React.Component {
   render () {
@@ -67,20 +67,7 @@ class ProfilePage extends React.Component {
                 </div>
               </div>
             </div>
-            <ul>
-              <li>
-                <i aria-hidden='true' className='home large icon'></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='compass large icon'></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='camera retro large icon'></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='user circle large icon'></i>
-              </li>
-            </ul>
+           <HeaderUl/>
           </div>
         </div>
 

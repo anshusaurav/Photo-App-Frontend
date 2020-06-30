@@ -236,6 +236,9 @@ table {
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 1rem;
       justify-content: space-evenly;
+      .active-nav-link{
+        color: #000000de;
+      }
     }
   }
 }
@@ -517,7 +520,7 @@ table {
 .upload-form-container {
   // height: 100vh;
   padding-top: 30px;
-  height: calc(100vh - 54px);
+  height: 100vh;
   padding-bottom: 44px;
   .upload-icon-div {
     margin-bottom: 1rem;

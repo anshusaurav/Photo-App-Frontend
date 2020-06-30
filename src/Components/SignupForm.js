@@ -131,7 +131,7 @@ class SignupForm extends React.Component {
                   placeholder='Password'
                   type='password'
                   name='password'
-                  minlength='4'
+                  minLength='4'
                   defaultValue={password}
                   onChange={this.handleChange}
                   required

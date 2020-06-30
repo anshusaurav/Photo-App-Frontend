@@ -1,8 +1,10 @@
 import React from 'react'
 import GlobalFonts from './../fonts/fonts'
-import PageHeaderCustom from './PageHeaderCustom'
+import PageHeaderCustom from './PageHeaderCustom';
+import HeaderUl from './common/HeaderUl'
 import { Card, Icon, Image, Form, TextArea, Button } from 'semantic-ui-react'
-
+import {Link, NavLink} from 'react-router-dom'
+import HeaderSubHeader from 'semantic-ui-react/dist/commonjs/elements/Header/HeaderSubheader'
 class HomePage extends React.Component {
   render () {
     var arr = [
@@ -41,12 +43,29 @@ class HomePage extends React.Component {
       'https://images.pexels.com/photos/3636074/pexels-photo-3636074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-    ];
-    var suggestions = [{image:'https://react.semantic-ui.com/images/avatar/small/veronika.jpg',name:'veronicsossi'},
-    {image:'https://react.semantic-ui.com/images/avatar/small/lindsay.png',name:'lindsay'},
-    {image:'https://react.semantic-ui.com/images/avatar/small/matthew.png',name:'methhew'},
-    {image:'https://react.semantic-ui.com/images/avatar/small/jenny.jpg',name:'jennihess'},
-    {image:'https://react.semantic-ui.com/images/avatar/small/rachel.png',name:'rachael'}]
+    ]
+    var suggestions = [
+      {
+        image: 'https://react.semantic-ui.com/images/avatar/small/veronika.jpg',
+        name: 'veronicsossi'
+      },
+      {
+        image: 'https://react.semantic-ui.com/images/avatar/small/lindsay.png',
+        name: 'lindsay'
+      },
+      {
+        image: 'https://react.semantic-ui.com/images/avatar/small/matthew.png',
+        name: 'methhew'
+      },
+      {
+        image: 'https://react.semantic-ui.com/images/avatar/small/jenny.jpg',
+        name: 'jennihess'
+      },
+      {
+        image: 'https://react.semantic-ui.com/images/avatar/small/rachel.png',
+        name: 'rachael'
+      }
+    ]
     return (
       <div className='full-container'>
         <div className='header-nav'>
@@ -70,26 +89,7 @@ class HomePage extends React.Component {
                 </div>
               </div>
             </div>
-            <ul>
-              <li>
-                <i aria-hidden='true' className='home large icon'></i>
-              </li>
-              <li>
-                <i
-                  aria-hidden='true'
-                  className='compass outline large icon'
-                ></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='camera retro large icon'></i>
-              </li>
-              <li>
-                <i
-                  aria-hidden='true'
-                  className='user circle outline large icon'
-                ></i>
-              </li>
-            </ul>
+            <HeaderUl/>
           </div>
         </div>
         <div>
@@ -222,32 +222,27 @@ class HomePage extends React.Component {
                         <Card.Meta>Anshu Saurabh</Card.Meta>
                       </Card.Content>
                     </Card> */}
-                    <div className='feed-profile-inner-div'>
-
-                    </div>
+                    <div className='feed-profile-inner-div'></div>
                   </div>
                   <div className='feed-sugg-user-div'>
                     <h4>Suggestions for you</h4>
                   </div>
                   <div className='feed-suggestion-profile-div'>
                     {suggestions.map(elem => {
-
                       return (
                         <div className='feed-suggestion-profile-inner-div'>
-                      <div className='feed-sugg-profile-user'>
-                        <div className='feed-sugg-profile-img-div'>
-                          <img src={elem.image}></img>
+                          <div className='feed-sugg-profile-user'>
+                            <div className='feed-sugg-profile-img-div'>
+                              <img src={elem.image}></img>
+                            </div>
+                            <p>{elem.name}</p>
+                          </div>
+                          <div>
+                            <Button color='blue'>Follow</Button>
+                          </div>
                         </div>
-                        <p>{elem.name}</p>
-                      </div>
-                      <div>
-                        <Button color='blue'>Follow</Button>
-                      </div>
-                    </div>
                       )
-                    })
-                    
-                    }
+                    })}
                   </div>
                 </div>
               </div>

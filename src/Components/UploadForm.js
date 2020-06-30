@@ -4,6 +4,7 @@ import PageHeaderCustom from './PageHeaderCustom'
 import { Form, Button, Image, Transition, Progress } from 'semantic-ui-react'
 import imageCompression from 'browser-image-compression'
 import axios from 'axios'
+import HeaderUl from './common/HeaderUl'
 class UploadForm extends React.Component {
   constructor (props) {
     super(props)
@@ -126,20 +127,7 @@ class UploadForm extends React.Component {
                 </div>
               </div>
             </div>
-            <ul>
-              <li>
-                <i aria-hidden='true' className='home large icon'></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='compass large icon'></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='camera retro large icon'></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='user circle large icon'></i>
-              </li>
-            </ul>
+            <HeaderUl/>
           </div>
         </div>
         <div className='container upload-form-container'>

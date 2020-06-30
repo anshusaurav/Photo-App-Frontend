@@ -20,8 +20,10 @@ class LoginForm extends React.Component {
       password: '',
       isSubmitable: false
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
+    this.checkValidUser = this.checkValidUser.bind(this);
     this.contextRef = createRef()
   }
 
@@ -50,7 +52,11 @@ class LoginForm extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
       })
-      let data = await response.json()
+      let data = await response.json();
+      console.log(data);
+      if(!data.errors){
+        this.props.history.push('/');
+      }
       console.log(data)
     } catch (error) {
       console.error('Error:', error)
@@ -72,9 +78,9 @@ class LoginForm extends React.Component {
   }
 
   render () {
-    const {email, password} = this.state;
+    const { email, password } = this.state
     return (
-      <div class='form-container'>
+      <div className='form-container'>
         <Grid
           textAlign='center'
           style={{ height: '100vh' }}
@@ -85,7 +91,7 @@ class LoginForm extends React.Component {
             <FormHeaderCustom>Instagram</FormHeaderCustom>
             <Form size='large' onSubmit={this.handleSubmit}>
               <Segment>
-              <Form.Input
+                <Form.Input
                   fluid
                   placeholder='E-mail address'
                   name='email'
@@ -93,31 +99,37 @@ class LoginForm extends React.Component {
                   onChange={this.handleChange}
                   required
                 />
-                 <Form.Input
+                <Form.Input
                   fluid
                   placeholder='Password'
                   type='password'
                   name='password'
-                  minlength='4'
+                  minLength='4'
                   defaultValue={password}
                   onChange={this.handleChange}
                   required
                 />
 
-                <Button color='blue' fluid size='large'>
+                <Button
+                  color='blue'
+                  fluid
+                  size='large'
+                  onClick={this.handleSubmit}
+                  disabled={!this.state.isSubmitable}
+                >
                   Log in
                 </Button>
               </Segment>
             </Form>
             <Divider horizontal>Or</Divider>
             <div className='login-facebook-btn-div'>
-              <Button color='white'>
+              <Button >
                 <Icon name='facebook square' color='blue'></Icon>Log in with
                 Facebook
               </Button>
             </div>
             <div className='forgot-password-btn-div'>
-              <Button className='forgot-password-btn' color='white'>
+              <Button className='forgot-password-btn'>
                 Forgot Password?
               </Button>
             </div>

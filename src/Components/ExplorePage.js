@@ -1,17 +1,10 @@
 import React from 'react'
 import GlobalFonts from './../fonts/fonts'
 import PageHeaderCustom from './PageHeaderCustom'
+import HeaderUl from './common/HeaderUl'
 // import { Icon } from 'semantic-ui-react'
 class ExplorePage extends React.Component {
-  //   state = { name: '', email: '', username: '', fullname: '', password:'' }
 
-  //   handleChange = (e, { name, value }) => this.setState({ [name]: value })
-
-  //   handleSubmit = () => {
-  //     const { name, email } = this.state;
-
-  //     this.setState({ submittedName: name, submittedEmail: email })
-  //   }
 
   render () {
     var arr = [
@@ -74,20 +67,7 @@ class ExplorePage extends React.Component {
                 </div>
               </div>
             </div>
-            <ul>
-              <li>
-                <i aria-hidden='true' className='home large icon'></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='compass large icon'></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='camera retro large icon'></i>
-              </li>
-              <li>
-                <i aria-hidden='true' className='user circle large icon'></i>
-              </li>
-            </ul>
+            <HeaderUl/>
           </div>
         </div>
         <div>

@@ -5,7 +5,7 @@ import SignupForm from './SignupForm';
 import ProfilePage from './ProfilePage';
 import UploadForm from './UploadForm';
 import HomePage from './HomePage'
-import {BrowserRouter as Router, Route, Switch}  from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch}  from 'react-router-dom';
 
 class Main extends React.Component{
 
@@ -22,17 +22,17 @@ class Main extends React.Component{
                     <Route path='/explore'>
                         <ExplorePage/>
                     </Route>
-                    <Router path='/profile'>
+                    <Route path='/user'>
                         <ProfilePage/>
-                    </Router>
-                    <Router path='/upload'>
+                    </Route>
+                    <Route path='/upload'>
                         <UploadForm/>
-                    </Router>
-                    <Router path='/home'>
+                    </Route>
+                    <Route path='/' exact={true}>
                         <HomePage/>
-                    </Router>
+                    </Route>
                 </Switch>
-            </Router>
+                </Router>
             )
         }
 }
