@@ -175,21 +175,53 @@ class HomePage extends React.Component {
                           2 days ago
                         </Card.Description>
                       </Card.Content>
-                      <Form className='add-comment-form'>
-                        <Form.Group className='add-comment-form-inner-div'>
-                          <Form.Field className='add-comment-text-div'>
-                            <TextArea rows={1} class='add-comment-input-text' placeholder='Add a comment...' style={{border: 0}}/>
-                          </Form.Field>
-                          <Form.Field>
-                            <Button class='feed-elem-add-comment-btn' disabled={true} style={{background: 'none', color: 'blue'}}>POST</Button>
-                          </Form.Field>
-                        </Form.Group>
-                      </Form>
+                      <div className='comment-form-outer-div'>
+                        <Form className='add-comment-form'>
+                          <TextArea
+                            rows={1}
+                            class='add-comment-input-text'
+                            placeholder='Add a comment...'
+                            style={{
+                              border: 0,
+                              overflow: 'hidden',
+                              width: '100%'
+                            }}
+                          />
+
+                          <Button
+                            class='feed-elem-add-comment-btn'
+                            disabled={true}
+                            style={{ background: 'none', color: '#0095f6' }}
+                          >
+                            POST
+                          </Button>
+                        </Form>
+                      </div>
                     </Card>
                   )
                 })}
               </div>
-              <div className='feed-suggestions-div'></div>
+              <div className='feed-suggestions-div'>
+                <div className='feed-suggestion-inner-div'>
+                  <div className='feed-profile-div'>
+                    <Card>
+                      <Card.Content>
+                        <Image
+                        className='feed-profile-picture-img'
+                          floated='right'
+                          size='mini'
+                          src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
+                        />
+                        <Card.Header>anshusaurav</Card.Header>
+                        <Card.Meta>Anshu Saurabh</Card.Meta>
+                      </Card.Content>
+                    </Card>
+                  </div>
+                  <div className='feed-sugg-user-div'>
+                    <h4>Suggestions for you</h4>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

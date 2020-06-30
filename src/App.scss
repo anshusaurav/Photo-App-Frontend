@@ -101,7 +101,7 @@ section {
   display: block;
 }
 body {
-  line-height: 1;
+  line-height: 1.5;
 }
 ol,
 ul {
@@ -613,30 +613,47 @@ table {
     .feed-image-elem-date{
       margin: 0.25rem 0;
     }
+    .comment-form-outer-div{
+      display: flex;
+      align-items: stretch;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
     .add-comment-form{
+      align-items: center;
+      display: flex;
+
       border-top: 1px solid #efefef;
       padding-top: 1rem;
       width: 100%;
-      .add-comment-form-inner-div{
-        display: grid;
-        grid-template-columns: auto auto;
-        align-items: center;
-        justify-content: space-between;
-        .add-comment-text-div{
-          align-self: stretch;
-          
-        }
+      flex-direction: row;
+      flex-grow: 1;
+      .add-comment-input-text{
+        display: flex;
+        flex-grow: 1;
         
+        
+      }
+      .add-comment-input-text::placeholder{
+        font-family: lato;
       }
       
     }
     .feed-elem-add-comment-btn{
       background-color: transparent;
-      color: blue;
+      // color: blue;
     }
     
   }
   
   .feed-suggestions-div {
+    .feed-profile-picture-img{
+      border-radius: 50%;
+    }
+    .feed-sugg-user-div{
+      h4{
+        color: rgb(38, 38, 38);
+      }
+    }
   }
 }
