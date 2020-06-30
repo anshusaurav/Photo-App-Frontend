@@ -3,18 +3,7 @@ import GlobalFonts from './../fonts/fonts'
 import PageHeaderCustom from './PageHeaderCustom'
 import { Card, Icon, Image, Form, Input, Button } from 'semantic-ui-react'
 
-// import { Icon } from 'semantic-ui-react'
 class HomePage extends React.Component {
-  //   state = { name: '', email: '', username: '', fullname: '', password:'' }
-
-  //   handleChange = (e, { name, value }) => this.setState({ [name]: value })
-
-  //   handleSubmit = () => {
-  //     const { name, email } = this.state;
-
-  //     this.setState({ submittedName: name, submittedEmail: email })
-  //   }
-
   render () {
     var arr = [
       'https://images.pexels.com/photos/3088778/pexels-photo-3088778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
@@ -81,90 +70,111 @@ class HomePage extends React.Component {
                 <i aria-hidden='true' className='home large icon'></i>
               </li>
               <li>
-                <i aria-hidden='true' className='compass large icon'></i>
+                <i
+                  aria-hidden='true'
+                  className='compass outline large icon'
+                ></i>
               </li>
               <li>
                 <i aria-hidden='true' className='camera retro large icon'></i>
               </li>
               <li>
-                <i aria-hidden='true' className='user circle large icon'></i>
+                <i
+                  aria-hidden='true'
+                  className='user circle outline large icon'
+                ></i>
               </li>
             </ul>
           </div>
         </div>
         <div>
           <div className='container'>
-            <div className='home-page-'></div>
-            {arr.map(img => {
-              return (
-                <Card>
-                  <Card.Content>
-                    <Image
-                      src='https://instagram.fdel27-1.fna.fbcdn.net/v/t51.2885-19/s320x320/50517569_544196982755555_8719396859195424768_n.jpg?_nc_ht=instagram.fdel27-1.fna.fbcdn.net&_nc_ohc=wJTNT5XGR9oAX8_wWx8&oh=3af2bd6593403a95bf4f6d6818ed1e63&oe=5F21F5F3'
-                      size='mini'
-                      circular
-                    />
-                    <span>anshusaurav</span>
-                    <span>
-                      {' '}
-                      <Icon name='ellipsis horizontal' />{' '}
-                    </span>
-                  </Card.Content>
-                  <Image
-                    src='https://images.pexels.com/photos/955241/pexels-photo-955241.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-                    wrapped
-                    ui={false}
-                  />
-                  <Card.Content>
-                    <Card.Header>
-                      <span>
-                        {' '}
-                        <Icon name='heart outline' />{' '}
-                      </span>
-                      <span>
-                        {' '}
-                        <Icon name='comment outline' />{' '}
-                      </span>
-                      <span>
-                        {' '}
-                        <Icon name='send outline' />{' '}
-                      </span>
-                      <span>
-                        {' '}
-                        <Icon name='bookmark outline' />{' '}
-                      </span>
-                    </Card.Header>
-                    <Card.Header>1,022 likes</Card.Header>
-                    <Card.Meta>View All 106 comments</Card.Meta>
-                    <Card.Description>
-                      <strong>Daniel </strong>
-                      Why everyone linking this pic..??
-                    </Card.Description>
-                    <Card.Description>
-                      <strong>Sunny </strong>
-                      Bela paisagem! !! Vamos segui? SDV!
-                    </Card.Description>
-                    <Card.Description>
-                      <strong>Leone </strong>
-                      is a comedian living in Nashville.
-                    </Card.Description>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <Card.Meta>2 days ago</Card.Meta>
-                  </Card.Content>
-                  <Form>
-                    <Form.Group inline>
-                      <Form.Field>
-                        <Input placeholder='(xxx)' />
-                      </Form.Field>
-                      <span>
-                        <Button>POST</Button>
-                      </span>
-                    </Form.Group>
-                  </Form>
-                </Card>
-              )
-            })}
+            <div className='home-page-div'>
+              <div className='feed-images-div'>
+                {arr.map(img => {
+                  return (
+                    <Card className='feed-image-card'>
+                      <Card.Content className='feed-image-author-content'>
+                        <div className='feed-image-author-profile'>
+                          <Image
+                            className='feed-image-author-image'
+                            src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
+                            size='mini'
+                            circular
+                          />
+                          <span className='feed-image-author-username'>
+                            anshusaurav
+                          </span>
+                        </div>
+                        <span>
+                          {' '}
+                          <Icon name='ellipsis horizontal' />{' '}
+                        </span>
+                      </Card.Content>
+                      <Image
+                        className='feed-image-elem'
+                        src={img}
+                        wrapped
+                        ui={true}
+                      />
+                      <Card.Content>
+                        <Card.Description className='feed-image-inter-content'>
+                          <div className='feed-image-action-div'>
+                            <span>
+                              {' '}
+                              <Icon className='action-elem' name='heart outline large' />{' '}
+                            </span>
+                            <span>
+                              {' '}
+                              <Icon className='action-elem' name='comment outline large' />{' '}
+                            </span>
+                            <span>
+                              {' '}
+                              <Icon className='action-elem' name='send outline large' />{' '}
+                            </span>
+                          </div>
+
+                          <div>
+                          <span>
+                            {' '}
+                            <Icon className='action-elem' name='bookmark outline large' />{' '}
+                          </span>
+                          </div>
+                        </Card.Description>
+                        <Card.Description> <p className='feed-image-like-count'>1,022 likes</p></Card.Description>
+                        <Card.Meta>View All 106 comments</Card.Meta>
+                        <Card.Description>
+                          <strong>Daniel </strong>
+                          Why everyone linking this pic..??
+                        </Card.Description>
+                        <Card.Description>
+                          <strong>Sunny </strong>
+                          Bela paisagem! !! Vamos segui? SDV!
+                        </Card.Description>
+                        <Card.Description>
+                          <strong>Leone </strong>
+                          is a comedian living in Nashville.
+                        </Card.Description>
+                      </Card.Content>
+                      <Card.Content>
+                        <Card.Meta>2 days ago</Card.Meta>
+                      </Card.Content>
+                      <Form>
+                        <Form.Group inline>
+                          <Form.Field>
+                            <Input placeholder='(xxx)' />
+                          </Form.Field>
+                          <span>
+                            <Button>POST</Button>
+                          </span>
+                        </Form.Group>
+                      </Form>
+                    </Card>
+                  )
+                })}
+              </div>
+              <div className='feed-suggestions-div'></div>
+            </div>
           </div>
         </div>
       </div>

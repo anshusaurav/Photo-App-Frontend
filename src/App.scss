@@ -401,7 +401,7 @@ table {
         .first-p {
           margin-left: 0;
         }
-        .profile-fullname{
+        .profile-fullname {
           font-size: 1.2rem;
           font-weight: 600;
         }
@@ -541,7 +541,6 @@ table {
     display: grid;
     justify-content: center;
     align-items: center;
-    // background-color:olivedrab;
 
     input {
       align-self: center;
@@ -551,11 +550,66 @@ table {
 
 //Upload form CSS
 
-
 //homepage cSs starts
 
-.home-page-div{
+.home-page-div {
+  margin-top: 30px;
   display: grid;
-  grid-template-columns: 1fr;
-  width: 100%;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 25px;
+  .feed-images-div {
+    .feed-image-card {
+      width: 100%;
+      .feed-image-author-content {
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .feed-image-author-profile {
+        display: grid;
+        align-items: center;
+        grid-template-columns: auto auto;
+        grid-gap: 1rem;
+        .feed-image-author-image {
+          border-radius: 50%;
+        }
+        .feed-image-author-username {
+          font-size: 1.1rem;
+          font-weight: 600;
+        }
+      }
+
+      .feed-image-elem {
+        border-top: 1px solid #efefef;
+        background: transparent;
+        padding-top: 1rem;
+        object-fit: cover;
+      }
+
+      .feed-image-inter-content{
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        .feed-image-action-div{
+          display: grid;
+          grid-template-columns: repeat(3,1fr);
+          grid-gap: 0.75rem;
+        }
+        .action-elem{
+          color: rgba(0,0,0,.85)
+        }
+        
+      }
+    }
+    .feed-image-like-count{
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: rgba(0,0,0,.85)
+    }
+  }
+  .feed-suggestions-div {
+  }
 }
