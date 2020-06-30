@@ -42,9 +42,10 @@ class ExplorePage extends React.Component {
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
     ]
+    const {toggleLoggedIn} = this.props;
     return (
       <div className='full-container'>
-        <HeaderNav/>
+        <HeaderNav toggleLoggedIn={toggleLoggedIn}/>
         <div>
           <div className='explore-img-div container'>
             {arr.map(img => {

@@ -5,13 +5,8 @@ import SignupForm from './SignupForm'
 import ProfilePage from './ProfilePage'
 import UploadForm from './UploadForm'
 import HomePage from './HomePage'
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom'
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Redirect } from 'react-router'
 class Main extends React.Component {
   constructor (props) {
     super(props)
@@ -23,9 +18,12 @@ class Main extends React.Component {
   toggleLoggedIn () {
     this.setState({ isLoggedIn: !this.state.isLoggedIn })
   }
-  componentDidMount(){
-      if(localStorage.getItem('jwttoken') && localStorage.getItem('loggedInUser'))
-        this.setState({isLoggedIn: true})
+  componentDidMount () {
+    if (
+      localStorage.getItem('jwttoken') &&
+      localStorage.getItem('loggedInUser')
+    )
+      this.setState({ isLoggedIn: true })
   }
   render () {
     const { isLoggedIn } = this.state
@@ -36,66 +34,42 @@ class Main extends React.Component {
             {!isLoggedIn ? (
               <LoginForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
-              <Redirect
-                to={{
-                  pathname: '/'
-                }}
-              />
+              <Redirect to='/' />
             )}
           </Route>
           <Route path='/signup'>
             {!isLoggedIn ? (
               <SignupForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
-              <Redirect
-                to={{
-                  pathname: '/'
-                }}
-              />
+              <Redirect to='/' />
             )}
           </Route>
           <Route path='/explore'>
             {isLoggedIn ? (
               <ExplorePage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
-              <Redirect
-                to={{
-                  pathname: '/login'
-                }}
-              />
+              <Redirect to='/login' />
             )}
           </Route>
           <Route path='/user'>
             {isLoggedIn ? (
               <ProfilePage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
-              <Redirect
-                to={{
-                  pathname: '/login'
-                }}
-              />
+              <Redirect to='/login'/>
             )}
           </Route>
           <Route path='/upload'>
             {isLoggedIn ? (
               <UploadForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
-              <Redirect
-                to={{
-                  pathname: '/login'
-                }}
-              />
+              <Redirect to='/login' />
             )}
           </Route>
           <Route path='/' exact={true}>
             {isLoggedIn ? (
               <HomePage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
-              <Redirect
-                to={{
-                  pathname: '/login'
-                }}
-              />
+              <Redirect to='/login' />
             )}
           </Route>
         </Switch>

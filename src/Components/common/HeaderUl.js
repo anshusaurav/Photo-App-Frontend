@@ -7,8 +7,9 @@ class HeaderUl extends React.Component {
     this.clickHandler = this.clickHandler.bind(this);
   }
   clickHandler(event){
-    const { history} = this.props;
     event.preventDefault();
+    const { history} = this.props;
+    
     this.props.toggleLoggedIn();
     localStorage.removeItem('jwttoken');
     localStorage.removeItem('loggedInUser');

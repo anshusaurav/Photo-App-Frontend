@@ -78,17 +78,18 @@ class UploadForm extends React.Component {
     const url = 'http://localhost:4000/api/p/'
     const formData = new FormData()
     const { filename, description, location, tagList } = this.state
+    const {jwttoken} = localStorage;
     formData.append('description', description)
     formData.append('location', location)
     formData.append('tags', JSON.stringify(tagList))
     formData.append('filename', filename)
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1])
-    }
+    };
     const headers = {
       'Content-Type': 'multipart/form-data',
       Authorization:
-        'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjg2MGY0M2ViNTBhODAzMmEzYzM0MCIsInVzZXJuYW1lIjoic2V0dXNhdXJhYmgiLCJleHAiOjE1OTg1OTgzODgsImlhdCI6MTU5MzQxNDM4OH0.eD1BeSYNFMs4qC6yRewczB_hOFipMKwkUtoQM55yscc'
+        `Token ${jwttoken}`
     }
 
     axios
@@ -107,10 +108,11 @@ class UploadForm extends React.Component {
   }
 
   render () {
-    const { filename, description, location, tagList, visible } = this.state
+    const { filename, description, location, tagList, visible } = this.state;
+    const {toggleLoggedIn} = this.props;
     return (
-      <div className='full-container '>
-        <HeaderNav/>
+      <div className='full-container'>
+        <HeaderNav toggleLoggedIn={toggleLoggedIn}/>
         <div className='container upload-form-container'>
           <div className='upload-form-inner-div'>
             <Form onSubmit={this.onSubmitHandler}>
