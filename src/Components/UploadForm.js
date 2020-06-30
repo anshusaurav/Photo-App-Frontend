@@ -1,7 +1,7 @@
 import React, { createRef } from 'react'
 import GlobalFonts from './../fonts/fonts'
 import PageHeaderCustom from './PageHeaderCustom'
-import { Form, Button, Image, Transition } from 'semantic-ui-react'
+import { Form, Button, Image, Transition, Progress } from 'semantic-ui-react'
 import imageCompression from 'browser-image-compression'
 import axios from 'axios'
 class UploadForm extends React.Component {
@@ -14,6 +14,7 @@ class UploadForm extends React.Component {
       description: '',
       tagList: '',
       location: '',
+      loaded: 0,
       visible: true
       // isSubmitable: false
     }
@@ -38,9 +39,9 @@ class UploadForm extends React.Component {
       // console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
       let reader = new FileReader()
       let file = compressedFile
-      
-      this.setState(prevState => ({ visible: !prevState.visible }));
-      this.setState({ imagePreviewUrl: '' });
+
+      this.setState(prevState => ({ visible: !prevState.visible }))
+      this.setState({ imagePreviewUrl: '' })
       reader.onloadend = () => {
         this.setState(
           {
@@ -57,7 +58,6 @@ class UploadForm extends React.Component {
     } catch (error) {
       console.log(error)
     }
-
   }
   onChangeHandler (event) {
     switch (event.target.name) {
@@ -91,9 +91,16 @@ class UploadForm extends React.Component {
       Authorization:
         'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZjg2MGY0M2ViNTBhODAzMmEzYzM0MCIsInVzZXJuYW1lIjoic2V0dXNhdXJhYmgiLCJleHAiOjE1OTg1OTgzODgsImlhdCI6MTU5MzQxNDM4OH0.eD1BeSYNFMs4qC6yRewczB_hOFipMKwkUtoQM55yscc'
     }
+
     axios
       .post(url, formData, {
-        headers: headers
+        headers: headers,
+
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          })
+        }
       })
       .then(res => {
         console.log(res.statusText)
@@ -159,6 +166,11 @@ class UploadForm extends React.Component {
                     </Transition>
                   </div>
                 </div>
+                {Math.floor(this.state.loaded) !== 0?
+                <div>
+                  <Progress percent={Math.floor(this.state.loaded)} active={Math.floor(this.state.loaded) !==100} inverted color='blue' progress></Progress>
+                </div>:''
+                }
                 <div className='ui horizontal divider'>Image Preview</div>
 
                 <div className='file-select-input-div'>
