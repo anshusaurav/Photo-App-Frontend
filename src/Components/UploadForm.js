@@ -1,10 +1,8 @@
 import React, { createRef } from 'react'
-import GlobalFonts from './../fonts/fonts'
-import PageHeaderCustom from './PageHeaderCustom'
 import { Form, Button, Image, Transition, Progress } from 'semantic-ui-react'
 import imageCompression from 'browser-image-compression'
 import axios from 'axios'
-import HeaderUl from './common/HeaderUl'
+import HeaderNav from './common/HeaderNav'
 class UploadForm extends React.Component {
   constructor (props) {
     super(props)
@@ -112,24 +110,7 @@ class UploadForm extends React.Component {
     const { filename, description, location, tagList, visible } = this.state
     return (
       <div className='full-container '>
-        <div className='header-nav'>
-          <div className='header-inner-div'>
-            <GlobalFonts />
-            <PageHeaderCustom>Instagram</PageHeaderCustom>
-            <div className='ui search'>
-              <div className='ui icon input'>
-                <input type='text' />
-                <i aria-hidden='true' className='search icon'></i>
-              </div>
-              <div className='results transition'>
-                <div className='message empty'>
-                  <div className='header'>No results found.</div>
-                </div>
-              </div>
-            </div>
-            <HeaderUl/>
-          </div>
-        </div>
+        <HeaderNav/>
         <div className='container upload-form-container'>
           <div className='upload-form-inner-div'>
             <Form onSubmit={this.onSubmitHandler}>

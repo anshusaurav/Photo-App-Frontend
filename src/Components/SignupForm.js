@@ -14,7 +14,6 @@ import {
 import { withRouter, Link } from 'react-router-dom'
 
 class SignupForm extends React.Component {
-  
   constructor (props) {
     super(props)
     this.state = {
@@ -22,7 +21,8 @@ class SignupForm extends React.Component {
       username: '',
       fullname: '',
       password: '',
-      isSubmitable: false
+      isSubmitable: false,
+      errorMsgs: null
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -42,10 +42,10 @@ class SignupForm extends React.Component {
   }
 
   async submitUser () {
-    console.log(this.contextRef.current)
+    // console.log(this.contextRef.current);
     const { email, password, username, fullname } = this.state
     const user = { user: { email, password, username, fullname } }
-    const url = 'http://localhost:4000/api/users/';
+    const url = 'http://localhost:4000/api/users/'
 
     try {
       const response = await fetch(url, {
@@ -53,14 +53,27 @@ class SignupForm extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
       })
-      let data = await response.json()
+      let data = await response.json();
+      if(!data.errors) {
+        this.props.history.push('/login');
+      }
+      else{
+        const errors = []
+        for (const [key, value] of Object.entries(data.errors)) {
+          errors.push(`${key} ${value}`)
+        }
+        this.setState({ errorMsgs: errors })
+      }
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Error:', error);
+      const errors = []
+      errors.push(error.toString());
+      this.setState({ errorMsgs: errors })
     }
   }
   checkValidUser () {
-    const { email, fullname, username, password } = this.state;
-    let data = [];
+    const { email, fullname, username, password } = this.state
+    let data = []
     const found = email.match('/@/')
     let res = true
     if (email.length < 5 || email.indexOf('@') <= 0) {
@@ -80,7 +93,7 @@ class SignupForm extends React.Component {
     return { result: false, data }
   }
   render () {
-    const { email, fullname, username, password } = this.state
+    const { email, fullname, username, password,errorMsgs } = this.state
     return (
       <div className='form-container'>
         <Grid
@@ -100,6 +113,12 @@ class SignupForm extends React.Component {
               </Button>
             </div>
             <Divider horizontal>Or</Divider>
+            {errorMsgs &&
+              errorMsgs.map((msg, index) => (
+                <Message key={index} color='red'>
+                  {msg}
+                </Message>
+              ))}
             <Form size='large' onSubmit={this.handleSubmit}>
               <Segment>
                 <Form.Input
@@ -153,7 +172,7 @@ class SignupForm extends React.Component {
               By Signing up, you agree to our <span>Terms</span>,{' '}
               <span>Data Policy</span> and <span>Cookies Policy</span>
             </p>
-            <Message >
+            <Message>
               Have an account?{' '}
               <Link to='login'>
                 <Button ref={this.contextRef}>Log in</Button>

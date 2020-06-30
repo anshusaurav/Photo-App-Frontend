@@ -8,7 +8,12 @@ import HomePage from './HomePage'
 import { BrowserRouter as Router, Route, Switch}  from 'react-router-dom';
 
 class Main extends React.Component{
-
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoggedIn: false
+        }
+    }
         render(){
             return (
             <Router>

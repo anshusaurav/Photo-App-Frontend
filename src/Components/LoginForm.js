@@ -18,12 +18,11 @@ class LoginForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      isSubmitable: false
+      isSubmitable: false,
+      errorMsgs: null
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.submitLogin = this.submitLogin.bind(this);
-    this.checkValidUser = this.checkValidUser.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.contextRef = createRef()
   }
 
@@ -41,7 +40,6 @@ class LoginForm extends React.Component {
   }
 
   async submitLogin () {
-    console.log(this.contextRef.current)
     const { email, password } = this.state
     const user = { user: { email, password } }
     const url = 'http://localhost:4000/api/users/login'
@@ -52,14 +50,24 @@ class LoginForm extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
       })
-      let data = await response.json();
-      console.log(data);
-      if(!data.errors){
-        this.props.history.push('/');
-      }
+      let data = await response.json()
       console.log(data)
+      if (!data.errors) {
+        localStorage.setItem('jwttoken', data.user.token)
+        this.props.history.push('/')
+      } else {
+        const errors = []
+        for (const [key, value] of Object.entries(data.errors)) {
+          errors.push(`${key} ${value}`)
+        }
+        this.setState({ errorMsgs: errors })
+      }
+      // console.log(data)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Error:', error);
+      const errors = []
+      errors.push(error.toString());
+      this.setState({ errorMsgs: errors })
     }
   }
   checkValidUser () {
@@ -78,7 +86,7 @@ class LoginForm extends React.Component {
   }
 
   render () {
-    const { email, password } = this.state
+    const { email, password, errorMsgs } = this.state
     return (
       <div className='form-container'>
         <Grid
@@ -121,17 +129,21 @@ class LoginForm extends React.Component {
                 </Button>
               </Segment>
             </Form>
+            {errorMsgs &&
+              errorMsgs.map((msg, index) => (
+                <Message key={index} color='red'>
+                  {msg}
+                </Message>
+              ))}
             <Divider horizontal>Or</Divider>
             <div className='login-facebook-btn-div'>
-              <Button >
+              <Button>
                 <Icon name='facebook square' color='blue'></Icon>Log in with
                 Facebook
               </Button>
             </div>
             <div className='forgot-password-btn-div'>
-              <Button className='forgot-password-btn'>
-                Forgot Password?
-              </Button>
+              <Button className='forgot-password-btn'>Forgot Password?</Button>
             </div>
             <Message>
               Don't have an account?{' '}

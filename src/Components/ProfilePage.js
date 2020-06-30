@@ -1,8 +1,6 @@
 import React from 'react'
-import GlobalFonts from './../fonts/fonts'
-import PageHeaderCustom from './PageHeaderCustom'
-import HeaderUl from './common/HeaderUl'
-import { Icon, Button, Label } from 'semantic-ui-react'
+import HeaderNav from './common/HeaderNav'
+import {Button } from 'semantic-ui-react'
 class ProfilePage extends React.Component {
   render () {
     var profilePicture =
@@ -46,30 +44,7 @@ class ProfilePage extends React.Component {
     ]
     return (
       <div className='full-container'>
-        <div className='header-nav'>
-          <div className='header-inner-div'>
-            <GlobalFonts />
-            <PageHeaderCustom>Instagram</PageHeaderCustom>
-            <div fallbackElement='[object Object]' class='ui search'>
-              <div className='ui icon input'>
-                <input
-                  type='text'
-                  value=''
-                  tabindex='0'
-                  className='prompt'
-                  autocomplete='off'
-                />
-                <i aria-hidden='true' class='search icon'></i>
-              </div>
-              <div className='results transition'>
-                <div className='message empty'>
-                  <div className='header'>No results found.</div>
-                </div>
-              </div>
-            </div>
-           <HeaderUl/>
-          </div>
-        </div>
+        <HeaderNav/>
 
         <div className='profile-user-details container'>
           <div className='profile-user-inner-div'>
