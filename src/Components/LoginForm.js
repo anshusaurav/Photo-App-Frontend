@@ -38,9 +38,10 @@ class LoginForm extends React.Component {
     event.preventDefault()
     this.submitLogin()
   }
-
+  
   async submitLogin () {
-    const { email, password } = this.state
+    const { email, password } = this.state;
+    const {history, toggleLoggedIn} = this.props;
     const user = { user: { email, password } }
     const url = 'http://localhost:4000/api/users/login'
 
@@ -53,14 +54,17 @@ class LoginForm extends React.Component {
       let data = await response.json()
       console.log(data)
       if (!data.errors) {
-        localStorage.setItem('jwttoken', data.user.token)
-        this.props.history.push('/')
+        localStorage.setItem('jwttoken', data.user.token);
+        localStorage.setItem('loggedInUser',JSON.stringify(data.user));
+        toggleLoggedIn();
+        history.push('/');
       } else {
         const errors = []
         for (const [key, value] of Object.entries(data.errors)) {
           errors.push(`${key} ${value}`)
         }
-        this.setState({ errorMsgs: errors })
+        this.setState({ errorMsgs: errors });
+
       }
       // console.log(data)
     } catch (error) {

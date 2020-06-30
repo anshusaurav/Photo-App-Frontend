@@ -63,9 +63,11 @@ class HomePage extends React.Component {
         name: 'rachael'
       }
     ]
+    const {toggleLoggedIn} = this.props;
     return (
+      
       <div className='full-container'>
-        <HeaderNav/>
+        <HeaderNav toggleLoggedIn={toggleLoggedIn}/>
         <div>
           <div className='container'>
             <div className='home-page-div'>

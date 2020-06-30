@@ -3,7 +3,13 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import GlobalFonts from './../../fonts/fonts'
 import PageHeaderCustom from './../PageHeaderCustom';
-function HeaderNav(){
+class HeaderNav extends React.Component {
+  constructor (props) {
+    super(props);
+    
+  }
+  render () {
+    const {toggleLoggedIn} = this.props;
     return (
         <div className='header-nav'>
           <div className='header-inner-div'>
@@ -28,10 +34,11 @@ function HeaderNav(){
                 </div>
               </div>
             </div>
-            <HeaderUl/>
+            <HeaderUl toggleLoggedIn={toggleLoggedIn}/>
           </div>
         </div>
     )
+  }
 }
 
 export default HeaderNav

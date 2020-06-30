@@ -233,11 +233,25 @@ table {
     }
     ul {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       grid-gap: 1rem;
       justify-content: space-evenly;
+      li {
+        a{
+          color: #827f7fde;
+        }
+      }
       .active-nav-link{
         color: #000000de;
+      }
+      .header-logout-btn-div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .button{
+          padding: 0;
+          background-color: transparent;
+        }
       }
     }
   }
