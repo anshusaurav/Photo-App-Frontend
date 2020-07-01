@@ -25,9 +25,21 @@ class PopUpImageElem extends React.Component {
         name: 'rachael'
       }
     ]
-    const {commentsCount, favoritesCount, filename} = this.props.img;
+    const {commentsCount, favoritesCount, filename, author, createdAt, description} = this.props.img;
+    const {username, fullname, image, following} = author;
     return (
       
+//       author: {username: "anshusaurav", fullname: "anshu saurabh", image: "https://static.productionready.io/images/smiley-cyrus.jpg", following: false}
+// commentsCount: 0
+// createdAt: "2020-07-01T13:01:35.232Z"
+// description: "Grass Fields"
+// favorited: false
+// favoritesCount: 0
+// filename: "46165cc9-095e-43d3-87f7-9138e48fdf4a_blob"
+// location: "Dharamshala"
+// slug: "46165cc9-095e-43d3-87f7-9138e48fdf4a_blob-1fwvqd"
+// tagList: ["["Mountains","Serenity"]"]
+// updatedAt: "2020-07-01T13:01:35.232Z"
       <Card
         className='popup-image-card'
         style={{
@@ -52,7 +64,7 @@ class PopUpImageElem extends React.Component {
                     circular
                   />
                   <span className='popup-image-author-username'>
-                    anshusaurav
+                    {username}
                   </span>
                 </div>
                 <span>
@@ -68,8 +80,8 @@ class PopUpImageElem extends React.Component {
                     className='popup-comment-comment-user-img'
                     src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg'
                   ></Image>
-                  <strong>anshusaurav </strong>
-                  Why everyone linking this pic..??
+                  <strong>{username} </strong>
+                  {description}
                 </Card.Description>
                 <Card.Description className='popup-common-des popup-comment-elem-single'>
                   <Image
@@ -132,7 +144,7 @@ class PopUpImageElem extends React.Component {
                   <p className='popup-image-like-count'>{favoritesCount} likes</p>
                 </Card.Description>
                 <Card.Description className='popup-image-elem-date popup-common-des'>
-                  2 days ago
+                  {createdAt}
                 </Card.Description>
               </Card.Content>
               <div className='popup-comment-form-outer-div'>
