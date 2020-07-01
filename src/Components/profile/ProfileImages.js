@@ -48,15 +48,10 @@ class ProfileImages extends React.Component {
         {imagepostList &&
           imagepostList.map(imagePost => {
             return (
-              <ImageElem img={`http://localhost:4000/${imagePost.filename}`} />
+              <ImageElem img={imagePost} />
             )
           })}
-        {arr.map(img => {
-          return (
-            <ImageElem img={img}/>
-            
-          )
-        })}
+        
       </div>
     )
   }

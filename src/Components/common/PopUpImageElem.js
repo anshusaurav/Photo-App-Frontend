@@ -25,19 +25,23 @@ class PopUpImageElem extends React.Component {
         name: 'rachael'
       }
     ]
-    const img = this.props.img
+    const {commentsCount, favoritesCount, filename} = this.props.img;
     return (
+      
       <Card
         className='popup-image-card'
         style={{
           backgroundColor: 'transparent',
           minHeight: '100vh',
-          borderRadius: '1px'
+          borderRadius: '1px',
+          position:'relative'
         }}
       >
+      <span class='close-popup-span'>X</span>
         <div className='pop-up-container'>
+        
           <div className='pop-up-grid'>
-            <Image className='popup-image-elem' src={img} wrapped ui={true} />
+            <Image className='popup-image-elem' src={`http://localhost:4000/${filename}`} wrapped ui={true} />
             <div className='pop-up-des-div'>
               <Card.Content className='popup-image-author-content'>
                 <div className='popup-image-author-profile'>
@@ -86,7 +90,7 @@ class PopUpImageElem extends React.Component {
                   is a comedian living in Nashville.
                 </Card.Description>
                 <Card.Meta className='popup-common-des popup-more-comment-anchor'>
-                  View All 106 comments
+                  View All {commentsCount} comments
                 </Card.Meta>
                 <Card.Description className='popup-image-inter-content'>
                   <div className='popup-image-action-div'>
@@ -125,7 +129,7 @@ class PopUpImageElem extends React.Component {
                 </Card.Description>
                 <Card.Description className='popup-common-des'>
                   {' '}
-                  <p className='popup-image-like-count'>1,022 likes</p>
+                  <p className='popup-image-like-count'>{favoritesCount} likes</p>
                 </Card.Description>
                 <Card.Description className='popup-image-elem-date popup-common-des'>
                   2 days ago

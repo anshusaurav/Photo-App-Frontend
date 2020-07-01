@@ -4,6 +4,7 @@ import FeedImageElem from './FeedImageElem'
 import PopUpImageElem from './PopUpImageElem'
 class ImageElem extends React.Component {
   render () {
+    const {commentsCount, favoritesCount, filename} = this.props.img;
     return (
       // <style > #image-elem-popup-small:before {} </style>
       <Popup
@@ -23,14 +24,14 @@ class ImageElem extends React.Component {
           <div className='explore-item'>
             <div className='content'>
               <div className='link-img' href='#' target='_blank'>
-                <img src={this.props.img} alt=' '></img>
+                <img src={`http://localhost:4000/${filename}`} alt=' '></img>
                 <div className='content-overlay'></div>
                 <div className='content-details fadeIn-bottom'>
                   <h2 className='content-title'>
-                    <i aria-hidden='true' className='like icon'></i> 456
+                    <i aria-hidden='true' className='like icon'></i> {favoritesCount}
                   </h2>
                   <h2 className='content-title'>
-                    <i aria-hidden='true' className='comment  icon'></i> 123
+                    <i aria-hidden='true' className='comment  icon'></i> {commentsCount}
                   </h2>
                 </div>
               </div>
