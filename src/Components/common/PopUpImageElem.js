@@ -27,7 +27,7 @@ class PopUpImageElem extends React.Component {
     ]
     const img = this.props.img
     return (
-      <Card className='popup-image-card'>
+      <Card className='popup-image-card' style={{backgroundColor: 'transparent', minHeight: '100vh', borderRadius: '1px'}}>
         <div className='pop-up-container' >
         <div className='pop-up-grid'>
           <Image className='popup-image-elem' src={img} wrapped ui={true} />

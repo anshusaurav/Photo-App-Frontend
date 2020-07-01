@@ -15,7 +15,8 @@ class ImageElem extends React.Component {
           top: '0vh',
           left: '0vw',
           transform: 'none',
-          marginTop: 0
+          marginTop: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)'
         }}
         className='image-elem-popup-small'
         trigger={
