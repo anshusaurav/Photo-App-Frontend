@@ -1,59 +1,149 @@
 import React from 'react'
 import { Card, Icon, Image, Form, TextArea, Button } from 'semantic-ui-react'
-
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 class PopUpImageElem extends React.Component {
-  render () {
-    var comments = [
-      {
-        image: 'https://react.semantic-ui.com/images/avatar/small/veronika.jpg',
-        name: 'veronicsossi'
-      },
-      {
-        image: 'https://react.semantic-ui.com/images/avatar/small/lindsay.png',
-        name: 'lindsay'
-      },
-      {
-        image: 'https://react.semantic-ui.com/images/avatar/small/matthew.png',
-        name: 'methhew'
-      },
-      {
-        image: 'https://react.semantic-ui.com/images/avatar/small/jenny.jpg',
-        name: 'jennihess'
-      },
-      {
-        image: 'https://react.semantic-ui.com/images/avatar/small/rachel.png',
-        name: 'rachael'
+  constructor (props) {
+    super(props)
+    this.state = { isSubmitable: '', body: '', comments: null }
+    this.changeHandler = this.changeHandler.bind(this)
+    this.submitHandler = this.submitHandler.bind(this)
+
+    // Add locale-specific relative date/time formatting rules.
+  }
+
+  changeHandler (event, { name, value }) {
+    if (event.target.name === 'body') {
+      this.setState({ body: event.target.value }, function () {
+        if (this.checkValidComment().result) {
+          this.setState({ isSubmitable: true })
+        } else {
+          this.setState({ isSubmitable: false })
+        }
+      })
+    }
+  }
+  submitHandler (event) {
+    event.preventDefault()
+    this.submitComment()
+  }
+  async submitComment () {
+    const { slug } = this.props.img
+    const { body } = this.state
+    const { jwttoken } = localStorage
+    const comment = { comment: { body } }
+    const url = `http://localhost:4000/api/p/${slug}/comments`
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${jwttoken}`
+        },
+        body: JSON.stringify(comment)
+      })
+      let data = await response.json()
+      if (!data.errors) {
+        // console.log('Posted successfully')
+        this.setState({ body: '' })
+      } else {
+        const errors = []
+        for (const [key, value] of Object.entries(data.errors)) {
+          errors.push(`${key} ${value}`)
+        }
+        this.setState({ errorMsgs: errors })
       }
-    ]
-    const {commentsCount, favoritesCount, filename, author, createdAt, description} = this.props.img;
-    const {username, fullname, image, following} = author;
+    } catch (error) {
+      console.error('Error:', error)
+      const errors = []
+      errors.push(error.toString())
+      this.setState({ errorMsgs: errors })
+    }
+  }
+  checkValidComment () {
+    const { body } = this.state
+    let res = true,
+      data = []
+    if (body.trim().length === 0) {
+      res = false
+      data.push('email')
+    }
+    if (res) return { result: true, data }
+
+    return { result: false, data }
+  }
+  async saveComments () {
+    const { slug } = this.props.img
+    const { jwttoken } = localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
+    // console.log(loggedInUser.username)
+    const url = `http://localhost:4000/api/p/${slug}/comments`
+    // const { jwttoken } = localStorage
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/JSON',
+          Authorization: `Token ${jwttoken}`
+        }
+      })
+      const data = await response.json()
+      console.log('comments', data)
+      if (!data.errors) {
+        this.setState({ comments: data.comments }, () => {
+          let comments = [...this.state.comments]
+          comments.forEach(comment => {
+            TimeAgo.addLocale(en)
+            const timeAgo = new TimeAgo('en-US')
+            comment.createdAt = timeAgo.format(new Date(comment.createdAt))
+          })
+          this.setState({ comments })
+        })
+      }
+    } catch (error) {
+      console.error('Error: ' + error)
+    }
+  }
+  componentDidMount () {
+    this.saveComments()
+  }
+  render () {
+    
+    let {
+      commentsCount,
+      favoritesCount,
+      filename,
+      author,
+      createdAt,
+      description
+    } = this.props.img
+    //{new Date(updatedAt).toDateString()}
+    TimeAgo.addLocale(en)
+    const timeAgo = new TimeAgo('en-US')
+    createdAt = timeAgo.format(new Date(createdAt))
+
+    const { username, fullname, image, following } = author
+    const { isSubmitable, body, comments } = this.state
     return (
-      
-//       author: {username: "anshusaurav", fullname: "anshu saurabh", image: "https://static.productionready.io/images/smiley-cyrus.jpg", following: false}
-// commentsCount: 0
-// createdAt: "2020-07-01T13:01:35.232Z"
-// description: "Grass Fields"
-// favorited: false
-// favoritesCount: 0
-// filename: "46165cc9-095e-43d3-87f7-9138e48fdf4a_blob"
-// location: "Dharamshala"
-// slug: "46165cc9-095e-43d3-87f7-9138e48fdf4a_blob-1fwvqd"
-// tagList: ["["Mountains","Serenity"]"]
-// updatedAt: "2020-07-01T13:01:35.232Z"
       <Card
         className='popup-image-card'
         style={{
           backgroundColor: 'transparent',
           minHeight: '100vh',
           borderRadius: '1px',
-          position:'relative'
+          position: 'relative'
         }}
       >
-      <span class='close-popup-span'>X</span>
+        <span class='close-popup-span'>X</span>
         <div className='pop-up-container'>
-        
           <div className='pop-up-grid'>
-            <Image className='popup-image-elem' src={`http://localhost:4000/${filename}`} wrapped ui={true} />
+            <Image
+              className='popup-image-elem'
+              src={`http://localhost:4000/${filename}`}
+              wrapped
+              ui={true}
+            />
             <div className='pop-up-des-div'>
               <Card.Content className='popup-image-author-content'>
                 <div className='popup-image-author-profile'>
@@ -73,7 +163,6 @@ class PopUpImageElem extends React.Component {
                 </span>
               </Card.Content>
               <Card.Content>
-                
                 <Card.Description className='popup-common-des  popup-comment-elem-single'>
                   <Image
                     size='mini'
@@ -83,26 +172,24 @@ class PopUpImageElem extends React.Component {
                   <strong>{username} </strong>
                   {description}
                 </Card.Description>
-                <Card.Description className='popup-common-des popup-comment-elem-single'>
-                  <Image
-                    size='mini'
-                    className='popup-comment-comment-user-img'
-                    src='https://react.semantic-ui.com/images/avatar/small/matthew.png'
-                  ></Image>
-                  <strong>Sunny </strong>
-                  Bela paisagem! !! Vamos segui? SDV!
-                </Card.Description>
-                <Card.Description className='popup-common-des popup-comment-elem-single '>
-                  <Image
-                    size='mini'
-                    className='popup-comment-comment-user-img'
-                    src='https://react.semantic-ui.com/images/avatar/small/lindsay.png'
-                  ></Image>
-                  <strong>Leone </strong>
-                  is a comedian living in Nashville.
-                </Card.Description>
+                {comments &&
+                  comments.map(comment => {
+                    return (
+                      <Card.Description className='popup-common-des popup-comment-elem-single'>
+                        <Image
+                          size='mini'
+                          className='popup-comment-comment-user-img'
+                          src={comment.author.image}
+                        ></Image>
+                        <strong>{comment.author.username}</strong>
+                        {comment.body}
+                      </Card.Description>
+                    )
+                  })}
+
+                
                 <Card.Meta className='popup-common-des popup-more-comment-anchor'>
-                  View All {commentsCount} comments
+                  {commentsCount!==0?`View All ${commentsCount} comments`:`Be the first one to respond`}
                 </Card.Meta>
                 <Card.Description className='popup-image-inter-content'>
                   <div className='popup-image-action-div'>
@@ -141,30 +228,40 @@ class PopUpImageElem extends React.Component {
                 </Card.Description>
                 <Card.Description className='popup-common-des'>
                   {' '}
-                  <p className='popup-image-like-count'>{favoritesCount} likes</p>
+                  <p className='popup-image-like-count'>
+                  {favoritesCount!==0?`${favoritesCount} likes`:`Be the first one to like`}
+                    
+                  </p>
                 </Card.Description>
                 <Card.Description className='popup-image-elem-date popup-common-des'>
                   {createdAt}
                 </Card.Description>
               </Card.Content>
               <div className='popup-comment-form-outer-div'>
-                <Form className='popup-add-comment-form'>
+                <Form
+                  className='popup-add-comment-form'
+                  onSubmit={this.submitHandler}
+                >
                   <TextArea
                     rows={1}
                     class='popup-add-comment-input-text'
                     placeholder='Add a comment...'
+                    name='body'
+                    onChange={this.changeHandler}
+                    value={body}
                     style={{
                       border: 0,
                       overflow: 'hidden',
                       width: '100%',
                       resize: 'none'
                     }}
-                  />
+                  ></TextArea>
 
                   <Button
                     class='popup-elem-add-comment-btn'
-                    // disabled={true}
+                    disabled={!isSubmitable}
                     style={{ background: 'none', color: '#0095f6' }}
+                    onClick={this.submitHandler}
                   >
                     POST
                   </Button>

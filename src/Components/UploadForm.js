@@ -24,8 +24,8 @@ class UploadForm extends React.Component {
   async onImageChange (event) {
     event.preventDefault()
     const imageFile = event.target.files[0]
-    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+    console.log('originalFile instanceof Blob', imageFile instanceof Blob) // true
+    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`)
 
     const options = {
       maxSizeMB: 1,
@@ -34,8 +34,11 @@ class UploadForm extends React.Component {
     }
     try {
       const compressedFile = await imageCompression(imageFile, options)
-      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+      console.log(
+        'compressedFile instanceof Blob',
+        compressedFile instanceof Blob
+      ) // true
+      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`) // smaller than maxSizeMB
       let reader = new FileReader()
       let file = compressedFile
 
@@ -62,15 +65,15 @@ class UploadForm extends React.Component {
     switch (event.target.name) {
       case 'description':
         this.setState({ description: event.target.value })
-        break;
+        break
       case 'location':
         this.setState({ location: event.target.value })
-        break;
+        break
       case 'tags':
         const tagsArr = event.target.value.split(' ')
         const tagList = tagsArr.map(elem => elem.replace(/,+$/, ''))
-        this.setState({ tagList: tagList });
-        break;
+        this.setState({ tagList: tagList })
+        break
       default:
         console.log('Invalid target')
     }
@@ -79,18 +82,17 @@ class UploadForm extends React.Component {
     const url = 'http://localhost:4000/api/p/'
     const formData = new FormData()
     const { filename, description, location, tagList } = this.state
-    const {jwttoken} = localStorage;
+    const { jwttoken } = localStorage
     formData.append('description', description)
     formData.append('location', location)
     formData.append('tags', JSON.stringify(tagList))
     formData.append('filename', filename)
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1])
-    };
+    }
     const headers = {
       'Content-Type': 'multipart/form-data',
-      Authorization:
-        `Token ${jwttoken}`
+      Authorization: `Token ${jwttoken}`
     }
 
     axios
@@ -109,11 +111,11 @@ class UploadForm extends React.Component {
   }
 
   render () {
-    const { description, location, tagList, visible } = this.state;
-    const {toggleLoggedIn} = this.props;
+    const { description, location, tagList, visible } = this.state
+    const { toggleLoggedIn } = this.props
     return (
       <div className='full-container'>
-        <HeaderNav toggleLoggedIn={toggleLoggedIn}/>
+        <HeaderNav toggleLoggedIn={toggleLoggedIn} />
         <div className='container upload-form-container'>
           <div className='upload-form-inner-div'>
             <Form onSubmit={this.onSubmitHandler}>
@@ -138,11 +140,19 @@ class UploadForm extends React.Component {
                     </Transition>
                   </div>
                 </div>
-                {Math.floor(this.state.loaded) !== 0?
-                <div>
-                  <Progress percent={Math.floor(this.state.loaded)} active={Math.floor(this.state.loaded) !==100} inverted color='blue' progress></Progress>
-                </div>:''
-                }
+                {Math.floor(this.state.loaded) !== 0 ? (
+                  <div>
+                    <Progress
+                      percent={Math.floor(this.state.loaded)}
+                      active={Math.floor(this.state.loaded) !== 100}
+                      inverted
+                      color='blue'
+                      progress
+                    ></Progress>
+                  </div>
+                ) : (
+                  ''
+                )}
                 <div className='ui horizontal divider'>Image Preview</div>
 
                 <div className='file-select-input-div'>

@@ -24,7 +24,7 @@ class ProfilePage extends React.Component {
         }
       })
       const data = await response.json()
-      console.log('USer data', data);
+      // console.log('USer data', data);
       if (!data.errors) {
         this.setState({ profile: data.user })
       }
@@ -35,7 +35,7 @@ class ProfilePage extends React.Component {
   async savePosts () {
     const { jwttoken } = localStorage;
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-    console.log(loggedInUser.username)
+    // console.log(loggedInUser.username)
     const url = `http://localhost:4000/api/p?author=${loggedInUser.username}`;
     // const { jwttoken } = localStorage
     try {
@@ -47,7 +47,7 @@ class ProfilePage extends React.Component {
         }
       })
       const data = await response.json();
-      console.log('iamges',data);
+      // console.log('iamges',data);
       if (!data.errors) {
         this.setState({ imagepostList: data.imageposts })
       }

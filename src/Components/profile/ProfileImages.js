@@ -42,7 +42,7 @@ class ProfileImages extends React.Component {
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
     ]
     const { imagepostList } = this.props
-    console.log('IM ', imagepostList)
+    // console.log('IM ', imagepostList)
     return (
       <div className='profile-img-div'>
         {imagepostList &&
