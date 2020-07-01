@@ -34,7 +34,7 @@ class Main extends React.Component {
             {!isLoggedIn ? (
               <LoginForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
-              <Redirect to='/' />
+              <Redirect to='/'  />
             )}
           </Route>
           <Route path='/signup'>

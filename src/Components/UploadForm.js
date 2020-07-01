@@ -62,14 +62,15 @@ class UploadForm extends React.Component {
     switch (event.target.name) {
       case 'description':
         this.setState({ description: event.target.value })
-        break
+        break;
       case 'location':
         this.setState({ location: event.target.value })
-        break
+        break;
       case 'tags':
         const tagsArr = event.target.value.split(' ')
         const tagList = tagsArr.map(elem => elem.replace(/,+$/, ''))
-        this.setState({ tagList: tagList })
+        this.setState({ tagList: tagList });
+        break;
       default:
         console.log('Invalid target')
     }

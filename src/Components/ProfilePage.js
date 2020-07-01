@@ -11,10 +11,7 @@ class ProfilePage extends React.Component {
       profile: null
     }
   }
-  componentDidMount () {
-    this.saveProfile()
-    this.savePosts()
-  }
+  
   async saveProfile () {
     const url = 'http://localhost:4000/api/user'
     const { jwttoken } = localStorage
@@ -27,7 +24,7 @@ class ProfilePage extends React.Component {
         }
       })
       const data = await response.json()
-      console.log(data);
+      console.log('USer data', data);
       if (!data.errors) {
         this.setState({ profile: data.user })
       }
@@ -49,8 +46,8 @@ class ProfilePage extends React.Component {
           Authorization: `Token ${jwttoken}`
         }
       })
-      const data = await response.json()
-      console.log(data);
+      const data = await response.json();
+      console.log('iamges',data);
       if (!data.errors) {
         this.setState({ imagepostList: data.imageposts })
       }
@@ -58,10 +55,13 @@ class ProfilePage extends React.Component {
       console.error('Error: ' + error)
     }
   }
-
+  componentDidMount(){
+    this.saveProfile();
+    this.savePosts();
+  }
   render () {
-    const { toggleLoggedIn } = this.props
-    const { profile, imagepostList } = this.state
+    const { toggleLoggedIn } = this.props;
+    const { profile, imagepostList } = this.state;
     return (
       <div className='full-container'>
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
