@@ -1,5 +1,6 @@
 import React from 'react'
-import HeaderNav from './common/HeaderNav'
+import HeaderNav from './common/HeaderNav';
+import ImageElem from './common/ImageElem'
 // import { Icon } from 'semantic-ui-react'
 class ExplorePage extends React.Component {
 
@@ -41,7 +42,8 @@ class ExplorePage extends React.Component {
       'https://images.pexels.com/photos/3636074/pexels-photo-3636074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-    ]
+    ];
+    
     const {toggleLoggedIn} = this.props;
     return (
       <div className='full-container'>
@@ -50,23 +52,7 @@ class ExplorePage extends React.Component {
           <div className='explore-img-div container'>
             {arr.map(img => {
               return (
-                <div className='explore-item'>
-                  <div className='content'>
-                    <a className='link-img' href='#' target='_blank'>
-                      <img src={img} alt></img>
-                      <div className='content-overlay'></div>
-                      <div className='content-details fadeIn-bottom'>
-                        <h2 className='content-title'>
-                          <i aria-hidden='true' className='like icon'></i> 456
-                        </h2>
-                        <h2 className='content-title'>
-                          <i aria-hidden='true' className='comment  icon'></i>{' '}
-                          123
-                        </h2>
-                      </div>
-                    </a>
-                  </div>
-                </div>
+                <ImageElem url={img}/>
               )
             })}
           </div>

@@ -1,11 +1,9 @@
 import React from 'react'
-
+import ImageElem from './../common/ImageElem'
 class ProfileImages extends React.Component {
   constructor (props) {
-    super(props);
+    super(props)
   }
-
-  
 
   render () {
     var arr = [
@@ -45,49 +43,20 @@ class ProfileImages extends React.Component {
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       'https://images.pexels.com/photos/3369526/pexels-photo-3369526.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
     ]
-    const { imagepostList } = this.props;
+    const { imagepostList } = this.props
     console.log('IM ', imagepostList)
     return (
       <div className='profile-img-div'>
         {imagepostList &&
           imagepostList.map(imagePost => {
             return (
-              <div className='explore-item'>
-                <div className='content'>
-                  <a className='link-img' href='#' target='_blank'>
-                    <img src={`http://localhost:4000/${imagePost.filename}`} alt></img>
-                    <div className='content-overlay'></div>
-                    <div className='content-details fadeIn-bottom'>
-                      <h2 className='content-title'>
-                        <i aria-hidden='true' className='like icon'></i> {imagePost.commentsCount}
-                      </h2>
-                      <h2 className='content-title'>
-                        <i aria-hidden='true' className='comment  icon'></i> {imagePost.favoritesCount}
-                      </h2>
-                    </div>
-                  </a>
-                </div>
-              </div>
+              <ImageElem url={`http://localhost:4000/${imagePost.filename}`} />
             )
           })}
         {arr.map(img => {
           return (
-            <div className='explore-item'>
-              <div className='content'>
-                <a className='link-img' href='#' target='_blank'>
-                  <img src={img} alt></img>
-                  <div className='content-overlay'></div>
-                  <div className='content-details fadeIn-bottom'>
-                    <h2 className='content-title'>
-                      <i aria-hidden='true' className='like icon'></i> 456
-                    </h2>
-                    <h2 className='content-title'>
-                      <i aria-hidden='true' className='comment  icon'></i> 123
-                    </h2>
-                  </div>
-                </a>
-              </div>
-            </div>
+            <ImageElem url={img}/>
+            
           )
         })}
       </div>
