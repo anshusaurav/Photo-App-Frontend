@@ -738,3 +738,143 @@ table {
     }
   }
 }
+//home page css endds here
+
+//Image Pop up Starts here
+// .image-elem-popup-small{
+//   position: fixed;
+//   min-width:60vw; 
+//   min-height:60vh;
+//   top: 20vh;
+//   left: 20vw;
+//   -webkit-transform: none;
+//   transform: none;
+//   margin-top: 0;
+// }
+.image-elem-popup-small:before{
+  display: none;
+}
+
+
+
+.popup-image-card {
+  min-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  min-height: 100%;
+  // padding: 20% auto;
+  position: relative;
+  box-shadow: none !important;
+  .pop-up-container{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  .pop-up-grid{
+    width: 60%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .popup-image-author-content {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .popup-image-author-profile {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto auto;
+    grid-gap: 1rem;
+    .popup-image-author-image {
+      border-radius: 50%;
+    }
+    .popup-image-author-username {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  }
+
+  .popup-image-elem {
+    border-top: 1px solid #efefef;
+    background: transparent;
+    padding-top: 1rem;
+    object-fit: cover;
+  }
+
+  .popup-image-inter-content{
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    .popup-image-action-div{
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      grid-gap: 0.75rem;
+    }
+    .popup-action-elem{
+      color: rgba(0,0,0,.85)
+    }
+    
+  }
+  
+}
+.popup-image-like-count{
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: rgba(0,0,0,.85)
+}
+.popup-image-elem-date{
+  margin: 0.25rem 0;
+}
+.popup-comment-form-outer-div{
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.popup-add-comment-form{
+  align-items: center;
+  display: flex;
+
+  border-top: 1px solid #efefef;
+  padding-top: 1rem;
+  width: 100%;
+  flex-direction: row;
+  flex-grow: 1;
+  .popup-add-comment-input-text{
+    display: flex;
+    flex-grow: 1;
+    
+    
+  }
+  .popup-add-comment-input-text::placeholder{
+    font-family: lato;
+  }
+  
+}
+.popup-elem-add-comment-btn{
+  background-color: transparent;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #2e394f;
+  &:active {
+    background-color: transparent;
+  }
+  &:hover {
+    background-color: transparent;
+  }
+  &:visited {
+    background-color: transparent;
+  }
+  &:focus {
+    background-color: transparent;
+  }
+  // color: blue;
+}
+//Image Pop up ends here
+
+

@@ -4,10 +4,7 @@ import {Link} from 'react-router-dom'
 import GlobalFonts from './../../fonts/fonts'
 import PageHeaderCustom from './../PageHeaderCustom';
 class HeaderNav extends React.Component {
-  constructor (props) {
-    super(props);
-    
-  }
+  
   render () {
     const {toggleLoggedIn} = this.props;
     return (

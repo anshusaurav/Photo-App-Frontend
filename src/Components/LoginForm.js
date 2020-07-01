@@ -66,7 +66,6 @@ class LoginForm extends React.Component {
         this.setState({ errorMsgs: errors });
 
       }
-      // console.log(data)
     } catch (error) {
       console.error('Error:', error);
       const errors = []
@@ -75,14 +74,12 @@ class LoginForm extends React.Component {
     }
   }
   checkValidUser () {
-    const { email, password } = this.state
-    let data = []
-    // const emailRegex = '/\S+@\S+\.\S+/';
-    const found = email.match('/@/')
-    let res = true
+    const { email} = this.state
+    let data = [];
+    let res = true;
     if (email.length < 5 || email.indexOf('@') <= 0) {
-      res = false
-      data.push('email')
+      res = false;
+      data.push('email');
     }
     if (res) return { result: true, data }
 

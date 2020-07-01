@@ -109,7 +109,7 @@ class UploadForm extends React.Component {
   }
 
   render () {
-    const { filename, description, location, tagList, visible } = this.state;
+    const { description, location, tagList, visible } = this.state;
     const {toggleLoggedIn} = this.props;
     return (
       <div className='full-container'>

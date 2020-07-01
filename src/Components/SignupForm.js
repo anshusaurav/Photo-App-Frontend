@@ -72,10 +72,9 @@ class SignupForm extends React.Component {
     }
   }
   checkValidUser () {
-    const { email, fullname, username, password } = this.state
-    let data = []
-    const found = email.match('/@/')
-    let res = true
+    const { email, fullname, username} = this.state
+    let data = [];
+    let res = true;
     if (email.length < 5 || email.indexOf('@') <= 0) {
       res = false
       data.push('email')

@@ -52,7 +52,7 @@ class ExplorePage extends React.Component {
           <div className='explore-img-div container'>
             {arr.map(img => {
               return (
-                <ImageElem url={img}/>
+                <ImageElem img={img}/>
               )
             })}
           </div>

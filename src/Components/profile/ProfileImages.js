@@ -1,9 +1,7 @@
 import React from 'react'
 import ImageElem from './../common/ImageElem'
 class ProfileImages extends React.Component {
-  constructor (props) {
-    super(props)
-  }
+ 
 
   render () {
     var arr = [
@@ -50,12 +48,12 @@ class ProfileImages extends React.Component {
         {imagepostList &&
           imagepostList.map(imagePost => {
             return (
-              <ImageElem url={`http://localhost:4000/${imagePost.filename}`} />
+              <ImageElem img={`http://localhost:4000/${imagePost.filename}`} />
             )
           })}
         {arr.map(img => {
           return (
-            <ImageElem url={img}/>
+            <ImageElem img={img}/>
             
           )
         })}
