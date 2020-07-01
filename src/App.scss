@@ -639,7 +639,8 @@ table {
       display: flex;
 
       border-top: 1px solid #efefef;
-      padding-top: 1rem;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
       width: 100%;
       flex-direction: row;
       flex-grow: 1;
@@ -754,7 +755,7 @@ table {
   min-width: 100vw;
   max-height: 100vh;
   min-height: 100vh;
-  
+
   padding: 20% auto;
   position: relative;
   box-shadow: none !important;
@@ -764,21 +765,30 @@ table {
     margin-top: 3.5rem;
     justify-content: center;
     align-items: center;
-    background:transparent;
+    background: transparent;
   }
   .pop-up-grid {
     width: 975px;
     min-height: 400px;
-    
+    max-height: 780px;
     height: 100%;
-    margin-left: -25px;
+    margin-top: -10px;
+    margin-left: -50px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
+    // grid-gap: 1rem;
     background-color: white;
   }
+  .pop-up-des-div {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
   .popup-image-author-content {
+    padding: 0 1rem;
+    padding-bottom: 0.5rem;
     display: grid;
+    border-bottom: 1px solid #efefef;
+    width: 100%;
     grid-template-columns: auto auto;
     align-items: center;
     justify-content: space-between;
@@ -796,15 +806,34 @@ table {
       font-weight: 600;
     }
   }
+  .popup-common-des {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 
+  .popup-more-comment-anchor {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #efefef;
+  }
+  .popup-comment-comment-user-img {
+    border-radius: 50%;
+  }
   .popup-image-elem {
     // border-top: 1px solid #efefef;
     background: transparent;
-    object-fit: cover;
+    object-fit: contain;
     // padding: 2rem 0;
     align-self: center;
   }
-
+  .popup-comment-elem-single{
+    
+    strong{
+      margin-left:0.5rem;
+      margin-right: 0.5rem;
+    }
+  }
   .popup-image-inter-content {
     display: grid;
     grid-template-columns: auto auto;
@@ -815,6 +844,8 @@ table {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 0.75rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
     .popup-action-elem {
       color: rgba(0, 0, 0, 0.85);
@@ -828,6 +859,7 @@ table {
 }
 .popup-image-elem-date {
   margin: 0.25rem 0;
+  padding-bottom: 0.5rem;
 }
 .popup-comment-form-outer-div {
   display: flex;
@@ -840,7 +872,8 @@ table {
   display: flex;
 
   border-top: 1px solid #efefef;
-  padding-top: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   width: 100%;
   flex-direction: row;
   flex-grow: 1;
