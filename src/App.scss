@@ -784,7 +784,7 @@ table {
   .pop-up-grid {
     width: 975px;
     min-height: 400px;
-    max-height: 780px;
+    max-height: 660px;
     height: 100%;
     margin-top: -10px;
     margin-left: -50px;
@@ -837,8 +837,10 @@ table {
   .popup-image-elem {
     // border-top: 1px solid #efefef;
     background: transparent;
-    object-fit: contain;
+    object-fit: fill;
+    margin: 0 auto;
     // padding: 2rem 0;
+    max-height: 660px;
     align-self: center;
   }
   .popup-comment-elem-single{

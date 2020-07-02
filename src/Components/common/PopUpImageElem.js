@@ -5,11 +5,15 @@ import en from 'javascript-time-ago/locale/en'
 class PopUpImageElem extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { isSubmitable: '', body: '', comments: null }
+    this.state = {
+      isSubmitable: '',
+      body: '',
+      comments: null,
+      isUpdated: false,
+      img:null
+    }
     this.changeHandler = this.changeHandler.bind(this)
     this.submitHandler = this.submitHandler.bind(this)
-
-    // Add locale-specific relative date/time formatting rules.
   }
 
   changeHandler (event, { name, value }) {
@@ -28,7 +32,7 @@ class PopUpImageElem extends React.Component {
     this.submitComment()
   }
   async submitComment () {
-    const { slug } = this.props.img
+    const  slug  = this.props.img;
     const { body } = this.state
     const { jwttoken } = localStorage
     const comment = { comment: { body } }
@@ -45,8 +49,8 @@ class PopUpImageElem extends React.Component {
       })
       let data = await response.json()
       if (!data.errors) {
-        // console.log('Posted successfully')
         this.setState({ body: '' })
+        this.setState({ isUpdated: !this.state.isUpdated })
       } else {
         const errors = []
         for (const [key, value] of Object.entries(data.errors)) {
@@ -74,7 +78,7 @@ class PopUpImageElem extends React.Component {
     return { result: false, data }
   }
   async saveComments () {
-    const { slug } = this.props.img
+    const  slug  = this.props.img;
     const { jwttoken } = localStorage
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
     // console.log(loggedInUser.username)
@@ -89,7 +93,7 @@ class PopUpImageElem extends React.Component {
         }
       })
       const data = await response.json()
-      console.log('comments', data)
+      // console.log('comments', data)
       if (!data.errors) {
         this.setState({ comments: data.comments }, () => {
           let comments = [...this.state.comments]
@@ -105,25 +109,59 @@ class PopUpImageElem extends React.Component {
       console.error('Error: ' + error)
     }
   }
+  async saveImage(){
+    const  slug  = this.props.img;
+    const { jwttoken } = localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
+    // console.log(loggedInUser.username)
+    const url = `http://localhost:4000/api/p/${slug}`
+    // const { jwttoken } = localStorage
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/JSON',
+          Authorization: `Token ${jwttoken}`
+        }
+      })
+      const data = await response.json()
+      console.log('image', data);
+      if (!data.errors) {
+        this.setState({ img: data.imagepost });
+      }
+    } catch (error) {
+      console.error('Error: ' + error)
+    }
+  }
   componentDidMount () {
+    this.saveImage();
     this.saveComments()
   }
-  render () {
-    
-    let {
-      commentsCount,
-      favoritesCount,
-      filename,
-      author,
-      createdAt,
-      description
-    } = this.props.img
-    //{new Date(updatedAt).toDateString()}
+  componentDidUpdate (prevProps, prevState) {
+    if (this.state.isUpdated !== prevState.isUpdated) {
+      this.saveComments()
+      this.saveImage();
+    }
+  }
+  timeAgo(date){
     TimeAgo.addLocale(en)
-    const timeAgo = new TimeAgo('en-US')
-    createdAt = timeAgo.format(new Date(createdAt))
+    const timeAgo = new TimeAgo('en-US');
+    return timeAgo.format(date);
+  }
+  render () {
+    // let {
+    //   commentsCount,
+    //   favoritesCount,
+    //   filename,
+    //   author,
+    //   createdAt,
+    //   description
+    // } = this.state.img;
+    // TimeAgo.addLocale(en)
+    // const timeAgo = new TimeAgo('en-US');
+    // createdAt = timeAgo.format(new Date(createdAt))
 
-    const { username, fullname, image, following } = author
+    // const { username, fullname, image, following } = author
     const { isSubmitable, body, comments } = this.state
     return (
       <Card
@@ -135,26 +173,31 @@ class PopUpImageElem extends React.Component {
           position: 'relative'
         }}
       >
+
         <span class='close-popup-span'>X</span>
         <div className='pop-up-container'>
           <div className='pop-up-grid'>
+            {this.state.img?
             <Image
               className='popup-image-elem'
-              src={`http://localhost:4000/${filename}`}
-              wrapped
+              src={`http://localhost:4000/${this.state.img.filename}`}
+              // wrapped
               ui={true}
-            />
+            />:
+            <p>Loading</p>
+            }
+            {this.state.img && this.state.comments?
             <div className='pop-up-des-div'>
               <Card.Content className='popup-image-author-content'>
                 <div className='popup-image-author-profile'>
                   <Image
                     className='popup-image-author-image'
-                    src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
+                    src={this.state.img.author.image}
                     size='mini'
                     circular
                   />
                   <span className='popup-image-author-username'>
-                    {username}
+                    {this.state.img.author.username}
                   </span>
                 </div>
                 <span>
@@ -167,10 +210,10 @@ class PopUpImageElem extends React.Component {
                   <Image
                     size='mini'
                     className='popup-comment-comment-user-img'
-                    src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg'
+                    src={this.state.img.author.image}
                   ></Image>
-                  <strong>{username} </strong>
-                  {description}
+                  <strong>{this.state.img.author.username} </strong>
+                  {this.state.img.description}
                 </Card.Description>
                 {comments &&
                   comments.map(comment => {
@@ -187,9 +230,10 @@ class PopUpImageElem extends React.Component {
                     )
                   })}
 
-                
                 <Card.Meta className='popup-common-des popup-more-comment-anchor'>
-                  {commentsCount!==0?`View All ${commentsCount} comments`:`Be the first one to respond`}
+                  {this.state.img.commentsCount !== 0
+                    ? `View All ${this.state.img.commentsCount} comments`
+                    : `Be the first one to respond`}
                 </Card.Meta>
                 <Card.Description className='popup-image-inter-content'>
                   <div className='popup-image-action-div'>
@@ -229,12 +273,13 @@ class PopUpImageElem extends React.Component {
                 <Card.Description className='popup-common-des'>
                   {' '}
                   <p className='popup-image-like-count'>
-                  {favoritesCount!==0?`${favoritesCount} likes`:`Be the first one to like`}
-                    
+                    {this.state.img.favoritesCount !== 0
+                      ? `${this.state.img.favoritesCount} likes`
+                      : `Be the first one to like`}
                   </p>
                 </Card.Description>
                 <Card.Description className='popup-image-elem-date popup-common-des'>
-                  {createdAt}
+                {this.timeAgo(new Date(this.state.img.createdAt))}
                 </Card.Description>
               </Card.Content>
               <div className='popup-comment-form-outer-div'>
@@ -268,6 +313,8 @@ class PopUpImageElem extends React.Component {
                 </Form>
               </div>
             </div>
+            :<p>Loading</p>
+            }
           </div>
         </div>
       </Card>

@@ -26,47 +26,49 @@ class Main extends React.Component {
       this.setState({ isLoggedIn: true })
   }
   render () {
-    const { isLoggedIn } = this.state
+    const { isLoggedIn } = this.state;
+    const {jwttoken} = localStorage;
+    console.log(isLoggedIn);
     return (
       <Router>
         <Switch>
           <Route path='/login'>
-            {!isLoggedIn ? (
+            {!jwttoken ? (
               <LoginForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/'  />
             )}
           </Route>
           <Route path='/signup'>
-            {!isLoggedIn ? (
+            {!jwttoken ? (
               <SignupForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/' />
             )}
           </Route>
           <Route path='/explore'>
-            {isLoggedIn ? (
+            {jwttoken ? (
               <ExplorePage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login' />
             )}
           </Route>
           <Route path='/user'>
-            {isLoggedIn ? (
+            {jwttoken ? (
               <ProfilePage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login'/>
             )}
           </Route>
           <Route path='/upload'>
-            {isLoggedIn ? (
+            {jwttoken ? (
               <UploadForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login' />
             )}
           </Route>
           <Route path='/' exact={true}>
-            {isLoggedIn ? (
+            {jwttoken ? (
               <HomePage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login' />

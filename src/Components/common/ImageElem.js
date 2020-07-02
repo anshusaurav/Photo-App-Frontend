@@ -39,7 +39,7 @@ class ImageElem extends React.Component {
           </div>
         }
       >
-        <PopUpImageElem img={this.props.img} />
+        <PopUpImageElem img={this.props.img.slug} />
       </Popup>
     )
   }
