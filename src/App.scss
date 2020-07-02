@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&display=swap");
 html,
 body,
 div,
@@ -379,6 +378,7 @@ table {
       width: 150px;
       height: 150px;
       img {
+        cursor: pointer;
         width: 100%;
         border-radius: 50%;
       }
@@ -748,7 +748,7 @@ table {
 //   transform: none;
 //   margin-top: 0;
 // }
-.image-elem-popup-small:before {
+.image-elem-popup-small:before{
   display: none;
 }
 
@@ -761,8 +761,8 @@ table {
   padding: 20% auto;
   // position: relative;
   box-shadow: none !important;
-  .close-popup-span{
-    font-family: 'Orbitron', sans-serif;
+  .close-popup-span {
+    font-family: "Orbitron", sans-serif;
     position: absolute;
     top: 0rem;
     right: 3rem;
@@ -780,7 +780,7 @@ table {
     background: transparent;
     position: relative;
   }
-  
+
   .pop-up-grid {
     width: 975px;
     min-height: 400px;
@@ -843,10 +843,9 @@ table {
     max-height: 660px;
     align-self: center;
   }
-  .popup-comment-elem-single{
-
-    strong{
-      margin-left:0.5rem;
+  .popup-comment-elem-single {
+    strong {
+      margin-left: 0.5rem;
       margin-right: 0.5rem;
     }
   }
@@ -922,3 +921,68 @@ table {
   // color: blue;
 }
 //Image Pop up ends here
+
+//Change Profile Picture image
+
+.ui.bottom.left.popup:before   {
+  display: none;
+}
+.change-picture-pop-outer-div {
+  display: flex;
+  min-height: 100%;
+  margin-top: 10%;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  position: relative;
+  .change-picture-pop-inner-div {
+    
+    width: 400px;
+    height: 240px;
+    margin-top: -10px;
+    margin-left: -50px;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    // grid-gap: 1rem;
+    background-color: white;
+    div{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.25rem;
+    } 
+    h2{
+      font-size: 18px;
+      font-weight: 600;
+      margin: 6px 0 6px;
+    }
+    .button{
+      border-top: 1px solid #dbdbdb;
+      background-color: transparent;
+      font-size: 1.25rem;
+      font-weight: 500;
+      &:active {
+        background-color: transparent;
+      }
+      &:hover {
+        background-color: transparent;
+      }
+      &:visited {
+        background-color: transparent;
+      }
+      &:focus {
+        background-color: transparent;
+      }
+      &:first-of-type{
+        font-weight: 700;
+        color: #0095F6;
+      }
+      &:nth-of-type(2){
+        font-weight: 700;
+        color: #F1737D;
+      }
+    }
+
+  }
+}
