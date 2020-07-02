@@ -3,12 +3,28 @@ import { Popup } from 'semantic-ui-react'
 import FeedImageElem from './FeedImageElem'
 import PopUpImageElem from './PopUpImageElem'
 class ImageElem extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      isOpen: false
+    }
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+  handleOpen(){
+    this.setState({isOpen: true})
+  }
+  handleClose(){
+    this.setState({isOpen: false})
+  }
   render () {
     const {commentsCount, favoritesCount, filename} = this.props.img;
     return (
       // <style > #image-elem-popup-small:before {} </style>
       <Popup
         on='click'
+        open = {this.state.isOpen}
+        onOpen={this.handleOpen}
         style={{
           position: 'fixed',
           minWidth: '100vw',
@@ -39,7 +55,7 @@ class ImageElem extends React.Component {
           </div>
         }
       >
-        <PopUpImageElem img={this.props.img.slug} />
+        <PopUpImageElem img={this.props.img.slug} handleClose ={this.handleClose} />
       </Popup>
     )
   }

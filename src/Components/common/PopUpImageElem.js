@@ -204,19 +204,6 @@ class PopUpImageElem extends React.Component {
     return timeAgo.format(date)
   }
   render () {
-    // let {
-    //   commentsCount,
-    //   favoritesCount,
-    //   filename,
-    //   author,
-    //   createdAt,
-    //   description
-    // } = this.state.img;
-    // TimeAgo.addLocale(en)
-    // const timeAgo = new TimeAgo('en-US');
-    // createdAt = timeAgo.format(new Date(createdAt))
-
-    // const { username, fullname, image, following } = author
     const { isSubmitable, body, comments } = this.state
     return (
       <Card
@@ -228,7 +215,7 @@ class PopUpImageElem extends React.Component {
           position: 'relative'
         }}
       >
-        <span class='close-popup-span'>X</span>
+        <span class='close-popup-span' onClick={this.props.handleClose}>X</span>
         <div className='pop-up-container'>
           <div className='pop-up-grid'>
             {this.state.img ? (
