@@ -6,20 +6,20 @@ class ProfilePicturePopUp extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      filename : null
+      filename: null
     }
     this.fileInputRef = createRef()
-    this.changehandleClick = this.changehandleClick.bind(this);
-    this.handleUpdatePicture = this.handleUpdatePicture.bind(this);
-    this.changeSubmitHandler = this.changeSubmitHandler.bind(this);
+    this.changehandleClick = this.changehandleClick.bind(this)
+    this.handleUpdatePicture = this.handleUpdatePicture.bind(this)
+    this.changeSubmitHandler = this.changeSubmitHandler.bind(this)
   }
-  changehandleClick(event) {
-    this.fileInputRef.current.click();
+  changehandleClick (event) {
+    this.fileInputRef.current.click()
   }
-  handleUpdatePicture(event){
+  handleUpdatePicture (event) {
     event.preventDefault()
-    console.dir(this.fileInputRef.current);
-    console.log('Form submitted');
+    console.dir(this.fileInputRef.current)
+    console.log('Form submitted')
   }
   // onChangeFile(event){
   //   // console.log(event.target.files[0]);
@@ -29,11 +29,11 @@ class ProfilePicturePopUp extends React.Component {
 
   //   this.props.handleClose();
   // }
-  async changeSubmitHandler(event){
+  async changeSubmitHandler (event) {
     const url = `http://localhost:4000/api/user`
-    
-    const {jwttoken} = localStorage;
-    const filename = event.target.files[0];
+
+    const { jwttoken } = localStorage
+    const filename = event.target.files[0]
     console.log('originalFile instanceof Blob', filename instanceof Blob) // true
     console.log(`originalFile size ${filename.size / 1024 / 1024} MB`)
 
@@ -43,35 +43,38 @@ class ProfilePicturePopUp extends React.Component {
       useWebWorker: true
     }
     try {
-      console.log('shaktiman');
+      console.log('shaktiman')
       const compressedFile = await imageCompression(filename, options)
       console.log(
         'compressedFile instanceof Blob',
         compressedFile instanceof Blob
       ) // true
-      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`) // smaller than maxSizeMB
-      let reader = new FileReader();
-      let file = compressedFile;
-      const formData = new FormData();
-      formData.append('filename', file);
+      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`)
+      let file = compressedFile
+      const formData = new FormData()
+      formData.append('image', file)
       const headers = {
         'Content-Type': 'multipart/form-data',
         Authorization: `Token ${jwttoken}`
       }
-      axios.put(url, formData, {
-        headers: headers,
+      axios
+        .put(url, formData, {
+          headers: headers,
 
-        onUploadProgress: ProgressEvent => {
-          // this.setState({
-          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-          // })
-          console.log(ProgressEvent.loaded, ProgressEvent.total)
-        }
-      })
-      .then(res => {
-        console.log(res.statusText);
-        this.props.handleClose();
-      })
+          onUploadProgress: ProgressEvent => {
+            // this.setState({
+            //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+            // })
+            console.log(ProgressEvent.loaded, ProgressEvent.total)
+          }
+        })
+        .then(res => {
+          console.log('sadasd' + res.statusText);
+          
+          this.props.handleClose();
+          this.props.toggleUpdate();
+          
+        })
     } catch (error) {
       console.log(error)
     }
@@ -83,7 +86,11 @@ class ProfilePicturePopUp extends React.Component {
           <div>
             <h2>Change Profile Photo</h2>
           </div>
-          <Button className='change-picture-pop-btn' fluid onClick={this.changehandleClick}>
+          <Button
+            className='change-picture-pop-btn'
+            fluid
+            onClick={this.changehandleClick}
+          >
             Upload Photo
           </Button>
           <Button className='change-picture-pop-btn' fluid>
@@ -101,7 +108,7 @@ class ProfilePicturePopUp extends React.Component {
               className='change-profile-input-file-elem'
               name='filename'
               type='file'
-              onChange= {this.changeSubmitHandler}
+              onChange={this.changeSubmitHandler}
               ref={this.fileInputRef}
             ></input>
           </Form>

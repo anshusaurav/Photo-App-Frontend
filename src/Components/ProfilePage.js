@@ -8,31 +8,11 @@ class ProfilePage extends React.Component {
     super(props)
     this.state = {
       imagepostList: null,
-      profile: null,
       isUpdated: false,
     }
   }
   
-  async saveProfile () {
-    const url = 'http://localhost:4000/api/user'
-    const { jwttoken } = localStorage
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/JSON',
-          Authorization: `Token ${jwttoken}`
-        }
-      })
-      const data = await response.json()
-      // console.log('USer data', data);
-      if (!data.errors) {
-        this.setState({ profile: data.user })
-      }
-    } catch (error) {
-      console.error('Error: ' + error)
-    }
-  }
+  
   async savePosts () {
     const { jwttoken } = localStorage;
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -57,7 +37,6 @@ class ProfilePage extends React.Component {
     }
   }
   componentDidMount(){
-    this.saveProfile();
     this.savePosts();
   }
   render () {
@@ -68,7 +47,7 @@ class ProfilePage extends React.Component {
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
       
         <div className='profile-user-details container'>
-          {profile && <ProfileHero profile={profile}/>}
+          <ProfileHero/>
         </div>
         <div className='container'> <ProfileImages imagepostList={imagepostList}/></div>
       </div>
