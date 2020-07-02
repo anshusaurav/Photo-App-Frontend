@@ -28,7 +28,6 @@ class ProfilePage extends React.Component {
         }
       })
       const data = await response.json();
-      // console.log('iamges',data);
       if (!data.errors) {
         this.setState({ imagepostList: data.imageposts })
       }

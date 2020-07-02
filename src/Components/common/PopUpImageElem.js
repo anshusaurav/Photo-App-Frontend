@@ -1,5 +1,13 @@
 import React, { createRef } from 'react'
-import { Card, Icon, Image, Form, TextArea, Button } from 'semantic-ui-react'
+import {
+  Card,
+  Icon,
+  Image,
+  Form,
+  TextArea,
+  Button,
+  Transition
+} from 'semantic-ui-react'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 class PopUpImageElem extends React.Component {
@@ -10,36 +18,31 @@ class PopUpImageElem extends React.Component {
       body: '',
       comments: null,
       isUpdated: false,
-      img: null
+      img: null,
+      animation: 'tada',
+      duration: 500,
+      visible: true
     }
     this.textAreaRef = createRef()
     this.changeHandler = this.changeHandler.bind(this)
     this.submitHandler = this.submitHandler.bind(this)
     this.toggleLike = this.toggleLike.bind(this)
-    this.putFocusOnTextArea = this.putFocusOnTextArea.bind(this);
-    // this.handleClosePopup = this.handleClosePopup.bind(this);
+    this.putFocusOnTextArea = this.putFocusOnTextArea.bind(this)
+    this.toggleFollow = this.toggleFollow.bind(this)
   }
-  // handleClosePopup(event){
-  //   console.log(event.key);
-  // }
-  putFocusOnTextArea (event) {
-    console.dir(this.textAreaRef.current)
-    this.textAreaRef.current.focus()
-  }
-  toggleLike (event) {
+
+  toggleFollow (event) {
     event.preventDefault()
-    this.submitLikeToggle()
+    this.submitFollowToggle()
   }
-  async submitLikeToggle () {
-    const slug = this.props.img
+  async submitFollowToggle () {
+    const slug = this.state.img.author.username
     const { jwttoken } = localStorage
-    const url = `http://localhost:4000/api/p/${slug}/favorite`
-    const isLiked = this.state.img.favorited
-    // console.log('SEEHERE ANSHU',this.state.img);
-    // console.log('SEEHERE ANSHU',isLiked);
+    const url = `http://localhost:4000/api/profiles/${slug}/follow`
+    const isFollowed = this.state.img.author.following
     try {
       let response
-      if (isLiked) {
+      if (isFollowed) {
         response = await fetch(url, {
           method: 'DELETE',
           headers: {
@@ -60,6 +63,61 @@ class PopUpImageElem extends React.Component {
       console.log(data)
       if (!data.errors) {
         this.setState({ isUpdated: !this.state.isUpdated })
+        this.toggleVisibility()
+      } else {
+        const errors = []
+        for (const [key, value] of Object.entries(data.errors)) {
+          errors.push(`${key} ${value}`)
+        }
+        this.setState({ errorMsgs: errors })
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      const errors = []
+      errors.push(error.toString())
+      this.setState({ errorMsgs: errors })
+    }
+  }
+  toggleVisibility = () =>
+    this.setState(prevState => ({ visible: !prevState.visible }))
+
+  putFocusOnTextArea (event) {
+    console.dir(this.textAreaRef.current)
+    this.textAreaRef.current.focus()
+  }
+  toggleLike (event) {
+    event.preventDefault()
+    this.submitLikeToggle()
+  }
+  async submitLikeToggle () {
+    const slug = this.props.img
+    const { jwttoken } = localStorage
+    const url = `http://localhost:4000/api/p/${slug}/favorite`
+    const isLiked = this.state.img.favorited
+    try {
+      let response
+      if (isLiked) {
+        response = await fetch(url, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${jwttoken}`
+          }
+        })
+      } else {
+        response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${jwttoken}`
+          }
+        })
+      }
+      let data = await response.json()
+      // console.log(data)
+      if (!data.errors) {
+        this.setState({ isUpdated: !this.state.isUpdated })
+        this.toggleVisibility()
       } else {
         const errors = []
         for (const [key, value] of Object.entries(data.errors)) {
@@ -138,7 +196,6 @@ class PopUpImageElem extends React.Component {
   async saveComments () {
     const slug = this.props.img
     const { jwttoken } = localStorage
-    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
     const url = `http://localhost:4000/api/p/${slug}/comments`
     try {
       const response = await fetch(url, {
@@ -167,10 +224,7 @@ class PopUpImageElem extends React.Component {
   async saveImage () {
     const slug = this.props.img
     const { jwttoken } = localStorage
-    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
-    // console.log(loggedInUser.username)
     const url = `http://localhost:4000/api/p/${slug}`
-    // const { jwttoken } = localStorage
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -205,7 +259,16 @@ class PopUpImageElem extends React.Component {
     return timeAgo.format(date)
   }
   render () {
-    const { isSubmitable, body, comments } = this.state
+    const {
+      isSubmitable,
+      body,
+      comments,
+      animation,
+      duration,
+      visible
+    } = this.state
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
+
     return (
       <Card
         className='popup-image-card'
@@ -215,10 +278,10 @@ class PopUpImageElem extends React.Component {
           borderRadius: '1px',
           position: 'relative'
         }}
-        // contentEditable={true}
-        // onKeyUp={this.handleClosePopup}
       >
-        <span class='close-popup-span' onClick={this.props.handleClose}>X</span>
+        <span class='close-popup-span' onClick={this.props.handleClose}>
+          X
+        </span>
         <div className='pop-up-container'>
           <div className='pop-up-grid'>
             {this.state.img ? (
@@ -242,6 +305,24 @@ class PopUpImageElem extends React.Component {
                     />
                     <span className='popup-image-author-username'>
                       {this.state.img.author.username}
+                    </span>
+                    <span>
+                      {this.state.img.author.following ? (
+                        <Button
+                          className='pop-up-unfollow-btn'
+                          onClick={this.toggleFollow}
+                        >
+                          Following
+                        </Button>
+                      ) : this.state.img.author.username !==
+                        loggedInUser.username ? (
+                        <Button
+                          className='pop-up-follow-btn'
+                          onClick={this.toggleFollow}
+                        >
+                          Follow
+                        </Button>
+                      ) : null}
                     </span>
                   </div>
                   <span>
@@ -286,16 +367,21 @@ class PopUpImageElem extends React.Component {
                   <Card.Description className='popup-image-inter-content'>
                     <div className='popup-image-action-div'>
                       <span>
-                        {' '}
-                        <Icon
-                          className='popup-action-elem'
-                          name={
-                            this.state.img.favorited
-                              ? 'heart large red'
-                              : 'heart outline large'
-                          }
-                          onClick={this.toggleLike}
-                        />{' '}
+                        <Transition
+                          animation={animation}
+                          duration={duration}
+                          visible={visible}
+                        >
+                          <Icon
+                            className='popup-action-elem'
+                            name={
+                              this.state.img.favorited
+                                ? 'heart large red'
+                                : 'heart outline large'
+                            }
+                            onClick={this.toggleLike}
+                          />
+                        </Transition>
                       </span>
                       <span>
                         {' '}
@@ -329,10 +415,10 @@ class PopUpImageElem extends React.Component {
                     <p className='popup-image-like-count'>
                       {this.state.img.favoritesCount !== 0
                         ? `${this.state.img.favoritesCount} ${
-                          this.state.img.favoritesCount !== 1
-                            ? 'likes'
-                            : 'like'
-                        }`
+                            this.state.img.favoritesCount !== 1
+                              ? 'likes'
+                              : 'like'
+                          }`
                         : `Be the first one to like`}
                     </p>
                   </Card.Description>

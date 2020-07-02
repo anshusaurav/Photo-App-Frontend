@@ -812,7 +812,7 @@ table {
   .popup-image-author-profile {
     display: grid;
     align-items: center;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     grid-gap: 1rem;
     .popup-image-author-image {
       border-radius: 50%;
@@ -820,6 +820,46 @@ table {
     .popup-image-author-username {
       font-size: 1.1rem;
       font-weight: 600;
+    }
+    .pop-up-follow-btn{
+      background-color: transparent;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #0095f6;
+      letter-spacing: 0.4px;
+      &:active {
+        background-color: transparent;
+      }
+      &:hover {
+        background-color: transparent;
+      }
+      &:visited {
+        background-color: transparent;
+        color: #0095f6;
+      }
+      &:focus {
+        background-color: transparent;
+      }
+    }
+    .pop-up-unfollow-btn{
+      background-color: transparent;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #262626;
+      letter-spacing: 0.4px;
+      &:active {
+        background-color: transparent;
+      }
+      &:hover {
+        background-color: transparent;
+      }
+      &:visited {
+        background-color: transparent;
+        color: #262626;
+      }
+      &:focus {
+        background-color: transparent;
+      }
     }
   }
   .popup-common-des {

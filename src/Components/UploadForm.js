@@ -136,7 +136,7 @@ class UploadForm extends React.Component {
                         size='medium'
                         rounded
                         fluid
-                      />
+                      />  
                     </Transition>
                   </div>
                 </div>
