@@ -16,9 +16,12 @@ class PopUpImageElem extends React.Component {
     this.changeHandler = this.changeHandler.bind(this)
     this.submitHandler = this.submitHandler.bind(this)
     this.toggleLike = this.toggleLike.bind(this)
-    this.putFocusOnTextArea = this.putFocusOnTextArea.bind(this)
+    this.putFocusOnTextArea = this.putFocusOnTextArea.bind(this);
+    // this.handleClosePopup = this.handleClosePopup.bind(this);
   }
-
+  // handleClosePopup(event){
+  //   console.log(event.key);
+  // }
   putFocusOnTextArea (event) {
     console.dir(this.textAreaRef.current)
     this.textAreaRef.current.focus()
@@ -136,9 +139,7 @@ class PopUpImageElem extends React.Component {
     const slug = this.props.img
     const { jwttoken } = localStorage
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
-    // console.log(loggedInUser.username)
     const url = `http://localhost:4000/api/p/${slug}/comments`
-    // const { jwttoken } = localStorage
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -214,6 +215,8 @@ class PopUpImageElem extends React.Component {
           borderRadius: '1px',
           position: 'relative'
         }}
+        // contentEditable={true}
+        // onKeyUp={this.handleClosePopup}
       >
         <span class='close-popup-span' onClick={this.props.handleClose}>X</span>
         <div className='pop-up-container'>

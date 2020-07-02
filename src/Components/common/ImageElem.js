@@ -20,7 +20,6 @@ class ImageElem extends React.Component {
   render () {
     const {commentsCount, favoritesCount, filename} = this.props.img;
     return (
-      // <style > #image-elem-popup-small:before {} </style>
       <Popup
         on='click'
         open = {this.state.isOpen}
