@@ -262,6 +262,7 @@ table {
   padding-top: 30px;
   margin: 0 auto;
   display: grid;
+  min-height: 100vh;
   grid-gap: 25px;
   grid-auto-flow: dense;
   grid-template-columns: repeat(3, 1fr);
@@ -432,6 +433,7 @@ table {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 975px;
+  min-height: 80vh;
   border-top: 1px solid #dbdbdb;
   padding-top: 30px;
   margin: 0 auto;

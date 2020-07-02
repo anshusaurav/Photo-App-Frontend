@@ -12,23 +12,15 @@ class ProfilePicturePopUp extends React.Component {
     this.changehandleClick = this.changehandleClick.bind(this)
     this.handleUpdatePicture = this.handleUpdatePicture.bind(this)
     this.changeSubmitHandler = this.changeSubmitHandler.bind(this)
+    this.removeSubmitHandler = this.removeSubmitHandler.bind(this)
   }
   changehandleClick (event) {
     this.fileInputRef.current.click()
   }
   handleUpdatePicture (event) {
     event.preventDefault()
-    console.dir(this.fileInputRef.current)
-    console.log('Form submitted')
   }
-  // onChangeFile(event){
-  //   // console.log(event.target.files[0]);
-  //   this.setState({filename: event.target.files[0]}, ()=>{
-  //     this.changeSubmitHandler();
-  //   });
 
-  //   this.props.handleClose();
-  // }
   async changeSubmitHandler (event) {
     const url = `http://localhost:4000/api/user`
 
@@ -43,7 +35,6 @@ class ProfilePicturePopUp extends React.Component {
       useWebWorker: true
     }
     try {
-      console.log('shaktiman')
       const compressedFile = await imageCompression(filename, options)
       console.log(
         'compressedFile instanceof Blob',
@@ -62,18 +53,41 @@ class ProfilePicturePopUp extends React.Component {
           headers: headers,
 
           onUploadProgress: ProgressEvent => {
-            // this.setState({
-            //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-            // })
             console.log(ProgressEvent.loaded, ProgressEvent.total)
           }
         })
         .then(res => {
-          console.log('sadasd' + res.statusText);
-          
-          this.props.handleClose();
-          this.props.toggleUpdate();
-          
+          this.props.handleClose()
+          this.props.toggleUpdate()
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  removeSubmitHandler (event) {
+    console.log('Remove');
+    const url = `http://localhost:4000/api/user`
+
+    const { jwttoken } = localStorage
+
+    try {
+      const formData = new FormData()
+      formData.append('signal', 'remove')
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Token ${jwttoken}`
+      }
+      axios
+        .put(url, formData, {
+          headers: headers,
+
+          onUploadProgress: ProgressEvent => {
+            console.log(ProgressEvent.loaded, ProgressEvent.total)
+          }
+        })
+        .then(res => {
+          this.props.handleClose()
+          this.props.toggleUpdate()
         })
     } catch (error) {
       console.log(error)
@@ -93,7 +107,11 @@ class ProfilePicturePopUp extends React.Component {
           >
             Upload Photo
           </Button>
-          <Button className='change-picture-pop-btn' fluid>
+          <Button
+            className='change-picture-pop-btn'
+            fluid
+            onClick={this.removeSubmitHandler}
+          >
             Remove Current Photo
           </Button>
           <Button
