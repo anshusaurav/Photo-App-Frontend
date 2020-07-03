@@ -376,11 +376,17 @@ table {
       align-items: center;
     }
     .profile-picture-inner-div {
-      width: 150px;
-      height: 150px;
+      min-width: 150px;
+      min-height: 150px;
+      max-width: 150px;
+      max-height: 150px;
       img {
         cursor: pointer;
         width: 100%;
+        min-width: 150px;
+      min-height: 150px;
+      max-width: 150px;
+      max-height: 150px;
         border-radius: 50%;
       }
     }
@@ -740,16 +746,7 @@ table {
 //home page css endds here
 
 //Image Pop up Starts here
-// .image-elem-popup-small{
-//   position: fixed;
-//   min-width:60vw;
-//   min-height:60vh;
-//   top: 20vh;
-//   left: 20vw;
-//   -webkit-transform: none;
-//   transform: none;
-//   margin-top: 0;
-// }
+
 .image-elem-popup-small:before{
   display: none;
 }
@@ -798,6 +795,7 @@ table {
   .pop-up-des-div {
     padding-top: 1rem;
     padding-bottom: 1rem;
+    position: relative;
   }
   .popup-image-author-content {
     padding: 0 1rem;
@@ -808,6 +806,9 @@ table {
     grid-template-columns: auto auto;
     align-items: center;
     justify-content: space-between;
+    min-height: 15%;
+    max-height: 15%;
+    height: 15%;
   }
   .popup-image-author-profile {
     display: grid;
@@ -827,19 +828,7 @@ table {
       font-weight: 500;
       color: #0095f6;
       letter-spacing: 0.4px;
-      &:active {
-        background-color: transparent;
-      }
-      &:hover {
-        background-color: transparent;
-      }
-      &:visited {
-        background-color: transparent;
-        color: #0095f6;
-      }
-      &:focus {
-        background-color: transparent;
-      }
+      
     }
     .pop-up-unfollow-btn{
       background-color: transparent;
@@ -847,20 +836,16 @@ table {
       font-weight: 500;
       color: #262626;
       letter-spacing: 0.4px;
-      &:active {
-        background-color: transparent;
-      }
-      &:hover {
-        background-color: transparent;
-      }
-      &:visited {
-        background-color: transparent;
-        color: #262626;
-      }
-      &:focus {
-        background-color: transparent;
-      }
+      
     }
+  }
+  .pop-up-image-comment-complete-div{
+    min-height: 40%;
+    max-height: 40%;
+  }
+  .pop-up-image-action-complete-div{
+    min-height: 20%;
+    max-height: 20%;
   }
   .popup-common-des {
     margin-top: 0.5rem;
@@ -923,13 +908,18 @@ table {
   align-items: stretch;
   flex-direction: column;
   flex-shrink: 0;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0.5rem;
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
 }
 .popup-add-comment-form {
   align-items: center;
   display: flex;
 
-  border-top: 1px solid #efefef;
-  border-bottom: 1px solid #efefef;
+  
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   width: 100%;
@@ -938,6 +928,7 @@ table {
   .popup-add-comment-input-text {
     display: flex;
     flex-grow: 1;
+    font-family: lato;
   }
   .popup-add-comment-input-text::placeholder {
     font-family: lato;

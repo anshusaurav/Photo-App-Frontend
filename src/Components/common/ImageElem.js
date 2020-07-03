@@ -1,6 +1,5 @@
 import React from 'react'
 import { Popup } from 'semantic-ui-react'
-import FeedImageElem from './FeedImageElem'
 import PopUpImageElem from './PopUpImageElem'
 class ImageElem extends React.Component {
   constructor(props){

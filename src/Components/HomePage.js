@@ -106,7 +106,7 @@ class HomePage extends React.Component {
                         <div className='feed-suggestion-profile-inner-div'>
                           <div className='feed-sugg-profile-user'>
                             <div className='feed-sugg-profile-img-div'>
-                              <img src={elem.image}></img>
+                              <img src={elem.image} alt=''></img>
                             </div>
                             <p>{elem.name}</p>
                           </div>

@@ -34,6 +34,8 @@ class ProfileHero extends React.Component {
         },
       });
       const data = await response.json();
+      console.log(data);
+      
       if (!data.errors) {
         this.setState({ profile: data.user });
       }

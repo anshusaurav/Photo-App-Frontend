@@ -331,6 +331,7 @@ class PopUpImageElem extends React.Component {
                   </span>
                 </Card.Content>
                 <Card.Content>
+                <div className='pop-up-image-comment-complete-div'>
                   <Card.Description className='popup-common-des  popup-comment-elem-single'>
                     <Image
                       size='mini'
@@ -354,7 +355,7 @@ class PopUpImageElem extends React.Component {
                         </Card.Description>
                       )
                     })}
-
+                  
                   <Card.Meta className='popup-common-des popup-more-comment-anchor'>
                     {this.state.img.commentsCount !== 0
                       ? `View All ${this.state.img.commentsCount} ${
@@ -364,6 +365,7 @@ class PopUpImageElem extends React.Component {
                         }`
                       : `Be the first one to respond`}
                   </Card.Meta>
+                  </div>
                   <Card.Description className='popup-image-inter-content'>
                     <div className='popup-image-action-div'>
                       <span>

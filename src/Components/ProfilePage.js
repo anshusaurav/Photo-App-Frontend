@@ -40,7 +40,7 @@ class ProfilePage extends React.Component {
   }
   render () {
     const { toggleLoggedIn } = this.props;
-    const { profile, imagepostList } = this.state;
+    const { imagepostList } = this.state;
     return (
       <div className='full-container'>
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />

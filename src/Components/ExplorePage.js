@@ -8,7 +8,7 @@ class ExplorePage extends React.Component {
   }
   async savePosts() {
     const { jwttoken } = localStorage;
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     const url = `http://localhost:4000/api/p`;
     try {
       const response = await fetch(url, {
