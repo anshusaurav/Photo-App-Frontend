@@ -331,102 +331,104 @@ class PopUpImageElem extends React.Component {
                   </span>
                 </Card.Content>
                 <Card.Content>
-                <div className='pop-up-image-comment-complete-div'>
-                  <Card.Description className='popup-common-des  popup-comment-elem-single'>
-                    <Image
-                      size='mini'
-                      className='popup-comment-comment-user-img'
-                      src={this.state.img.author.image}
-                    ></Image>
-                    <strong>{this.state.img.author.username} </strong>
-                    {this.state.img.description}
-                  </Card.Description>
-                  {comments &&
-                    comments.map(comment => {
-                      return (
-                        <Card.Description className='popup-common-des popup-comment-elem-single'>
-                          <Image
-                            size='mini'
-                            className='popup-comment-comment-user-img'
-                            src={comment.author.image}
-                          ></Image>
-                          <strong>{comment.author.username}</strong>
-                          {comment.body}
-                        </Card.Description>
-                      )
-                    })}
-                  
-                  <Card.Meta className='popup-common-des popup-more-comment-anchor'>
-                    {this.state.img.commentsCount !== 0
-                      ? `View All ${this.state.img.commentsCount} ${
-                          this.state.img.commentsCount !== 1
-                            ? 'comments'
-                            : 'comment'
-                        }`
-                      : `Be the first one to respond`}
-                  </Card.Meta>
+                  <div className='pop-up-image-comment-complete-div'>
+                    <Card.Description className='popup-common-des  popup-comment-elem-single'>
+                      <Image
+                        size='mini'
+                        className='popup-comment-comment-user-img'
+                        src={this.state.img.author.image}
+                      ></Image>
+                      <strong>{this.state.img.author.username} </strong>
+                      {this.state.img.description}
+                    </Card.Description>
+                    {comments &&
+                      comments.map(comment => {
+                        return (
+                          <Card.Description className='popup-common-des popup-comment-elem-single'>
+                            <Image
+                              size='mini'
+                              className='popup-comment-comment-user-img'
+                              src={comment.author.image}
+                            ></Image>
+                            <strong>{comment.author.username}</strong>
+                            {comment.body}
+                          </Card.Description>
+                        )
+                      })}
+
+                    <Card.Meta className='popup-common-des popup-more-comment-anchor'>
+                      {this.state.img.commentsCount !== 0
+                        ? `View All ${this.state.img.commentsCount} ${
+                            this.state.img.commentsCount !== 1
+                              ? 'comments'
+                              : 'comment'
+                          }`
+                        : `Be the first one to respond`}
+                    </Card.Meta>
                   </div>
-                  <Card.Description className='popup-image-inter-content'>
-                    <div className='popup-image-action-div'>
-                      <span>
-                        <Transition
-                          animation={animation}
-                          duration={duration}
-                          visible={visible}
-                        >
+                  <div className='pop-up-image-action-complete-div'>
+                    <Card.Description className='popup-image-inter-content'>
+                      <div className='popup-image-action-div'>
+                        <span>
+                          <Transition
+                            animation={animation}
+                            duration={duration}
+                            visible={visible}
+                          >
+                            <Icon
+                              className='popup-action-elem'
+                              name={
+                                this.state.img.favorited
+                                  ? 'heart large red'
+                                  : 'heart outline large'
+                              }
+                              onClick={this.toggleLike}
+                            />
+                          </Transition>
+                        </span>
+                        <span>
+                          {' '}
                           <Icon
                             className='popup-action-elem'
-                            name={
-                              this.state.img.favorited
-                                ? 'heart large red'
-                                : 'heart outline large'
-                            }
-                            onClick={this.toggleLike}
-                          />
-                        </Transition>
-                      </span>
-                      <span>
-                        {' '}
-                        <Icon
-                          className='popup-action-elem'
-                          name='comment outline large'
-                          onClick={this.putFocusOnTextArea}
-                        />{' '}
-                      </span>
-                      <span>
-                        {' '}
-                        <Icon
-                          className='popup-action-elem'
-                          name='send outline large'
-                        />{' '}
-                      </span>
-                    </div>
+                            name='comment outline large'
+                            onClick={this.putFocusOnTextArea}
+                          />{' '}
+                        </span>
+                        <span>
+                          {' '}
+                          <Icon
+                            className='popup-action-elem'
+                            name='send outline large'
+                          />{' '}
+                        </span>
+                      </div>
 
-                    <div>
-                      <span>
-                        {' '}
-                        <Icon
-                          className='popup-action-elem'
-                          name='bookmark outline large'
-                        />{' '}
-                      </span>
-                    </div>
-                  </Card.Description>
-                  <Card.Description className='popup-common-des'>
-                    {' '}
-                    <p className='popup-image-like-count'>
-                      {this.state.img.favoritesCount !== 0
-                        ? `${this.state.img.favoritesCount} ${
-                            this.state.img.favoritesCount !== 1
-                              ? 'likes'
-                              : 'like'
-                          }`
-                        : `Be the first one to like`}
-                    </p>
-                  </Card.Description>
-                  <Card.Description className='popup-image-elem-date popup-common-des'>
-                    {this.timeAgo(new Date(this.state.img.createdAt))}
-                  </Card.Description>
+                      <div>
+                        <span>
+                          {' '}
+                          <Icon
+                            className='popup-action-elem'
+                            name='bookmark outline large'
+                          />{' '}
+                        </span>
+                      </div>
+                    </Card.Description>
+                    <Card.Description className='popup-common-des'>
+                      {' '}
+                      <p className='popup-image-like-count'>
+                        {this.state.img.favoritesCount !== 0
+                          ? `${this.state.img.favoritesCount} ${
+                              this.state.img.favoritesCount !== 1
+                                ? 'likes'
+                                : 'like'
+                            }`
+                          : `Be the first one to like`}
+                      </p>
+                    </Card.Description>
+                    <Card.Description className='popup-image-elem-date popup-common-des'>
+                      {this.timeAgo(new Date(this.state.img.createdAt))}
+                    </Card.Description>
+                  </div>
                 </Card.Content>
                 <div className='popup-comment-form-outer-div'>
                   <Form

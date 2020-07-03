@@ -9,7 +9,8 @@ import {
   Segment,
   Divider,
   Header,
-  Icon
+  Icon,
+  Input
 } from 'semantic-ui-react'
 import { withRouter, Link } from 'react-router-dom'
 
@@ -26,7 +27,7 @@ class SignupForm extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.contextRef = createRef()
+    this.usernameRef = createRef()
   }
   handleChange (event, { name, value }) {
     this.setState({ [name]: value })
@@ -91,6 +92,9 @@ class SignupForm extends React.Component {
 
     return { result: false, data }
   }
+  componentDidMount(){
+    this.usernameRef.current.focus();
+  }
   render () {
     const { email, fullname, username, password,errorMsgs } = this.state
     return (
@@ -120,15 +124,16 @@ class SignupForm extends React.Component {
               ))}
             <Form size='large' onSubmit={this.handleSubmit}>
               <Segment>
-                <Form.Input
+                <Input
                   fluid
                   placeholder='E-mail address'
                   name='email'
                   value={email}
                   onChange={this.handleChange}
+                  ref={this.usernameRef}
                   required
                 />
-                <Form.Input
+                <Input
                   fluid
                   placeholder='Full Name'
                   name='fullname'
@@ -136,7 +141,7 @@ class SignupForm extends React.Component {
                   onChange={this.handleChange}
                   required
                 />
-                <Form.Input
+                <Input
                   fluid
                   placeholder='Username'
                   name='username'
@@ -144,7 +149,7 @@ class SignupForm extends React.Component {
                   onChange={this.handleChange}
                   required
                 />
-                <Form.Input
+                <Input
                   fluid
                   placeholder='Password'
                   type='password'

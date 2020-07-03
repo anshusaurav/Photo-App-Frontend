@@ -2,26 +2,26 @@ import React from 'react'
 import { Popup } from 'semantic-ui-react'
 import PopUpImageElem from './PopUpImageElem'
 class ImageElem extends React.Component {
-  constructor(props){
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       isOpen: false
     }
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleOpen = this.handleOpen.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
-  handleOpen(){
-    this.setState({isOpen: true})
+  handleOpen () {
+    this.setState({ isOpen: true })
   }
-  handleClose(){
-    this.setState({isOpen: false})
+  handleClose () {
+    this.setState({ isOpen: false })
   }
   render () {
-    const {commentsCount, favoritesCount, filename} = this.props.img;
+    const { commentsCount, favoritesCount, filename } = this.props.img
     return (
       <Popup
         on='click'
-        open = {this.state.isOpen}
+        open={this.state.isOpen}
         onOpen={this.handleOpen}
         style={{
           position: 'fixed',
@@ -42,10 +42,12 @@ class ImageElem extends React.Component {
                 <div className='content-overlay'></div>
                 <div className='content-details fadeIn-bottom'>
                   <h2 className='content-title'>
-                    <i aria-hidden='true' className='like icon'></i> {favoritesCount}
+                    <i aria-hidden='true' className='like icon'></i>{' '}
+                    {favoritesCount}
                   </h2>
                   <h2 className='content-title'>
-                    <i aria-hidden='true' className='comment  icon'></i> {commentsCount}
+                    <i aria-hidden='true' className='comment  icon'></i>{' '}
+                    {commentsCount}
                   </h2>
                 </div>
               </div>
@@ -53,7 +55,10 @@ class ImageElem extends React.Component {
           </div>
         }
       >
-        <PopUpImageElem img={this.props.img.slug} handleClose ={this.handleClose} />
+        <PopUpImageElem
+          img={this.props.img.slug}
+          handleClose={this.handleClose}
+        />
       </Popup>
     )
   }

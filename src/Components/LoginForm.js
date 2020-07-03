@@ -8,6 +8,7 @@ import {
   Message,
   Segment,
   Divider,
+  Input,
   Icon
 } from 'semantic-ui-react'
 
@@ -23,7 +24,7 @@ class LoginForm extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.contextRef = createRef()
+    this.usernameRef = createRef()
   }
 
   handleChange (event, { name, value }) {
@@ -38,10 +39,10 @@ class LoginForm extends React.Component {
     event.preventDefault()
     this.submitLogin()
   }
-  
+
   async submitLogin () {
-    const { email, password } = this.state;
-    const {history, toggleLoggedIn} = this.props;
+    const { email, password } = this.state
+    const { history, toggleLoggedIn } = this.props
     const user = { user: { email, password } }
     const url = 'http://localhost:4000/api/users/login'
 
@@ -54,42 +55,45 @@ class LoginForm extends React.Component {
       let data = await response.json()
       console.log(data)
       if (!data.errors) {
-        localStorage.setItem('jwttoken', data.user.token);
-        localStorage.setItem('loggedInUser',JSON.stringify(data.user));
-        toggleLoggedIn();
-        history.push('/');
+        localStorage.setItem('jwttoken', data.user.token)
+        localStorage.setItem('loggedInUser', JSON.stringify(data.user))
+        toggleLoggedIn()
+        history.push('/')
       } else {
         const errors = []
         for (const [key, value] of Object.entries(data.errors)) {
           errors.push(`${key} ${value}`)
         }
-        this.setState({ errorMsgs: errors });
-
+        this.setState({ errorMsgs: errors })
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error)
       const errors = []
-      errors.push(error.toString());
+      errors.push(error.toString())
       this.setState({ errorMsgs: errors })
     }
   }
   checkValidUser () {
-    const { email} = this.state
-    let data = [];
-    let res = true;
+    const { email } = this.state
+    let data = []
+    let res = true
     if (email.length < 5 || email.indexOf('@') <= 0) {
-      res = false;
-      data.push('email');
+      res = false
+      data.push('email')
     }
     if (res) return { result: true, data }
 
     return { result: false, data }
   }
-
+  componentDidMount () {
+    this.usernameRef.current.focus()
+  }
   render () {
+    console.log('render', this.usernameRef);
     const { email, password, errorMsgs } = this.state
     return (
       <div className='form-container'>
+      {/* <input type='text' ref={this.usernameRef} placeholder='dasdas'/> */}
         <Grid
           textAlign='center'
           style={{ height: '100vh' }}
@@ -100,15 +104,16 @@ class LoginForm extends React.Component {
             <FormHeaderCustom>Instagram</FormHeaderCustom>
             <Form size='large' onSubmit={this.handleSubmit}>
               <Segment>
-                <Form.Input
+                <Input
                   fluid
                   placeholder='E-mail address'
                   name='email'
                   value={email}
                   onChange={this.handleChange}
+                  ref={this.usernameRef}
                   required
                 />
-                <Form.Input
+                <Input
                   fluid
                   placeholder='Password'
                   type='password'
@@ -149,7 +154,7 @@ class LoginForm extends React.Component {
             <Message>
               Don't have an account?{' '}
               <Link to='/signup'>
-                <Button ref={this.contextRef}>Sign Up</Button>
+                <Button>Sign Up</Button>
               </Link>
             </Message>
           </Grid.Column>
