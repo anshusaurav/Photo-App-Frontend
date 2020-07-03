@@ -1,51 +1,86 @@
-import React from "react";
-import HeaderNav from "./common/HeaderNav";
-import ImageElem from "./common/ImageElem";
+import React from 'react'
+import HeaderNav from './common/HeaderNav'
+import ImageElem from './common/ImageElem'
+import axios from 'axios'
+import InfiniteScroll from 'react-infinite-scroll-component'
 class ExplorePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { imagepostList: null };
-  }
-  async savePosts() {
-    const { jwttoken } = localStorage;
-    // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    const url = `http://localhost:4000/api/p`;
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/JSON",
-          Authorization: `Token ${jwttoken}`,
-        },
-      });
-      const data = await response.json();
-      if (!data.errors) {
-        this.setState({ imagepostList: data.imageposts });
-      }
-    } catch (error) {
-      console.error("Error: " + error);
+  constructor (props) {
+    super(props)
+    this.state = {
+      imagepostList: [],
+      limit: 9,
+      offset: 1,
+      hasMoreImages: true,
+      totalImages: 0
     }
   }
-  componentDidMount() {
-    this.savePosts();
+
+  componentDidMount () {
+    const { jwttoken } = localStorage
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${jwttoken}`
+    }
+    // const url = `http://localhost:4000/api/p/feed`
+    const { offset, limit } = this.state
+    axios
+      .get(`http://localhost:4000/api/p?offset=${offset}&limit=${limit}`, {
+        headers: headers
+      })
+      .then(res => {
+        this.setState({ imagepostList: res.data.imageposts })
+        this.setState({ totalImages: res.data.imagepostCount })
+      })
   }
-  render() {
-    const { imagepostList } = this.state;
-    const { toggleLoggedIn } = this.props;
+
+  fetchImages = () => {
+    const { jwttoken } = localStorage
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${jwttoken}`
+    }
+    // const url = `http://localhost:4000/api/p/feed`
+    const { offset, limit } = this.state
+    if (offset + limit >= this.state.totalImages)
+      this.setState({ hasMoreImages: false })
+    this.setState({ offset: this.state.offset + limit })
+    axios
+      .get(
+        `http://localhost:4000/api/p?offset=${offset + limit}&limit=${limit}`,
+        {
+          headers: headers
+        }
+      )
+      .then(res => {
+        this.setState(prevState => ({
+          imagepostList: prevState.imagepostList.concat(res.data.imageposts)
+        }))
+      })
+  }
+  render () {
+    const { imagepostList } = this.state
+    const { toggleLoggedIn } = this.props
     return (
-      <div className="full-container">
+      <div className='full-container'>
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
         <div>
-          <div className="explore-img-div container">
-            {imagepostList &&
-              imagepostList.map((img) => {
-                return <ImageElem img={img} />;
+          <div>
+            <InfiniteScroll
+              className='explore-img-div container'
+              dataLength={this.state.imagepostList.length}
+              next={this.fetchImages}
+              hasMore={this.state.hasMoreImages}
+              loader={<p>Loading...</p>}
+            >
+              {imagepostList.map(img => {
+                return <ImageElem img={img} key={img.id} />
               })}
+            </InfiniteScroll>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default ExplorePage;
+export default ExplorePage

@@ -233,7 +233,7 @@ class FeedImageElem extends React.Component {
         }
       })
       const data = await response.json()
-      console.log('image', data)
+      // console.log('image', data)
       if (!data.errors) {
         this.setState({ img: data.imagepost })
       }
@@ -383,7 +383,7 @@ class FeedImageElem extends React.Component {
                 })}
 
               <Card.Description className='feed-image-elem-date'>
-                2 days ago
+              {this.timeAgo(new Date(this.state.img.createdAt))}
               </Card.Description>
             </Card.Content>
             <div className='comment-form-outer-div'>

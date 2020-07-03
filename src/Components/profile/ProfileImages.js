@@ -1,22 +1,79 @@
 import React from 'react'
 import ImageElem from './../common/ImageElem'
+import axios from 'axios'
+import InfiniteScroll from 'react-infinite-scroll-component'
 class ProfileImages extends React.Component {
- 
+  constructor (props) {
+    super(props)
+    this.state = {
+      imagepostList: [],
+      isUpdated: false,
+      limit: 6,
+      offset: 1,
+      hasMoreImages: true,
+      totalImages: 0
+    }
+  }
 
+  componentDidMount () {
+    const { jwttoken } = localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${jwttoken}`
+    }
+    const { offset, limit } = this.state
+    axios
+      .get(
+        `http://localhost:4000/api/p?author=${loggedInUser.username}&offset=${offset}&limit=${limit}`,
+        {
+          headers: headers
+        }
+      )
+      .then(res => {
+        this.setState({ imagepostList: res.data.imageposts });
+        this.setState({ totalImages: res.data.imagepostCount });
+      })
+  }
+  fetchImages = () => {
+    const { jwttoken } = localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${jwttoken}`
+    }
+    const { offset, limit } = this.state;
+    if (offset + limit >= this.state.totalImages)
+      this.setState({ hasMoreImages: false })
+    this.setState({ offset: this.state.offset + limit })
+    axios
+      .get(
+        `http://localhost:4000/api/p?author=${loggedInUser.username}&offset=${offset+limit}&limit=${limit}`,
+        {
+          headers: headers
+        }
+      )
+      .then(res =>{
+        this.setState(prevState => ({
+          imagepostList: prevState.imagepostList.concat(res.data.imageposts)
+        }))
+        })
+      
+  }
   render () {
-    
-    const { imagepostList } = this.props
-    // console.log('IM ', imagepostList)
+    const { imagepostList } = this.state;
     return (
-      <div className='profile-img-div'>
-        {imagepostList &&
-          imagepostList.map(imagePost => {
-            return (
-              <ImageElem img={imagePost} />
-            )
-          })}
-        
-      </div>
+      <InfiniteScroll
+        className='profile-img-div container'
+        dataLength={this.state.imagepostList.length}
+        next={this.fetchImages}
+        hasMore={this.state.hasMoreImages}
+        loader={<p>Loading...</p>}
+      >
+        {imagepostList.map(img => {
+          return <ImageElem img={img} key={img.id} />
+        })}
+      </InfiniteScroll>
     )
   }
 }
