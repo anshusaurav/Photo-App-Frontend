@@ -4,13 +4,14 @@ import HeaderNav from './common/HeaderNav'
 import { Button } from 'semantic-ui-react'
 import FeedImageElem from './common/FeedImageElem'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import {FeedHeaderLoader, FeedMainLoader, FeedFooterLoader} from './loaders/loaders'
 import axios from 'axios'
 class HomePage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       imagepostList: [],
-      limit: 3,
+      limit: 6,
       offset: 1,
       hasMoreImages: true,
       totalImages: 0
@@ -18,7 +19,6 @@ class HomePage extends React.Component {
   }
 
   componentDidMount () {
-    // this.savePosts()
     const { jwttoken } = localStorage
     const headers = {
       'Content-Type': 'application/json',
@@ -33,7 +33,6 @@ class HomePage extends React.Component {
       .then(res => {
         this.setState({ imagepostList: res.data.imageposts })
         this.setState({ totalImages: res.data.imagepostCount })
-        // console.log('Initial Fetch: ' + res.data.imageposts.map(post=>post.filename));
       })
   }
   fetchImages = () => {
@@ -42,20 +41,22 @@ class HomePage extends React.Component {
       'Content-Type': 'application/json',
       Authorization: `Token ${jwttoken}`
     }
-    // const url = `http://localhost:4000/api/p/feed`
     const { offset, limit } = this.state
     if (offset + limit >= this.state.totalImages)
       this.setState({ hasMoreImages: false })
     this.setState({ offset: this.state.offset + limit })
     axios
-      .get(`http://localhost:4000/api/p/feed?offset=${offset+limit}&limit=${limit}`, {
-        headers: headers
-      })
+      .get(
+        `http://localhost:4000/api/p/feed?offset=${offset +
+          limit}&limit=${limit}`,
+        {
+          headers: headers
+        }
+      )
       .then(res => {
         this.setState(prevState => ({
           imagepostList: prevState.imagepostList.concat(res.data.imageposts)
         }))
-        // console.log('More Fetch: ' + res.data.imageposts.map(post=>post.filename));
       })
   }
   render () {
@@ -94,7 +95,7 @@ class HomePage extends React.Component {
                   dataLength={this.state.imagepostList.length}
                   next={this.fetchImages}
                   hasMore={this.state.hasMoreImages}
-                  loader={<p>Loading...</p>}
+                  loader={<><FeedHeaderLoader/><FeedHeaderLoader/><FeedHeaderLoader/></> }
                 >
                   {imagepostList.map(img => {
                     return <FeedImageElem img={img.slug} key={img.id} />

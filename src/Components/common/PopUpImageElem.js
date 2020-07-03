@@ -21,7 +21,10 @@ class PopUpImageElem extends React.Component {
       img: null,
       animation: 'tada',
       duration: 500,
-      visible: true
+      visible: true,
+      animationFollow: 'pulse',
+      durationFollow: 600,
+      visibleFollow: true
     }
     this.textAreaRef = createRef()
     this.changeHandler = this.changeHandler.bind(this)
@@ -63,7 +66,7 @@ class PopUpImageElem extends React.Component {
       console.log(data)
       if (!data.errors) {
         this.setState({ isUpdated: !this.state.isUpdated })
-        this.toggleVisibility()
+        this.toggleVisibilityFollow()
       } else {
         const errors = []
         for (const [key, value] of Object.entries(data.errors)) {
@@ -78,6 +81,8 @@ class PopUpImageElem extends React.Component {
       this.setState({ errorMsgs: errors })
     }
   }
+  toggleVisibilityFollow = () =>
+    this.setState(prevState => ({ visibleFollow: !prevState.visibleFollow }))
   toggleVisibility = () =>
     this.setState(prevState => ({ visible: !prevState.visible }))
 
@@ -207,15 +212,14 @@ class PopUpImageElem extends React.Component {
       })
       const data = await response.json()
       if (!data.errors) {
-        this.setState({ comments: data.comments }, () => {
-          let comments = [...this.state.comments]
+        let  comments= [...data.comments]; 
           comments.forEach(comment => {
             TimeAgo.addLocale(en)
             const timeAgo = new TimeAgo('en-US')
             comment.createdAt = timeAgo.format(new Date(comment.createdAt))
-          })
-          this.setState({ comments })
-        })
+          });
+        this.setState({ comments })
+      
       }
     } catch (error) {
       console.error('Error: ' + error)
@@ -233,8 +237,8 @@ class PopUpImageElem extends React.Component {
           Authorization: `Token ${jwttoken}`
         }
       })
-      const data = await response.json()
-      console.log('image', data)
+      const data = await response.json();
+      console.log('image', data);
       if (!data.errors) {
         this.setState({ img: data.imagepost })
       }
@@ -265,7 +269,10 @@ class PopUpImageElem extends React.Component {
       comments,
       animation,
       duration,
-      visible
+      visible,
+      animationFollow,
+      durationFollow,
+      visibleFollow
     } = this.state
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
 
@@ -307,22 +314,31 @@ class PopUpImageElem extends React.Component {
                       {this.state.img.author.username}
                     </span>
                     <span>
-                      {this.state.img.author.following ? (
-                        <Button
-                          className='pop-up-unfollow-btn'
-                          onClick={this.toggleFollow}
-                        >
-                          Following
-                        </Button>
-                      ) : this.state.img.author.username !==
-                        loggedInUser.username ? (
-                        <Button
-                          className='pop-up-follow-btn'
-                          onClick={this.toggleFollow}
-                        >
-                          Follow
-                        </Button>
-                      ) : null}
+                      <Transition
+                        animation={animationFollow}
+                        duration={durationFollow}
+                        visible={visibleFollow}
+                      >
+                        {this.state.img.author.following ? (
+                          <Button
+                            className='pop-up-unfollow-btn'
+                            onClick={this.toggleFollow}
+                            color= 'instagram'
+                            style={{borderRadius: 8}}
+                          >
+                            Following
+                          </Button>
+                        ) : this.state.img.author.username !==
+                          loggedInUser.username ? (
+                          <Button
+                            className='pop-up-follow-btn'
+                            onClick={this.toggleFollow}
+                            style={{borderRadius: 8}}
+                          >
+                            Follow
+                          </Button>
+                        ) : null}
+                      </Transition>
                     </span>
                   </div>
                   <span>

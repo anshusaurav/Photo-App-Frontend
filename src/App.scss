@@ -451,7 +451,9 @@ table {
   grid-auto-flow: dense;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 292px;
-
+  .ui.placeholder{
+    margin-top: 0 !important;
+  }
   .explore-item {
     display: flex;
 
@@ -589,8 +591,12 @@ table {
   grid-gap: 25px;
   min-height: 100vh;
   .feed-images-div {
+    .feed-loader-full-single{
+      padding: 1rem !important;
+    }
     .feed-image-card {
       width: 100%;
+      // padding: 1rem !important;
       .feed-image-author-content {
         display: grid;
         grid-template-columns: auto auto;
@@ -633,6 +639,7 @@ table {
         }
         .action-elem {
           color: rgba(0, 0, 0, 0.85);
+          cursor: pointer;
         }
       }
     }
@@ -833,18 +840,31 @@ table {
     }
     .pop-up-follow-btn{
       background-color: transparent;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #0095f6;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #3990c9;
       letter-spacing: 0.4px;
+      &:active {
+        background-color: transparent;
+      }
+      &:hover {
+        background-color: transparent;
+      }
+      &:visited {
+        background-color: transparent;
+      }
+      &:focus {
+        background-color: transparent;
+      }
       
     }
     .pop-up-unfollow-btn{
       background-color: transparent;
-      font-size: 0.95rem;
-      font-weight: 500;
+      font-size: 0.9rem;
+      font-weight: 600;
       color: #262626;
       letter-spacing: 0.4px;
+      
       
     }
   }
@@ -902,6 +922,7 @@ table {
     }
     .popup-action-elem {
       color: rgba(0, 0, 0, 0.85);
+      cursor: pointer;
     }
   }
 }
@@ -1032,3 +1053,4 @@ table {
     }
   }
 }
+

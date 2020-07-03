@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Popup } from "semantic-ui-react";
 import ProfilePicturePopUp from "../common/ProfilePicturePopUp";
+import {SingleImageLoaderMedium} from './../loaders/loaders'
 class ProfileHero extends React.Component {
   constructor(props) {
     super(props);
@@ -81,7 +82,7 @@ class ProfileHero extends React.Component {
               </Popup>
             </div>
           ) : (
-            <p>Loading</p>
+            <SingleImageLoaderMedium/>
           )}
         </div>
         {this.state.profile ? (
@@ -108,7 +109,7 @@ class ProfileHero extends React.Component {
             </div>
           </div>
         ) : (
-          <p>Loading</p>
+          null
         )}
       </div>
     );

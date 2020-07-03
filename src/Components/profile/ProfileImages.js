@@ -2,6 +2,8 @@ import React from 'react'
 import ImageElem from './../common/ImageElem'
 import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { SingleImageLoaderLarge } from './../loaders/loaders'
+import { Grid } from 'semantic-ui-react'
 class ProfileImages extends React.Component {
   constructor (props) {
     super(props)
@@ -31,8 +33,10 @@ class ProfileImages extends React.Component {
         }
       )
       .then(res => {
-        this.setState({ imagepostList: res.data.imageposts });
-        this.setState({ totalImages: res.data.imagepostCount });
+        this.setState({ imagepostList: res.data.imageposts })
+        this.setState({ totalImages: res.data.imagepostCount })
+        if (offset + limit >= res.data.imagepostCount)
+          this.setState({ hasMoreImages: false })
       })
   }
   fetchImages = () => {
@@ -42,33 +46,40 @@ class ProfileImages extends React.Component {
       'Content-Type': 'application/json',
       Authorization: `Token ${jwttoken}`
     }
-    const { offset, limit } = this.state;
+    const { offset, limit } = this.state
     if (offset + limit >= this.state.totalImages)
       this.setState({ hasMoreImages: false })
     this.setState({ offset: this.state.offset + limit })
     axios
       .get(
-        `http://localhost:4000/api/p?author=${loggedInUser.username}&offset=${offset+limit}&limit=${limit}`,
+        `http://localhost:4000/api/p?author=${
+          loggedInUser.username
+        }&offset=${offset + limit}&limit=${limit}`,
         {
           headers: headers
         }
       )
-      .then(res =>{
+      .then(res => {
         this.setState(prevState => ({
           imagepostList: prevState.imagepostList.concat(res.data.imageposts)
         }))
-        })
-      
+      })
   }
   render () {
-    const { imagepostList } = this.state;
+    const { imagepostList } = this.state
     return (
       <InfiniteScroll
         className='profile-img-div container'
         dataLength={this.state.imagepostList.length}
         next={this.fetchImages}
-        hasMore={this.state.hasMoreImages}
-        loader={<p>Loading...</p>}
+        hasMore={imagepostList && this.state.hasMoreImages}
+        loader={
+          <div style={{display: 'grid', gridTemplateColumns:'300px 300px 300px', gridGap: '30px'}}>
+            <SingleImageLoaderLarge />
+            <SingleImageLoaderLarge />
+            <SingleImageLoaderLarge />
+          </div>
+        }
       >
         {imagepostList.map(img => {
           return <ImageElem img={img} key={img.id} />
