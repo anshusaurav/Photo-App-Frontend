@@ -584,6 +584,7 @@ table {
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-gap: 25px;
+  min-height: 100vh;
   .feed-images-div {
     .feed-image-card {
       width: 100%;
@@ -657,6 +658,7 @@ table {
       .add-comment-input-text {
         display: flex;
         flex-grow: 1;
+        font-family: lato;
       }
       .add-comment-input-text::placeholder {
         font-family: lato;
