@@ -2,14 +2,17 @@ import React from 'react'
 
 import HeaderNav from './common/HeaderNav'
 import { Button } from 'semantic-ui-react'
-import FeedImageElem from './common/FeedImageElem'
+import FeedImageElem from './common/FeedImageElem';
+import InfiniteScroll from 'react-infinite-scroll-component'
+import axios from 'axios';
 class HomePage extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { imagepostList: null }
+    this.state = { imagepostList: [], limit:4, offset:1 }
   }
   async savePosts () {
-    const { jwttoken } = localStorage
+    const { jwttoken } = localStorage;
+
     const url = `http://localhost:4000/api/p/feed`
     try {
       const response = await fetch(url, {
@@ -29,9 +32,31 @@ class HomePage extends React.Component {
     }
   }
   componentDidMount () {
-    this.savePosts()
-  }
+    // this.savePosts()
+    const { jwttoken } = localStorage;
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${jwttoken}`
+    }
+    // const url = `http://localhost:4000/api/p/feed`
+    const {offset, limit} = this.state;
+    axios.get(`http://localhost:4000/api/p/feed?offset=${offset}&limit=${limit}`, {headers:headers})
+    .then(res => this.setState({imagepostList: res.data.imageposts}));
 
+  }
+  fetchImages = () =>{
+    
+    const { jwttoken } = localStorage;
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Token ${jwttoken}`
+    }
+    // const url = `http://localhost:4000/api/p/feed`
+    const {offset, limit} = this.state;
+    this.setState({offset: this.state.offset+limit})
+    axios.get(`http://localhost:4000/api/p/feed?offset=${offset}&limit=${limit}`, {headers:headers})
+    .then(res => this.setState({imagepostList: this.state.imagepostList.concat(res.data.imageposts)}));
+  }
   render () {
     var suggestions = [
       {
@@ -64,9 +89,20 @@ class HomePage extends React.Component {
           <div className='container'>
             <div className='home-page-div'>
               <div className='feed-images-div'>
-                {imagepostList && imagepostList.map(img => {
+                <InfiniteScroll
+                  dataLength = {this.state.imagepostList.length}
+                  next = {this.fetchImages}
+                  hasMore={true}
+                  loader={<p>Loading...</p>}
+                >
+                {imagepostList.map(img => {
+                  return <FeedImageElem img={img.slug} key={img.id} />
+                })
+                }
+                </InfiniteScroll>
+                {/* {imagepostList && imagepostList.map(img => {
                   return <FeedImageElem img={img.slug} />
-                })}
+                })} */}
               </div>
               <div className='feed-suggestions-div'>
                 <div className='feed-suggestion-inner-div'>
