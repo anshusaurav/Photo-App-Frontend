@@ -10,15 +10,16 @@ import {
 } from 'semantic-ui-react'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import cloneDeep from 'lodash/cloneDeep';
 class PopUpImageElem extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       isSubmitable: '',
       body: '',
-      comments: null,
+      comments: [],
       isUpdated: false,
-      img: null,
+      mainImg: {},
       animation: 'tada',
       duration: 500,
       visible: true,
@@ -31,7 +32,8 @@ class PopUpImageElem extends React.Component {
     this.submitHandler = this.submitHandler.bind(this)
     this.toggleLike = this.toggleLike.bind(this)
     this.putFocusOnTextArea = this.putFocusOnTextArea.bind(this)
-    this.toggleFollow = this.toggleFollow.bind(this)
+    this.toggleFollow = this.toggleFollow.bind(this);
+    // this.saveImage = this.saveImage.bind(this);
   }
 
   toggleFollow (event) {
@@ -39,10 +41,10 @@ class PopUpImageElem extends React.Component {
     this.submitFollowToggle()
   }
   async submitFollowToggle () {
-    const slug = this.state.img.author.username
+    const slug = this.state.mainImg.author.username;
     const { jwttoken } = localStorage
     const url = `http://localhost:4000/api/profiles/${slug}/follow`
-    const isFollowed = this.state.img.author.following
+    const isFollowed = this.state.mainImg.author.following
     try {
       let response
       if (isFollowed) {
@@ -98,7 +100,7 @@ class PopUpImageElem extends React.Component {
     const slug = this.props.img
     const { jwttoken } = localStorage
     const url = `http://localhost:4000/api/p/${slug}/favorite`
-    const isLiked = this.state.img.favorited
+    const isLiked = this.state.mainImg.favorited
     try {
       let response
       if (isLiked) {
@@ -198,10 +200,91 @@ class PopUpImageElem extends React.Component {
 
     return { result: false, data }
   }
-  async saveComments () {
+  // async saveComments () {
+  //   const slug = this.props.img
+  //   const { jwttoken } = localStorage
+  //   const url = `http://localhost:4000/api/p/${slug}/comments`
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/JSON',
+  //         Authorization: `Token ${jwttoken}`
+  //       }
+  //     })
+  //     const data = await response.json()
+  //     if (!data.errors) {
+  //       let comments = [...data.comments]
+  //       comments.forEach(comment => {
+  //         TimeAgo.addLocale(en)
+  //         const timeAgo = new TimeAgo('en-US')
+  //         comment.createdAt = timeAgo.format(new Date(comment.createdAt))
+  //       })
+  //       this.setState({ comments })
+  //     }
+  //   } catch (error) {
+  //     console.error('Error: ' + error)
+  //   }
+  // }
+  // async saveImage () {
+  //   const slug = this.props.img
+  //   const { jwttoken } = localStorage
+  //   const url = `http://localhost:4000/api/p/${slug}`
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/JSON',
+  //         Authorization: `Token ${jwttoken}`
+  //       }
+  //     })
+  //     const data = await response.json()
+  //     // console.log('imsage',  data.imagepost)
+  //     if (!data.errors && data.imagepost) {
+  //       console.log('No error')
+  //       // const img = cloneDeep(data.imagepost);
+  //       this.setState({ mainImg:data.imagepost}, function(){
+  //         console.log('img update');
+          // this.setState({isUpdated: true})
+  //       })
+  //     }
+
+  //   } catch (error) {
+  //     console.error('Error: ' + error)
+  //   }
+  // }
+  timeAgo (date) {
+    TimeAgo.addLocale(en)
+    const timeAgo = new TimeAgo('en-US')
+    return timeAgo.format(date)
+  }
+  async componentDidMount () {
+    // console.log('erererer');
     const slug = this.props.img
     const { jwttoken } = localStorage
-    const url = `http://localhost:4000/api/p/${slug}/comments`
+    let url = `http://localhost:4000/api/p/${slug}`
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/JSON',
+          Authorization: `Token ${jwttoken}`
+        }
+      })
+      const data = await response.json()
+      console.log('imsage',  data.imagepost)
+      if (!data.errors && data.imagepost) {
+        console.log('No error')
+        this.setState({ mainImg:data.imagepost}, function(){
+          console.log('img update');
+        })
+      }
+
+    } catch (error) {
+      console.error('Error: ' + error)
+    }
+
+    url = `http://localhost:4000/api/p/${slug}/comments`
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -212,23 +295,25 @@ class PopUpImageElem extends React.Component {
       })
       const data = await response.json()
       if (!data.errors) {
-        let  comments= [...data.comments]; 
-          comments.forEach(comment => {
-            TimeAgo.addLocale(en)
-            const timeAgo = new TimeAgo('en-US')
-            comment.createdAt = timeAgo.format(new Date(comment.createdAt))
-          });
+        let comments = [...data.comments]
+        comments.forEach(comment => {
+          TimeAgo.addLocale(en)
+          const timeAgo = new TimeAgo('en-US')
+          comment.createdAt = timeAgo.format(new Date(comment.createdAt))
+        })
         this.setState({ comments })
-      
       }
     } catch (error) {
       console.error('Error: ' + error)
     }
+    console.log('Mount', this.state)
   }
-  async saveImage () {
+  async componentDidUpdate (prevProps, prevState) {
+    if (this.state.isUpdated !== prevState.isUpdated) {
+      // console.log('erererer');
     const slug = this.props.img
     const { jwttoken } = localStorage
-    const url = `http://localhost:4000/api/p/${slug}`
+    let url = `http://localhost:4000/api/p/${slug}`
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -237,33 +322,53 @@ class PopUpImageElem extends React.Component {
           Authorization: `Token ${jwttoken}`
         }
       })
-      const data = await response.json();
-      console.log('image', data);
+      const data = await response.json()
+      // console.log('imsage',  data.imagepost)
+      if (!data.errors && data.imagepost) {
+        console.log('No error')
+        // const img = cloneDeep(data.imagepost);
+        this.setState({ mainImg:data.imagepost}, function(){
+          console.log('img update');
+        })
+      }
+
+    } catch (error) {
+      console.error('Error: ' + error)
+    }
+
+    url = `http://localhost:4000/api/p/${slug}/comments`
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/JSON',
+          Authorization: `Token ${jwttoken}`
+        }
+      })
+      const data = await response.json()
       if (!data.errors) {
-        this.setState({ img: data.imagepost })
+        let comments = [...data.comments]
+        comments.forEach(comment => {
+          TimeAgo.addLocale(en)
+          const timeAgo = new TimeAgo('en-US')
+          comment.createdAt = timeAgo.format(new Date(comment.createdAt))
+        })
+        this.setState({ comments })
       }
     } catch (error) {
       console.error('Error: ' + error)
     }
-  }
-
-  componentDidMount () {
-    this.saveImage()
-    this.saveComments()
-  }
-  componentDidUpdate (prevProps, prevState) {
-    if (this.state.isUpdated !== prevState.isUpdated) {
-      this.saveComments()
-      this.saveImage()
     }
+    console.log('Update', this.state)
   }
-  timeAgo (date) {
-    TimeAgo.addLocale(en)
-    const timeAgo = new TimeAgo('en-US')
-    return timeAgo.format(date)
+  componentWillUnmount(){
+
   }
+  
   render () {
+    console.log('Render',this.state)
     const {
+      mainImg,
       isSubmitable,
       body,
       comments,
@@ -273,10 +378,11 @@ class PopUpImageElem extends React.Component {
       animationFollow,
       durationFollow,
       visibleFollow
-    } = this.state
+    } = this.state;
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
 
     return (
+      
       <Card
         className='popup-image-card'
         style={{
@@ -286,81 +392,83 @@ class PopUpImageElem extends React.Component {
           position: 'relative'
         }}
       >
-        <span class='close-popup-span' onClick={this.props.handleClose}>
+        <span className='close-popup-span' onClick={this.props.handleClose}>
           X
         </span>
         <div className='pop-up-container'>
           <div className='pop-up-grid'>
-            {this.state.img ? (
+            {mainImg &&loggedInUser? (
               <Image
                 className='popup-image-elem'
-                src={`http://localhost:4000/${this.state.img.filename}`}
-                ui={true}
+                src={`http://localhost:4000/${mainImg.filename}`} 
               />
             ) : (
               <p>Loading</p>
             )}
-            {this.state.img && this.state.comments ? (
-              <div className='pop-up-des-div'>
-                <Card.Content className='popup-image-author-content'>
+
+            <div className='pop-up-des-div'>
+              <Card.Content className='popup-image-author-content'>
+                {loggedInUser&&mainImg && comments &&mainImg.author? (
                   <div className='popup-image-author-profile'>
                     <Image
                       className='popup-image-author-image'
-                      src={this.state.img.author.image}
+                      src={mainImg.author.image}
                       size='mini'
                       circular
                     />
                     <span className='popup-image-author-username'>
-                      {this.state.img.author.username}
+                      {mainImg.author.username}
                     </span>
                     <span>
-                      <Transition
-                        animation={animationFollow}
-                        duration={durationFollow}
-                        visible={visibleFollow}
-                      >
-                        {this.state.img.author.following ? (
+                    {mainImg.author.usernmae!==loggedInUser.username&&
+                        <>
+                        {mainImg.author.following ? (
                           <Button
                             className='pop-up-unfollow-btn'
                             onClick={this.toggleFollow}
-                            color= 'instagram'
-                            style={{borderRadius: 8}}
+                            color='instagram'
+                            style={{ borderRadius: 8 }}
                           >
                             Following
                           </Button>
-                        ) : this.state.img.author.username !==
+                        ) : mainImg.author.username !==
                           loggedInUser.username ? (
                           <Button
                             className='pop-up-follow-btn'
                             onClick={this.toggleFollow}
-                            style={{borderRadius: 8}}
+                            style={{ borderRadius: 8 }}
                           >
                             Follow
                           </Button>
                         ) : null}
-                      </Transition>
+                        </>
+                    }
                     </span>
                   </div>
-                  <span>
-                    {' '}
-                    <Icon name='ellipsis horizontal' />{' '}
-                  </span>
-                </Card.Content>
-                <Card.Content>
+                ) : (
+                  <p>Loading</p>
+                )}
+                <span>
+                  {' '}
+                  <Icon name='ellipsis horizontal' />{' '}
+                </span>
+              </Card.Content>
+               <Card.Content>
+                {loggedInUser&&comments &&mainImg &&mainImg.author? (
                   <div className='pop-up-image-comment-complete-div'>
                     <Card.Description className='popup-common-des  popup-comment-elem-single'>
                       <Image
                         size='mini'
                         className='popup-comment-comment-user-img'
-                        src={this.state.img.author.image}
+                        src={mainImg.author.image}
                       ></Image>
-                      <strong>{this.state.img.author.username} </strong>
-                      {this.state.img.description}
+                      <strong>{mainImg.author.username} </strong>
+                      {mainImg.description}
                     </Card.Description>
                     {comments &&
-                      comments.map(comment => {
+                      comments.map((comment,index) => {
                         return (
-                          <Card.Description className='popup-common-des popup-comment-elem-single'>
+                          <Card.Description key= {index} className='popup-common-des popup-comment-elem-single'>
                             <Image
                               size='mini'
                               className='popup-comment-comment-user-img'
@@ -370,18 +478,23 @@ class PopUpImageElem extends React.Component {
                             {comment.body}
                           </Card.Description>
                         )
-                      })}
+                      })
+                      }
 
                     <Card.Meta className='popup-common-des popup-more-comment-anchor'>
-                      {this.state.img.commentsCount !== 0
-                        ? `View All ${this.state.img.commentsCount} ${
-                            this.state.img.commentsCount !== 1
+                      {mainImg.commentsCount !== 0
+                        ? `View All ${mainImg.commentsCount} ${
+                            mainImg.commentsCount !== 1
                               ? 'comments'
                               : 'comment'
                           }`
                         : `Be the first one to respond`}
                     </Card.Meta>
                   </div>
+                ) : (
+                  <p>Loading</p>
+                )}
+                {comments && mainImg ? (
                   <div className='pop-up-image-action-complete-div'>
                     <Card.Description className='popup-image-inter-content'>
                       <div className='popup-image-action-div'>
@@ -394,10 +507,12 @@ class PopUpImageElem extends React.Component {
                             <Icon
                               className='popup-action-elem'
                               name={
-                                this.state.img.favorited
-                                  ? 'heart large red'
-                                  : 'heart outline large'
+                                mainImg.favorited
+                                  ? 'heart'
+                                  : 'heart outline'
                               }
+                              red={mainImg.favorited?'true':''}
+                              size='large'
                               onClick={this.toggleLike}
                             />
                           </Transition>
@@ -406,7 +521,8 @@ class PopUpImageElem extends React.Component {
                           {' '}
                           <Icon
                             className='popup-action-elem'
-                            name='comment outline large'
+                            name='comment outline'
+                            size='large'
                             onClick={this.putFocusOnTextArea}
                           />{' '}
                         </span>
@@ -414,7 +530,8 @@ class PopUpImageElem extends React.Component {
                           {' '}
                           <Icon
                             className='popup-action-elem'
-                            name='send outline large'
+                            name='send'
+                            size='large'
                           />{' '}
                         </span>
                       </div>
@@ -424,7 +541,8 @@ class PopUpImageElem extends React.Component {
                           {' '}
                           <Icon
                             className='popup-action-elem'
-                            name='bookmark outline large'
+                            name='bookmark outline'
+                            size='large'
                           />{' '}
                         </span>
                       </div>
@@ -432,9 +550,9 @@ class PopUpImageElem extends React.Component {
                     <Card.Description className='popup-common-des'>
                       {' '}
                       <p className='popup-image-like-count'>
-                        {this.state.img.favoritesCount !== 0
-                          ? `${this.state.img.favoritesCount} ${
-                              this.state.img.favoritesCount !== 1
+                        {mainImg.favoritesCount !== 0
+                          ? `${mainImg.favoritesCount} ${
+                            mainImg.favoritesCount !== 1
                                 ? 'likes'
                                 : 'like'
                             }`
@@ -442,45 +560,45 @@ class PopUpImageElem extends React.Component {
                       </p>
                     </Card.Description>
                     <Card.Description className='popup-image-elem-date popup-common-des'>
-                      {this.timeAgo(new Date(this.state.img.createdAt))}
+                      {this.timeAgo(new Date(mainImg.createdAt))}
                     </Card.Description>
                   </div>
-                </Card.Content>
-                <div className='popup-comment-form-outer-div'>
-                  <Form
-                    className='popup-add-comment-form'
-                    onSubmit={this.submitHandler}
-                  >
-                    <TextArea
-                      rows={1}
-                      class='popup-add-comment-input-text'
-                      placeholder='Add a comment...'
-                      name='body'
-                      onChange={this.changeHandler}
-                      value={body}
-                      style={{
-                        border: 0,
-                        overflow: 'hidden',
-                        width: '100%',
-                        resize: 'none'
-                      }}
-                      ref={this.textAreaRef}
-                    ></TextArea>
+                ) : (
+                  <p>Loading</p>
+                )}
+              </Card.Content>
+              <div className='popup-comment-form-outer-div'>
+                <Form
+                  className='popup-add-comment-form'
+                  onSubmit={this.submitHandler}
+                >
+                  <TextArea
+                    rows={1}
+                    className='popup-add-comment-input-text'
+                    placeholder='Add a comment...'
+                    name='body'
+                    onChange={this.changeHandler}
+                    value={body}
+                    style={{
+                      border: 0,
+                      overflow: 'hidden',
+                      width: '100%',
+                      resize: 'none'
+                    }}
+                    ref={this.textAreaRef}
+                  ></TextArea>
 
-                    <Button
-                      class='popup-elem-add-comment-btn'
-                      disabled={!isSubmitable}
-                      style={{ background: 'none', color: '#0095f6' }}
-                      onClick={this.submitHandler}
-                    >
-                      POST
-                    </Button>
-                  </Form>
-                </div>
-              </div>
-            ) : (
-              <p>Loading</p>
-            )}
+                  <Button
+                    className='popup-elem-add-comment-btn'
+                    disabled={!isSubmitable}
+                    style={{ background: 'none', color: '#0095f6' }}
+                    onClick={this.submitHandler}
+                  >
+                    POST
+                  </Button>
+                </Form>
+              </div> 
+            </div>
           </div>
         </div>
       </Card>

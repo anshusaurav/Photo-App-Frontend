@@ -21,8 +21,8 @@ class ImageElem extends React.Component {
     return (
       <Popup
         on='click'
-        open={this.state.isOpen}
-        onOpen={this.handleOpen}
+        // open={this.state.isOpen}
+        // onOpen={this.handleOpen}
         style={{
           position: 'fixed',
           minWidth: '100vw',
@@ -56,6 +56,7 @@ class ImageElem extends React.Component {
         }
       >
         <PopUpImageElem
+          key = {this.props.img._id}
           img={this.props.img.slug}
           handleClose={this.handleClose}
         />

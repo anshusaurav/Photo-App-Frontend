@@ -3,7 +3,6 @@ import ImageElem from './../common/ImageElem'
 import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { SingleImageLoaderLarge } from './../loaders/loaders'
-import { Grid } from 'semantic-ui-react'
 class ProfileImages extends React.Component {
   constructor (props) {
     super(props)

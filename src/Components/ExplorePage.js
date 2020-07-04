@@ -21,7 +21,6 @@ class ExplorePage extends React.Component {
       'Content-Type': 'application/json',
       Authorization: `Token ${jwttoken}`
     }
-    // const url = `http://localhost:4000/api/p/feed`
     const { offset, limit } = this.state
     axios
       .get(`http://localhost:4000/api/p?offset=${offset}&limit=${limit}`, {
@@ -39,7 +38,6 @@ class ExplorePage extends React.Component {
       'Content-Type': 'application/json',
       Authorization: `Token ${jwttoken}`
     }
-    // const url = `http://localhost:4000/api/p/feed`
     const { offset, limit } = this.state
     if (offset + limit >= this.state.totalImages)
       this.setState({ hasMoreImages: false })
@@ -73,7 +71,7 @@ class ExplorePage extends React.Component {
               loader={<p>Loading...</p>}
             >
               {imagepostList.map(img => {
-                return <ImageElem img={img} key={img.id} />
+                return <ImageElem img={img} key={img.filename} />
               })}
             </InfiniteScroll>
           </div>

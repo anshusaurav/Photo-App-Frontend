@@ -1,10 +1,14 @@
 import React from 'react'
 
 import HeaderNav from './common/HeaderNav'
-import { Button } from 'semantic-ui-react'
+import { Button,Card } from 'semantic-ui-react'
 import FeedImageElem from './common/FeedImageElem'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import {FeedHeaderLoader, FeedMainLoader, FeedFooterLoader} from './loaders/loaders'
+import {
+  FeedHeaderLoader,
+  FeedMainLoader,
+  FeedFooterLoader
+} from './loaders/loaders'
 import axios from 'axios'
 class HomePage extends React.Component {
   constructor (props) {
@@ -95,7 +99,19 @@ class HomePage extends React.Component {
                   dataLength={this.state.imagepostList.length}
                   next={this.fetchImages}
                   hasMore={this.state.hasMoreImages}
-                  loader={<><FeedHeaderLoader/><FeedHeaderLoader/><FeedHeaderLoader/></> }
+                  loader={
+                    <>
+                      <Card className='feed-image-card'>
+                        <FeedHeaderLoader />
+                      </Card>
+                      <Card className='feed-image-card'>
+                        <FeedHeaderLoader />
+                      </Card>
+                      <Card className='feed-image-card'>
+                        <FeedHeaderLoader />
+                      </Card>
+                    </>
+                  }
                 >
                   {imagepostList.map(img => {
                     return <FeedImageElem img={img.slug} key={img.id} />
@@ -111,9 +127,9 @@ class HomePage extends React.Component {
                     <h4>Suggestions for you</h4>
                   </div>
                   <div className='feed-suggestion-profile-div'>
-                    {suggestions.map(elem => {
+                    {suggestions.map((elem, index) => {
                       return (
-                        <div className='feed-suggestion-profile-inner-div'>
+                        <div className='feed-suggestion-profile-inner-div' key={index}>
                           <div className='feed-sugg-profile-user'>
                             <div className='feed-sugg-profile-img-div'>
                               <img src={elem.image} alt=''></img>

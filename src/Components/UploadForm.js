@@ -15,7 +15,6 @@ class UploadForm extends React.Component {
       location: '',
       loaded: 0,
       visible: true
-      // isSubmitable: false
     }
     this.onImageChange = this.onImageChange.bind(this)
     this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -23,16 +22,17 @@ class UploadForm extends React.Component {
   }
   async onImageChange (event) {
     event.preventDefault()
-    const imageFile = event.target.files[0]
-    console.log('originalFile instanceof Blob', imageFile instanceof Blob) // true
-    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`)
 
-    const options = {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 1920,
-      useWebWorker: true
-    }
     try {
+      const imageFile = event.target.files[0]
+      console.log('originalFile instanceof Blob', imageFile instanceof Blob) // true
+      console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`)
+
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true
+      }
       const compressedFile = await imageCompression(imageFile, options)
       console.log(
         'compressedFile instanceof Blob',
@@ -136,7 +136,7 @@ class UploadForm extends React.Component {
                         size='medium'
                         rounded
                         fluid
-                      />  
+                      />
                     </Transition>
                   </div>
                 </div>
@@ -160,6 +160,7 @@ class UploadForm extends React.Component {
                     className='input-file-elem'
                     name='filename'
                     type='file'
+                    defaultValue={this.state.filename}
                     onChange={this.onImageChange}
                   ></input>
                 </div>
