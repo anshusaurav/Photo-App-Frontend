@@ -65,7 +65,7 @@ class ExplorePage extends React.Component {
     const { toggleLoggedIn } = this.props
     return (
       <div className='full-container'>
-        <TempExploreLoader/>
+        
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
         <div>
           <div>
@@ -77,13 +77,7 @@ class ExplorePage extends React.Component {
                 hasMore={this.state.hasMoreImages}
                 loader={
                   
-                  <ExploreCompleteLoader
-                    style={{
-                      minWidth: '975',
-                      overflowX: 'hidden',
-                      overflowY: 'hidden'
-                    }}
-                  />
+                  <ExploreCompleteLoader/>
                 }
               >
                 {imagepostList.map(img => {

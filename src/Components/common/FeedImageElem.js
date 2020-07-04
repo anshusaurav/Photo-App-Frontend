@@ -6,7 +6,8 @@ import {
   Form,
   TextArea,
   Button,
-  Transition
+  Transition,
+  List
 } from 'semantic-ui-react'
 import { FeedHeaderLoader } from './../loaders/loaders'
 import TimeAgo from 'javascript-time-ago'
@@ -367,19 +368,26 @@ class FeedImageElem extends React.Component {
                   : `Be the first one to respond`}
               </Card.Meta>
               <Card.Description>
-                <strong>{this.state.img.author.username} </strong>
+                <strong >{this.state.img.author.username} </strong>
                 {this.state.img.description}
               </Card.Description>
+              <Transition.Group
+          as={List}
+          duration={200}
+          divided
+          size='small'
+          verticalAlign='middle'
+        >
               {comments &&
                 comments.map(comment => {
                   return (
                     <Card.Description>
-                      <strong>{comment.author.username} </strong>
+                      <strong style={{fontSize: 14, color: 'rgba(0,0,0,0.68)'}}>{comment.author.username} </strong>
                       {comment.body}
                     </Card.Description>
                   )
                 })}
-
+</Transition.Group>
               <Card.Description className='feed-image-elem-date'>
                 {this.timeAgo(new Date(this.state.img.createdAt))}
               </Card.Description>
