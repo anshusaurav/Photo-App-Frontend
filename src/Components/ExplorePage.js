@@ -9,7 +9,7 @@ class ExplorePage extends React.Component {
     this.state = {
       imagepostList: [],
       limit: 9,
-      offset: 1,
+      offset: 0,
       hasMoreImages: true,
       totalImages: 0
     }

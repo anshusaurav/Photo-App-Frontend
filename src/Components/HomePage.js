@@ -16,7 +16,7 @@ class HomePage extends React.Component {
     this.state = {
       imagepostList: [],
       limit: 6,
-      offset: 1,
+      offset: 0,
       hasMoreImages: true,
       totalImages: 0
     }
@@ -35,8 +35,13 @@ class HomePage extends React.Component {
         headers: headers
       })
       .then(res => {
-        this.setState({ imagepostList: res.data.imageposts })
-        this.setState({ totalImages: res.data.imagepostCount })
+        this.setState({ imagepostList: res.data.imageposts }, function(){
+          this.setState({ totalImages: res.data.imagepostCount }, function(){
+            if (offset + limit >= this.state.totalImages)
+            this.setState({ hasMoreImages: false })
+          })
+        })
+        
       })
   }
   fetchImages = () => {

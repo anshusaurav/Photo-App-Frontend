@@ -10,7 +10,7 @@ class ProfileImages extends React.Component {
       imagepostList: [],
       isUpdated: false,
       limit: 6,
-      offset: 1,
+      offset: 0,
       hasMoreImages: true,
       totalImages: 0
     }
