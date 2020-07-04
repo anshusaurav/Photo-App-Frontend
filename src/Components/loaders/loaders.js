@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Placeholder, GridColumn } from 'semantic-ui-react'
+import { Card, Placeholder, GridColumn, Segment } from 'semantic-ui-react'
 
 export function SingleImageLoaderMedium () {
   return (
@@ -18,17 +18,29 @@ export function SingleImageLoaderLarge () {
 
 export function FeedHeaderLoader () {
   return (
-    <Placeholder fluid>
-      <Placeholder.Header image>
-        <Placeholder.Line length='short' />
-        <Placeholder.Line length='very short' />
-      </Placeholder.Header>
-
-      <Placeholder.Image fluid style={{ minHeight: 480 }} />
-
-      <Placeholder.Line />
-      <Placeholder.Line />
-    </Placeholder>
+    <Card fluid style={{ borderRadius: 0, border: '1px solid #efefef' }}>
+      <Segment attached>
+        <Placeholder fluid style={{ marginBottom: 0 }}>
+          <Placeholder.Header image>
+            <Placeholder.Line length='short' />
+            <Placeholder.Line length='very short' />
+          </Placeholder.Header>
+        </Placeholder>
+      </Segment>
+      <Segment attached>
+        <Placeholder fluid style={{ marginBottom: 0 }}>
+          <Placeholder.Image fluid style={{ minHeight: 480 }} />
+        </Placeholder>
+      </Segment>
+      <Segment attached>
+        <Placeholder fluid style={{ marginBottom: 24 }}>
+          <Placeholder.Paragraph>
+            <Placeholder.Line length='very short' />
+            <Placeholder.Line length='very short' />
+            <Placeholder.Line length='long' />
+          </Placeholder.Paragraph>
+        </Placeholder>
+      </Segment>
+    </Card>
   )
 }
-

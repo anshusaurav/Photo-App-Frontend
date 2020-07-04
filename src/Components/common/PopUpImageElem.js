@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import cloneDeep from 'lodash/cloneDeep';
+// import cloneDeep from 'lodash/cloneDeep';
 class PopUpImageElem extends React.Component {
   constructor (props) {
     super(props)
@@ -200,173 +200,76 @@ class PopUpImageElem extends React.Component {
 
     return { result: false, data }
   }
-  // async saveComments () {
-  //   const slug = this.props.img
-  //   const { jwttoken } = localStorage
-  //   const url = `http://localhost:4000/api/p/${slug}/comments`
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/JSON',
-  //         Authorization: `Token ${jwttoken}`
-  //       }
-  //     })
-  //     const data = await response.json()
-  //     if (!data.errors) {
-  //       let comments = [...data.comments]
-  //       comments.forEach(comment => {
-  //         TimeAgo.addLocale(en)
-  //         const timeAgo = new TimeAgo('en-US')
-  //         comment.createdAt = timeAgo.format(new Date(comment.createdAt))
-  //       })
-  //       this.setState({ comments })
-  //     }
-  //   } catch (error) {
-  //     console.error('Error: ' + error)
-  //   }
-  // }
-  // async saveImage () {
-  //   const slug = this.props.img
-  //   const { jwttoken } = localStorage
-  //   const url = `http://localhost:4000/api/p/${slug}`
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/JSON',
-  //         Authorization: `Token ${jwttoken}`
-  //       }
-  //     })
-  //     const data = await response.json()
-  //     // console.log('imsage',  data.imagepost)
-  //     if (!data.errors && data.imagepost) {
-  //       console.log('No error')
-  //       // const img = cloneDeep(data.imagepost);
-  //       this.setState({ mainImg:data.imagepost}, function(){
-  //         console.log('img update');
-          // this.setState({isUpdated: true})
-  //       })
-  //     }
+  async saveComments () {
+    const slug = this.props.img
+    const { jwttoken } = localStorage
+    const url = `http://localhost:4000/api/p/${slug}/comments`
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/JSON',
+          Authorization: `Token ${jwttoken}`
+        }
+      })
+      const data = await response.json()
+      if (!data.errors) {
+        let comments = [...data.comments]
+        comments.forEach(comment => {
+          TimeAgo.addLocale(en)
+          const timeAgo = new TimeAgo('en-US')
+          comment.createdAt = timeAgo.format(new Date(comment.createdAt))
+        })
+        this.setState({ comments })
+      }
+    } catch (error) {
+      console.error('Error: ' + error)
+    }
+  }
+  async saveImage () {
+    const slug = this.props.img
+    const { jwttoken } = localStorage
+    const url = `http://localhost:4000/api/p/${slug}`
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/JSON',
+          Authorization: `Token ${jwttoken}`
+        }
+      })
+      const data = await response.json()
+      if (!data.errors && data.imagepost) {
+        console.log('No error')
+        this.setState({ mainImg:data.imagepost}, function(){
+          console.log('img update');
+        })
+      }
 
-  //   } catch (error) {
-  //     console.error('Error: ' + error)
-  //   }
-  // }
+    } catch (error) {
+      console.error('Error: ' + error)
+    }
+  }
   timeAgo (date) {
     TimeAgo.addLocale(en)
     const timeAgo = new TimeAgo('en-US')
     return timeAgo.format(date)
   }
   async componentDidMount () {
-    // console.log('erererer');
-    const slug = this.props.img
-    const { jwttoken } = localStorage
-    let url = `http://localhost:4000/api/p/${slug}`
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/JSON',
-          Authorization: `Token ${jwttoken}`
-        }
-      })
-      const data = await response.json()
-      console.log('imsage',  data.imagepost)
-      if (!data.errors && data.imagepost) {
-        console.log('No error')
-        this.setState({ mainImg:data.imagepost}, function(){
-          console.log('img update');
-        })
-      }
-
-    } catch (error) {
-      console.error('Error: ' + error)
-    }
-
-    url = `http://localhost:4000/api/p/${slug}/comments`
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/JSON',
-          Authorization: `Token ${jwttoken}`
-        }
-      })
-      const data = await response.json()
-      if (!data.errors) {
-        let comments = [...data.comments]
-        comments.forEach(comment => {
-          TimeAgo.addLocale(en)
-          const timeAgo = new TimeAgo('en-US')
-          comment.createdAt = timeAgo.format(new Date(comment.createdAt))
-        })
-        this.setState({ comments })
-      }
-    } catch (error) {
-      console.error('Error: ' + error)
-    }
-    console.log('Mount', this.state)
+   this.saveImage()
+   this.saveComments();
   }
   async componentDidUpdate (prevProps, prevState) {
     if (this.state.isUpdated !== prevState.isUpdated) {
-      // console.log('erererer');
-    const slug = this.props.img
-    const { jwttoken } = localStorage
-    let url = `http://localhost:4000/api/p/${slug}`
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/JSON',
-          Authorization: `Token ${jwttoken}`
-        }
-      })
-      const data = await response.json()
-      // console.log('imsage',  data.imagepost)
-      if (!data.errors && data.imagepost) {
-        console.log('No error')
-        // const img = cloneDeep(data.imagepost);
-        this.setState({ mainImg:data.imagepost}, function(){
-          console.log('img update');
-        })
-      }
-
-    } catch (error) {
-      console.error('Error: ' + error)
+      this.saveImage();
+      this.saveComments();
     }
-
-    url = `http://localhost:4000/api/p/${slug}/comments`
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/JSON',
-          Authorization: `Token ${jwttoken}`
-        }
-      })
-      const data = await response.json()
-      if (!data.errors) {
-        let comments = [...data.comments]
-        comments.forEach(comment => {
-          TimeAgo.addLocale(en)
-          const timeAgo = new TimeAgo('en-US')
-          comment.createdAt = timeAgo.format(new Date(comment.createdAt))
-        })
-        this.setState({ comments })
-      }
-    } catch (error) {
-      console.error('Error: ' + error)
-    }
-    }
-    console.log('Update', this.state)
   }
   componentWillUnmount(){
 
   }
   
   render () {
-    console.log('Render',this.state)
     const {
       mainImg,
       isSubmitable,
@@ -421,8 +324,15 @@ class PopUpImageElem extends React.Component {
                     </span>
                     <span>
                     {mainImg.author.usernmae!==loggedInUser.username&&
+                        
                         <>
+
                         {mainImg.author.following ? (
+                          <Transition
+                            animation={animationFollow}
+                            duration={durationFollow}
+                            visible={visibleFollow}
+                          >
                           <Button
                             className='pop-up-unfollow-btn'
                             onClick={this.toggleFollow}
@@ -430,16 +340,21 @@ class PopUpImageElem extends React.Component {
                             style={{ borderRadius: 8 }}
                           >
                             Following
-                          </Button>
+                          </Button></Transition>
                         ) : mainImg.author.username !==
                           loggedInUser.username ? (
+                            <Transition
+                            animation={animationFollow}
+                            duration={durationFollow}
+                            visible={visibleFollow}
+                          >
                           <Button
                             className='pop-up-follow-btn'
                             onClick={this.toggleFollow}
                             style={{ borderRadius: 8 }}
                           >
                             Follow
-                          </Button>
+                          </Button></Transition>
                         ) : null}
                         </>
                     }
