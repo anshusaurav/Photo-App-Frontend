@@ -240,10 +240,7 @@ class PopUpImageElem extends React.Component {
       })
       const data = await response.json()
       if (!data.errors && data.imagepost) {
-        console.log('No error')
-        this.setState({ mainImg:data.imagepost}, function(){
-          console.log('img update');
-        })
+        this.setState({ mainImg:data.imagepost})
       }
 
     } catch (error) {

@@ -37,7 +37,7 @@ class HomePage extends React.Component {
       .then(res => {
         this.setState({ imagepostList: res.data.imageposts }, function(){
           this.setState({ totalImages: res.data.imagepostCount }, function(){
-            if (offset + limit >= this.state.totalImages)
+            if (offset + limit >= res.data.imagepostCount)
             this.setState({ hasMoreImages: false })
           })
         })
@@ -100,6 +100,7 @@ class HomePage extends React.Component {
           <div className='container'>
             <div className='home-page-div'>
               <div className='feed-images-div'>
+              {this.state.imagepostList.length > 0 &&
                 <InfiniteScroll
                   dataLength={this.state.imagepostList.length}
                   next={this.fetchImages}
@@ -118,10 +119,11 @@ class HomePage extends React.Component {
                     </>
                   }
                 >
-                  {imagepostList.map(img => {
-                    return <FeedImageElem img={img.slug} key={img.id} />
+                  {imagepostList.map((img,index) => {
+                    return <FeedImageElem img={img.slug} key={index} />
                   })}
                 </InfiniteScroll>
+              }
               </div>
               <div className='feed-suggestions-div'>
                 <div className='feed-suggestion-inner-div'>

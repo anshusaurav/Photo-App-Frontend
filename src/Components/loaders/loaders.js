@@ -1,9 +1,16 @@
 import React from 'react'
-import { Card, Placeholder, GridColumn, Segment } from 'semantic-ui-react'
+import { Card, Placeholder, Grid, Segment } from 'semantic-ui-react'
 
 export function SingleImageLoaderMedium () {
   return (
     <Placeholder style={{ height: 150, width: 150 }}>
+      <Placeholder.Image />
+    </Placeholder>
+  )
+}
+export function SingleImageLoaderMediumRounded () {
+  return (
+    <Placeholder style={{ height: 150, width: 150, borderRadius: '50%' }}>
       <Placeholder.Image />
     </Placeholder>
   )
@@ -29,7 +36,7 @@ export function FeedHeaderLoader () {
       </Segment>
       <Segment attached>
         <Placeholder fluid style={{ marginBottom: 0 }}>
-          <Placeholder.Image fluid style={{ minHeight: 480 }} />
+          <Placeholder.Image fluid='true' style={{ minHeight: 480 }} />
         </Placeholder>
       </Segment>
       <Segment attached>
@@ -42,5 +49,144 @@ export function FeedHeaderLoader () {
         </Placeholder>
       </Segment>
     </Card>
+  )
+}
+
+export function TempExploreLoader () {
+  const arr = new Array(18).fill(1)
+  return (
+    <div className='explore-loader-div'>
+      {arr.map(elem => {
+        return (
+
+            <Placeholder fluid style={{marginTop: 0}}>
+              <Placeholder.Image fluid />
+            </Placeholder>
+          
+        )
+      })}
+    </div>
+  )
+}
+export function ExploreCompleteLoader () {
+  return (
+    <>
+      <Grid relaxed>
+        <Grid.Row columns={15}>
+          <Grid.Column width={10}>
+            <Placeholder fluid style={{ height: 414, width: 400 }}>
+              <Placeholder.Image fluid />
+            </Placeholder>
+          </Grid.Column>
+          <Grid.Column width={5} rows={2}>
+            <Grid.Row width={5} fluid>
+              <Placeholder fluid style={{ height: 192, width: 200 }}>
+                <Placeholder.Image fluid />
+              </Placeholder>
+            </Grid.Row>
+
+            <Grid.Row width={5} fluid>
+              <Placeholder fluid style={{ height: 192, width: 200 }}>
+                <Placeholder.Image />
+              </Placeholder>
+            </Grid.Row>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={15}>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={15}>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+
+      <Grid relaxed>
+        <Grid.Row columns={15}>
+          <Grid.Column width={5} rows={2}>
+            <Grid.Row width={5} fluid>
+              <Placeholder fluid style={{ height: 192, width: 200 }}>
+                <Placeholder.Image fluid />
+              </Placeholder>
+            </Grid.Row>
+
+            <Grid.Row width={5} fluid>
+              <Placeholder fluid style={{ height: 192, width: 200 }}>
+                <Placeholder.Image />
+              </Placeholder>
+            </Grid.Row>
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Placeholder fluid style={{ height: 414, width: 400 }}>
+              <Placeholder.Image fluid />
+            </Placeholder>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row columns={15}>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row columns={15}>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+          <Grid.Column width={5}>
+            <Placeholder fluid style={{ height: 192, width: 200 }}>
+              <Placeholder.Image />
+            </Placeholder>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </>
   )
 }

@@ -3,12 +3,17 @@ import HeaderNav from './common/HeaderNav'
 import ImageElem from './common/ImageElem'
 import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import {
+  ExploreCompleteLoader,
+  SingleImageLoaderLarge,
+  TempExploreLoader
+} from './loaders/loaders'
 class ExplorePage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       imagepostList: [],
-      limit: 9,
+      limit: 6,
       offset: 0,
       hasMoreImages: true,
       totalImages: 0
@@ -60,20 +65,34 @@ class ExplorePage extends React.Component {
     const { toggleLoggedIn } = this.props
     return (
       <div className='full-container'>
+        <TempExploreLoader/>
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
         <div>
           <div>
-            <InfiniteScroll
-              className='explore-img-div container'
-              dataLength={this.state.imagepostList.length}
-              next={this.fetchImages}
-              hasMore={this.state.hasMoreImages}
-              loader={<p>Loading...</p>}
-            >
-              {imagepostList.map(img => {
-                return <ImageElem img={img} key={img.filename} />
-              })}
-            </InfiniteScroll>
+            {this.state.imagepostList.length > 0 ? (
+              <InfiniteScroll
+                className='explore-img-div container'
+                dataLength={this.state.imagepostList.length}
+                next={this.fetchImages}
+                hasMore={this.state.hasMoreImages}
+                loader={
+                  
+                  <ExploreCompleteLoader
+                    style={{
+                      minWidth: '975',
+                      overflowX: 'hidden',
+                      overflowY: 'hidden'
+                    }}
+                  />
+                }
+              >
+                {imagepostList.map(img => {
+                  return <ImageElem img={img} key={img.filename} />
+                })}
+              </InfiniteScroll>
+            ) : (
+              <div className='profile-img-div'> </div>
+            )}
           </div>
         </div>
       </div>

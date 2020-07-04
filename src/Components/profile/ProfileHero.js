@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Popup } from "semantic-ui-react";
 import ProfilePicturePopUp from "../common/ProfilePicturePopUp";
-import {SingleImageLoaderMedium} from './../loaders/loaders'
+import {SingleImageLoaderMediumRounded} from './../loaders/loaders'
 class ProfileHero extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +35,6 @@ class ProfileHero extends React.Component {
         },
       });
       const data = await response.json();
-      console.log(data);
       
       if (!data.errors) {
         this.setState({ profile: data.user });
@@ -82,7 +81,7 @@ class ProfileHero extends React.Component {
               </Popup>
             </div>
           ) : (
-            <SingleImageLoaderMedium/>
+            <SingleImageLoaderMediumRounded/>
           )}
         </div>
         {this.state.profile ? (

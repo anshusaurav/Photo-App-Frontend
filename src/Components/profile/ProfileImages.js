@@ -67,7 +67,9 @@ class ProfileImages extends React.Component {
   render () {
     const { imagepostList } = this.state
     return (
-      <InfiniteScroll
+      <>
+      {imagepostList.length > 0 ?
+      (<InfiniteScroll
         className='profile-img-div container'
         dataLength={this.state.imagepostList.length}
         next={this.fetchImages}
@@ -83,8 +85,12 @@ class ProfileImages extends React.Component {
         {imagepostList.map(img => {
           return <ImageElem img={img} key={img.id} />
         })}
-      </InfiniteScroll>
+      </InfiniteScroll>):<div className='profile-img-div'> </div>}
+      </>
     )
+      
+      
+    
   }
 }
 
