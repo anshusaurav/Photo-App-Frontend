@@ -39,7 +39,7 @@ class ImageElem extends React.Component {
           <div className='explore-item'>
             <div className='content'>
               <div className='link-img' href='#' target='_blank'>
-                <img src={`http://localhost:4000/${filename}`} alt=' '></img>
+                <img src={`${filename}`} alt=' '></img>
                 <div className='content-overlay'></div>
                 <div className='content-details fadeIn-bottom'>
                   <h2 className='content-title'>

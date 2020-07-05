@@ -25,22 +25,22 @@ class UploadForm extends React.Component {
 
     try {
       const imageFile = event.target.files[0]
-      console.log('originalFile instanceof Blob', imageFile instanceof Blob) // true
-      console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`)
+      // console.log('originalFile instanceof Blob', imageFile instanceof Blob) // true
+      // console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`)
 
-      const options = {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 1920,
-        useWebWorker: true
-      }
-      const compressedFile = await imageCompression(imageFile, options)
-      console.log(
-        'compressedFile instanceof Blob',
-        compressedFile instanceof Blob
-      ) // true
-      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`) // smaller than maxSizeMB
+      // const options = {
+      //   maxSizeMB: 1,
+      //   maxWidthOrHeight: 1920,
+      //   useWebWorker: true
+      // }
+      // const compressedFile = await imageCompression(imageFile, options)
+      // console.log(
+      //   'compressedFile instanceof Blob',
+      //   compressedFile instanceof Blob
+      // ) // true
+      // console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`) // smaller than maxSizeMB
       let reader = new FileReader()
-      let file = compressedFile
+      let file = imageFile
 
       this.setState(prevState => ({ visible: !prevState.visible }))
       this.setState({ imagePreviewUrl: '' })
