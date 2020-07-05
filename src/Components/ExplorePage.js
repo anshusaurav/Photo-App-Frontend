@@ -71,6 +71,7 @@ class ExplorePage extends React.Component {
           <div>
             {this.state.imagepostList.length > 0 ? (
               <InfiniteScroll
+              
                 className='explore-img-div container'
                 dataLength={this.state.imagepostList.length}
                 next={this.fetchImages}

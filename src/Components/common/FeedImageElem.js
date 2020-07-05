@@ -313,7 +313,7 @@ class FeedImageElem extends React.Component {
                           this.state.img.favorited ? 'heart' : 'heart outline'
                         }
                         size='large'
-                        color={this.state.img.favorited ? 'red' : ''}
+                        color={this.state.img.favorited ? 'red' : 'black'}
                         onClick={this.toggleLike}
                       />
                     </Transition>
@@ -368,26 +368,23 @@ class FeedImageElem extends React.Component {
                   : `Be the first one to respond`}
               </Card.Meta>
               <Card.Description>
-                <strong >{this.state.img.author.username} </strong>
+                <strong>{this.state.img.author.username} </strong>
                 {this.state.img.description}
               </Card.Description>
-              <Transition.Group
-          as={List}
-          duration={200}
-          divided
-          size='small'
-          verticalAlign='middle'
-        >
+
               {comments &&
-                comments.map(comment => {
+                comments.map((comment, index) => {
                   return (
-                    <Card.Description>
-                      <strong style={{fontSize: 14, color: 'rgba(0,0,0,0.68)'}}>{comment.author.username} </strong>
+                    <Card.Description key={index}>
+                      <strong
+                        style={{ fontSize: 14, color: 'rgba(0,0,0,0.68)' }}
+                      >
+                        {comment.author.username}{' '}
+                      </strong>
                       {comment.body}
                     </Card.Description>
                   )
                 })}
-</Transition.Group>
               <Card.Description className='feed-image-elem-date'>
                 {this.timeAgo(new Date(this.state.img.createdAt))}
               </Card.Description>

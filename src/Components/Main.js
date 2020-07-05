@@ -28,7 +28,7 @@ class Main extends React.Component {
   render () {
     const { isLoggedIn } = this.state;
     const {jwttoken} = localStorage;
-    console.log(isLoggedIn);
+    // console.log(isLoggedIn);
     return (
       <Router>
         <Switch>

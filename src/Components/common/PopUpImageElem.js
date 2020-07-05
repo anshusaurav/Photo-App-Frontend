@@ -423,7 +423,7 @@ class PopUpImageElem extends React.Component {
                                   ? 'heart'
                                   : 'heart outline'
                               }
-                              red={mainImg.favorited?'true':''}
+                              color={mainImg.favorited?'red':'black'}
                               size='large'
                               onClick={this.toggleLike}
                             />

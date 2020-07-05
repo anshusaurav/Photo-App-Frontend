@@ -868,7 +868,9 @@ table {
   }
   .pop-up-image-comment-complete-div {
     min-height: 40%;
-    max-height: 40%;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: overlay;
   }
   .pop-up-image-action-complete-div {
     min-height: 20%;

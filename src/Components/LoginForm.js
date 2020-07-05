@@ -53,7 +53,7 @@ class LoginForm extends React.Component {
         body: JSON.stringify(user)
       })
       let data = await response.json()
-      console.log(data)
+      // console.log(data)
       if (!data.errors) {
         localStorage.setItem('jwttoken', data.user.token)
         localStorage.setItem('loggedInUser', JSON.stringify(data.user))
@@ -89,7 +89,7 @@ class LoginForm extends React.Component {
     this.usernameRef.current.focus()
   }
   render () {
-    console.log('render', this.usernameRef);
+    // console.log('render', this.usernameRef);
     const { email, password, errorMsgs } = this.state
     return (
       <div className='form-container'>

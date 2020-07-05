@@ -68,29 +68,35 @@ class ProfileImages extends React.Component {
     const { imagepostList } = this.state
     return (
       <>
-      {imagepostList.length > 0 ?
-      (<InfiniteScroll
-        className='profile-img-div container'
-        dataLength={this.state.imagepostList.length}
-        next={this.fetchImages}
-        hasMore={imagepostList && this.state.hasMoreImages}
-        loader={
-          <div style={{display: 'grid', gridTemplateColumns:'300px 300px 300px', gridGap: '30px'}}>
-            <SingleImageLoaderLarge />
-            <SingleImageLoaderLarge />
-            <SingleImageLoaderLarge />
-          </div>
-        }
-      >
-        {imagepostList.map(img => {
-          return <ImageElem img={img} key={img.id} />
-        })}
-      </InfiniteScroll>):<div className='profile-img-div'> </div>}
+        {imagepostList.length > 0 ? (
+          <InfiniteScroll
+            className='profile-img-div container'
+            dataLength={this.state.imagepostList.length}
+            next={this.fetchImages}
+            hasMore={imagepostList && this.state.hasMoreImages}
+            loader={
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '300px 300px 300px',
+                  gridGap: '30px'
+                }}
+              >
+                <SingleImageLoaderLarge />
+                <SingleImageLoaderLarge />
+                <SingleImageLoaderLarge />
+              </div>
+            }
+          >
+            {imagepostList.map(img => {
+              return <ImageElem img={img} key={img.id} />
+            })}
+          </InfiniteScroll>
+        ) : (
+          <div className='profile-img-div'> </div>
+        )}
       </>
     )
-      
-      
-    
   }
 }
 
