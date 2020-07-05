@@ -300,7 +300,7 @@ class PopUpImageElem extends React.Component {
             {mainImg &&loggedInUser? (
               <Image
                 className='popup-image-elem'
-                src={`http://localhost:4000/${mainImg.filename}`} 
+                src={`${mainImg.filename}`} 
               />
             ) : (
               <p>Loading</p>

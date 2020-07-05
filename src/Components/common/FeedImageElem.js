@@ -293,7 +293,7 @@ class FeedImageElem extends React.Component {
 
             <Image
               className='feed-image-elem'
-              src={`http://localhost:4000/${this.state.img.filename}`}
+              src={`${this.state.img.filename}`}
               wrapped
               ui={true}
             />
