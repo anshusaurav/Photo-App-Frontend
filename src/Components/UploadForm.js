@@ -3,7 +3,6 @@ import { Form, Button, Image, Transition, Progress } from 'semantic-ui-react'
 import imageCompression from 'browser-image-compression'
 import axios from 'axios'
 import HeaderNav from './common/HeaderNav'
-import mime from 'mime-types'
 class UploadForm extends React.Component {
   constructor (props) {
     super(props)
@@ -23,15 +22,9 @@ class UploadForm extends React.Component {
   }
   async onImageChange (event) {
     event.preventDefault()
-    // const Type =mime.lookup(req.file.originalname)
     try {
       const imageFile = event.target.files[0];
-      console.log(imageFile);
       const type = `${imageFile.type}`;
-      console.log('type: ', type);
-      console.log('originalFile instanceof Blob', imageFile instanceof Blob) // true
-      console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`)
-
       const options = {
         maxSizeMB: 1,
         maxWidthOrHeight: 1920,
@@ -42,12 +35,9 @@ class UploadForm extends React.Component {
       console.log(
         'compressedFile instanceof Blob',
         compressedFile instanceof Blob
-      ) // true
-      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`) // smaller than maxSizeMB
-      let reader = new FileReader()
+      ) 
       let file = compressedFile;
-      file.__proto__ = imageFile.__proto__;
-      console.log(file);
+      let reader = new FileReader(file);
       this.setState(prevState => ({ visible: !prevState.visible }))
       this.setState({ imagePreviewUrl: '' })
       reader.onloadend = () => {

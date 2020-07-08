@@ -26,13 +26,16 @@ class ProfilePicturePopUp extends React.Component {
 
     const { jwttoken } = localStorage
     const filename = event.target.files[0]
+    const type = `${filename.type}`
+    // console.log(type);
     console.log('originalFile instanceof Blob', filename instanceof Blob) // true
     console.log(`originalFile size ${filename.size / 1024 / 1024} MB`)
 
     const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: 1920,
-      useWebWorker: true
+      useWebWorker: true,
+      fileType: type
     }
     try {
       const compressedFile = await imageCompression(filename, options)
@@ -42,30 +45,35 @@ class ProfilePicturePopUp extends React.Component {
       ) // true
       console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`)
       let file = compressedFile
-      const formData = new FormData()
-      formData.append('image', file)
-      const headers = {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Token ${jwttoken}`
-      }
-      axios
-        .put(url, formData, {
-          headers: headers,
+      let reader = new FileReader(file)
 
-          onUploadProgress: ProgressEvent => {
-            console.log(ProgressEvent.loaded, ProgressEvent.total)
-          }
-        })
-        .then(res => {
-          this.props.handleClose()
-          this.props.toggleUpdate()
-        })
+      reader.onloadend = () => {
+        const formData = new FormData()
+        formData.append('image', compressedFile)
+        const headers = {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Token ${jwttoken}`
+        }
+        axios
+          .put(url, formData, {
+            headers: headers,
+
+            onUploadProgress: ProgressEvent => {
+              console.log(ProgressEvent.loaded, ProgressEvent.total)
+            }
+          })
+          .then(res => {
+            console.log('done')
+          })
+      }
+
+      reader.readAsDataURL(file)
     } catch (error) {
       console.log(error)
     }
   }
   removeSubmitHandler (event) {
-    console.log('Remove');
+    console.log('Remove')
     const url = `http://localhost:4000/api/user`
 
     const { jwttoken } = localStorage
