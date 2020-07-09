@@ -9,6 +9,9 @@ class UploadForm extends React.Component {
     this.contextRef = createRef()
     this.state = {
       filename: null,
+      filenameld: null,
+      filenamehd: null,
+      filenamemd: null,
       imagePreviewUrl: '',
       description: '',
       tagList: '',
@@ -23,36 +26,69 @@ class UploadForm extends React.Component {
   async onImageChange (event) {
     event.preventDefault()
     try {
-      const imageFile = event.target.files[0];
-      const type = `${imageFile.type}`;
-      const options = {
+      const imageFile = event.target.files[0]
+      const type = `${imageFile.type}`
+      const optionsOne = {
         maxSizeMB: 1,
         maxWidthOrHeight: 1920,
         useWebWorker: true,
         fileType: type
       }
-      const compressedFile = await imageCompression(imageFile, options)
+      const optionsTwo = {
+        maxSizeMB: 0.6,
+        maxWidthOrHeight: 1200,
+        useWebWorker: true,
+        fileType: type
+      }
+      const optionsThree = {
+        maxSizeMB: 0.2,
+        maxWidthOrHeight: 880,
+        useWebWorker: true,
+        fileType: type
+      }
+      const compressedFileOne = await imageCompression(imageFile, optionsOne)
+      const compressedFileTwo = await imageCompression(imageFile, optionsTwo)
+      const compressedFileThree = await imageCompression(
+        imageFile,
+        optionsThree
+      )
       console.log(
         'compressedFile instanceof Blob',
-        compressedFile instanceof Blob
-      ) 
-      let file = compressedFile;
-      let reader = new FileReader(file);
+        compressedFileOne instanceof Blob
+      )
+      let fileOne = compressedFileOne
+      let readerOne = new FileReader(fileOne)
+
+      let fileTwo = compressedFileTwo
+      let readerTwo = new FileReader(fileTwo)
+
+      let fileThree = compressedFileThree
+      let readerThree = new FileReader(fileThree)
+
       this.setState(prevState => ({ visible: !prevState.visible }))
       this.setState({ imagePreviewUrl: '' })
-      reader.onloadend = () => {
-        this.setState(
-          {
-            filename: file,
-            imagePreviewUrl: reader.result
-          },
-          function () {
-            this.setState(prevState => ({ visible: !prevState.visible }))
+      readerOne.onloadend = () => {
+        readerTwo.onloadend = () => {
+          readerThree.onloadend = () => {
+            this.setState(
+              {
+                filename: imageFile,
+                filenamehd: fileOne,
+                filenamemd: fileTwo,
+                filenameld: fileThree,
+                imagePreviewUrl: readerOne.result
+              },
+              function () {
+                this.setState(prevState => ({ visible: !prevState.visible }))
+              }
+            )
           }
-        )
+        }
       }
 
-      reader.readAsDataURL(file)
+      readerOne.readAsDataURL(fileOne);
+      readerTwo.readAsDataURL(fileTwo);
+      readerThree.readAsDataURL(fileThree);
     } catch (error) {
       console.log(error)
     }
@@ -77,12 +113,15 @@ class UploadForm extends React.Component {
   onSubmitHandler (event) {
     const url = 'http://localhost:4000/api/p/'
     const formData = new FormData()
-    const { filename, description, location, tagList } = this.state
+    const { filename, description, location, tagList, filenamehd, filenameld, filenamemd } = this.state
     const { jwttoken } = localStorage
     formData.append('description', description)
     formData.append('location', location)
     formData.append('tags', JSON.stringify(tagList))
     formData.append('filename', filename)
+    formData.append('filenameld', filenameld)
+    formData.append('filenamehd', filenamemd)
+    formData.append('filenamemd', filenamehd)
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1])
     }

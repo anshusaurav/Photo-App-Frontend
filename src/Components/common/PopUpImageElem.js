@@ -10,7 +10,6 @@ import {
 } from 'semantic-ui-react'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-// import cloneDeep from 'lodash/cloneDeep';
 class PopUpImageElem extends React.Component {
   constructor (props) {
     super(props)
