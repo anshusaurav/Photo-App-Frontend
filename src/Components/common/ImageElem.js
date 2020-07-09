@@ -1,6 +1,8 @@
 import React from 'react'
 import { Popup } from 'semantic-ui-react'
 import PopUpImageElem from './PopUpImageElem'
+import ProgressiveImage from 'react-progressive-image'
+import { Placeholder } from 'semantic-ui-react'
 class ImageElem extends React.Component {
   constructor (props) {
     super(props)
@@ -17,7 +19,15 @@ class ImageElem extends React.Component {
     this.setState({ isOpen: false })
   }
   render () {
-    const { commentsCount, favoritesCount, filename } = this.props.img;
+    console.log(this.props.img)
+    const {
+      commentsCount,
+      favoritesCount,
+      filename,
+      filenamesPL
+    } = this.props.img
+    const fileNamesStr = filenamesPL.join(', ')
+    // console.log('PL;: ', filenamesPL, filename);
     return (
       <Popup
         on='click'
@@ -39,7 +49,20 @@ class ImageElem extends React.Component {
           <div className='explore-item'>
             <div className='content'>
               <div className='link-img' href='#' target='_blank'>
-                <img src={`${filename}`} alt=' '></img>
+                
+                <ProgressiveImage
+                  src={`${filename}`}
+                  placeholder={`${filenamesPL[0]}`}
+                >
+                  {(src, loading) => (
+                    <img
+                      style={{ opacity: loading ? 0.5 : 1 }}
+                      src={src}
+                      alt='an image'
+                    />
+                  )}
+                </ProgressiveImage>
+                {/* <img src={`${filename}`} alt=' '></img> */}
                 <div className='content-overlay'></div>
                 <div className='content-details fadeIn-bottom'>
                   <h2 className='content-title'>
@@ -57,7 +80,7 @@ class ImageElem extends React.Component {
         }
       >
         <PopUpImageElem
-          key = {this.props.img.id}
+          key={this.props.img.id}
           img={this.props.img.slug}
           handleClose={this.handleClose}
         />
