@@ -12,6 +12,7 @@ import {
 import { FeedHeaderLoader } from './../loaders/loaders'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import ProgressiveImage from 'react-progressive-image'
 class FeedImageElem extends React.Component {
   constructor (props) {
     super(props)
@@ -281,6 +282,7 @@ class FeedImageElem extends React.Component {
                   size='mini'
                   circular
                 />
+
                 <span className='feed-image-author-username'>
                   {this.state.img.author.username}
                 </span>
@@ -290,13 +292,27 @@ class FeedImageElem extends React.Component {
                 <Icon name='ellipsis horizontal' />{' '}
               </span>
             </Card.Content>
-
-            <Image
+            <ProgressiveImage
+              src={`${this.state.img.filename}`}
+              placeholder={`${this.state.img.filenamesPL[0]}`}
+            >
+              {(src, loading) => (
+                <Image
+                  className='feed-image-elem'
+                  style={{ opacity: loading ? 0.5 : 1 }}
+                  src={src}
+                  wrapped
+                  ui={true}
+                  alt='an image'
+                />
+              )}
+            </ProgressiveImage>
+            {/* <Image
               className='feed-image-elem'
               src={`${this.state.img.filename}`}
               wrapped
               ui={true}
-            />
+            /> */}
 
             <Card.Content>
               <Card.Description className='feed-image-inter-content'>

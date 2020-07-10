@@ -10,15 +10,11 @@ class ProfilePicturePopUp extends React.Component {
     }
     this.fileInputRef = createRef()
     this.changehandleClick = this.changehandleClick.bind(this)
-    this.handleUpdatePicture = this.handleUpdatePicture.bind(this)
     this.changeSubmitHandler = this.changeSubmitHandler.bind(this)
     this.removeSubmitHandler = this.removeSubmitHandler.bind(this)
   }
   changehandleClick (event) {
     this.fileInputRef.current.click()
-  }
-  handleUpdatePicture (event) {
-    event.preventDefault()
   }
 
   async changeSubmitHandler (event) {
@@ -48,8 +44,8 @@ class ProfilePicturePopUp extends React.Component {
       let reader = new FileReader(file)
 
       reader.onloadend = () => {
-        const formData = new FormData()
-        formData.append('image', compressedFile)
+        let formData = new FormData()
+        formData.append('filename', file)
         const headers = {
           'Content-Type': 'multipart/form-data',
           Authorization: `Token ${jwttoken}`
