@@ -8,7 +8,8 @@ class ProfilePicturePopUp extends React.Component {
     this.state = {
       filename: null
     }
-    this.fileInputRef = createRef()
+    this.fileInputRef = createRef();
+    this.closePopupRef = createRef();
     this.changehandleClick = this.changehandleClick.bind(this)
     this.changeSubmitHandler = this.changeSubmitHandler.bind(this)
     this.removeSubmitHandler = this.removeSubmitHandler.bind(this)
@@ -22,8 +23,7 @@ class ProfilePicturePopUp extends React.Component {
 
     const { jwttoken } = localStorage
     const filename = event.target.files[0]
-    const type = `${filename.type}`
-    // console.log(type);
+    const type = `${filename.type}`;
     console.log('originalFile instanceof Blob', filename instanceof Blob) // true
     console.log(`originalFile size ${filename.size / 1024 / 1024} MB`)
 
@@ -45,7 +45,7 @@ class ProfilePicturePopUp extends React.Component {
 
       reader.onloadend = () => {
         let formData = new FormData()
-        formData.append('filename', file)
+        formData.append('image', file)
         const headers = {
           'Content-Type': 'multipart/form-data',
           Authorization: `Token ${jwttoken}`
@@ -122,6 +122,7 @@ class ProfilePicturePopUp extends React.Component {
             className='change-picture-pop-btn'
             fluid
             onClick={this.props.handleClose}
+            ref={this.closePopupRef}
           >
             Cancel
           </Button>
