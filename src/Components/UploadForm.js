@@ -17,7 +17,8 @@ class UploadForm extends React.Component {
       tagList: '',
       location: '',
       loaded: 0,
-      visible: true
+      visible: true,
+      isUploadingToCloud: false
     }
     this.onImageChange = this.onImageChange.bind(this)
     this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -86,9 +87,9 @@ class UploadForm extends React.Component {
         }
       }
 
-      readerOne.readAsDataURL(fileOne);
-      readerTwo.readAsDataURL(fileTwo);
-      readerThree.readAsDataURL(fileThree);
+      readerOne.readAsDataURL(fileOne)
+      readerTwo.readAsDataURL(fileTwo)
+      readerThree.readAsDataURL(fileThree)
     } catch (error) {
       console.log(error)
     }
@@ -113,7 +114,15 @@ class UploadForm extends React.Component {
   onSubmitHandler (event) {
     const url = 'http://localhost:4000/api/p/'
     const formData = new FormData()
-    const { filename, description, location, tagList, filenamehd, filenameld, filenamemd } = this.state
+    const {
+      filename,
+      description,
+      location,
+      tagList,
+      filenamehd,
+      filenameld,
+      filenamemd
+    } = this.state
     const { jwttoken } = localStorage
     formData.append('description', description)
     formData.append('location', location)
@@ -129,7 +138,7 @@ class UploadForm extends React.Component {
       'Content-Type': 'multipart/form-data',
       Authorization: `Token ${jwttoken}`
     }
-
+    this.setState({isUploadingToCloud: true})
     axios
       .post(url, formData, {
         headers: headers,
@@ -141,12 +150,19 @@ class UploadForm extends React.Component {
         }
       })
       .then(res => {
+        this.setState({isUploadingToCloud: false})
         console.log(res.statusText)
       })
   }
 
   render () {
-    const { description, location, tagList, visible } = this.state
+    const {
+      description,
+      location,
+      tagList,
+      visible,
+      isUploadingToCloud
+    } = this.state
     const { toggleLoggedIn } = this.props
     return (
       <div className='full-container'>
@@ -225,15 +241,20 @@ class UploadForm extends React.Component {
                   onChange={this.onChangeHandler}
                 />
               </Form.Field>
-
-              <Button
-                fluid
-                type='submit'
-                // disabled={!this.state.isSubmitable}
-                color='blue'
-              >
-                Upload
-              </Button>
+              {isUploadingToCloud ? (
+                <Button fluid loading primary>
+                  Loading
+                </Button>
+              ) : (
+                <Button
+                  fluid
+                  type='submit'
+                  // disabled={!this.state.isSubmitable}
+                  color='blue'
+                >
+                  Upload
+                </Button>
+              )}
             </Form>
           </div>
         </div>

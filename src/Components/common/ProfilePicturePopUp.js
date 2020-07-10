@@ -59,7 +59,8 @@ class ProfilePicturePopUp extends React.Component {
             }
           })
           .then(res => {
-            console.log('done')
+            this.props.handleClose();
+          this.props.toggleUpdate();
           })
       }
 
