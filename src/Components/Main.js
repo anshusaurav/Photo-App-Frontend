@@ -5,6 +5,7 @@ import SignupForm from './SignupForm'
 import ProfilePage from './ProfilePage'
 import UploadForm from './UploadForm'
 import HomePage from './HomePage'
+import SettingsPage from './SettingsPage'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Redirect } from 'react-router'
 class Main extends React.Component {
@@ -70,6 +71,13 @@ class Main extends React.Component {
           <Route path='/' exact={true}>
             {jwttoken ? (
               <HomePage toggleLoggedIn={this.toggleLoggedIn} />
+            ) : (
+              <Redirect to='/login' />
+            )}
+          </Route>
+          <Route path='/settings' >
+            {jwttoken ? (
+              <SettingsPage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login' />
             )}

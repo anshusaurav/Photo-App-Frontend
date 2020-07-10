@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Popup } from 'semantic-ui-react'
 import ProfilePicturePopUp from '../common/ProfilePicturePopUp'
 import { SingleImageLoaderMediumRounded } from './../loaders/loaders'
+import { Link } from 'react-router-dom'
 class ProfileHero extends React.Component {
   constructor (props) {
     super(props)
@@ -88,7 +89,7 @@ class ProfileHero extends React.Component {
           <div className='profile-details-outer-div'>
             <div className='profile-details-div-one'>
               <h2>{this.state.profile.username}</h2>
-              <Button>Edit Profile</Button>
+              <Link to='/settings'><Button>Edit Profile</Button></Link>
             </div>
             <div className='profile-details-div-one'>
               <p className='first-p'>
