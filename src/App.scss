@@ -404,6 +404,10 @@ table {
         flex-wrap: nowrap;
         // grid-template-columns: 1fr 1fr;
         justify-content: start;
+        .edit-profile-btn{
+          line-height: 2.0 !important;
+          color: #262626 !important;
+        }
         h2 {
           overflow: hidden;
           text-overflow: ellipsis;
@@ -1078,3 +1082,18 @@ table {
 }
 
 //Explore Loader ends here
+
+
+
+//Settings page starts here
+
+.settings-user-profile-main{
+  margin-top: 1rem;
+  min-height: 100vh;
+}
+
+.settings-main-section{
+  width: 80%;
+}
+
+//Settings page ends here
