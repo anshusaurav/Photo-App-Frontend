@@ -162,7 +162,38 @@ class UploadForm extends React.Component {
       filenamemd,
       isImage
     } = this.state
-    const { jwttoken } = localStorage
+    const { jwttoken } = localStorage;
+    if(isImage ===0){
+      formData.append('description', description)
+      formData.append('location', location)
+      formData.append('tags', JSON.stringify(tagList))
+      formData.append('isImage', isImage)
+      formData.append('filename', filename)
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1])
+      }
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Token ${jwttoken}`
+      }
+      this.setState({ isUploadingToCloud: true })
+      axios
+        .post(url, formData, {
+          headers: headers,
+  
+          onUploadProgress: ProgressEvent => {
+            this.setState({
+              loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+            })
+          }
+        })
+        .then(res => {
+          this.setState({ isUploadingToCloud: false })
+          console.log(res.statusText)
+        })
+      
+    }
+    else{
     formData.append('description', description)
     formData.append('location', location)
     formData.append('tags', JSON.stringify(tagList))
@@ -193,6 +224,7 @@ class UploadForm extends React.Component {
         this.setState({ isUploadingToCloud: false })
         console.log(res.statusText)
       })
+    }
   }
 
   render () {
@@ -240,9 +272,10 @@ class UploadForm extends React.Component {
                                 : ''
                             }
                             type='video/mp4'
-                            poster='https://imgur.com/IK3qPhT' >
-                            loop={true}
-                            autoplay={true}
+                            poster='https://imgur.com/IK3qPhT' 
+                            autoPlay={true}
+                            loop>
+                            
                         </video>
                       )}
                     </Transition>
