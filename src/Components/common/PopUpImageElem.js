@@ -31,7 +31,7 @@ class PopUpImageElem extends React.Component {
     this.submitHandler = this.submitHandler.bind(this)
     this.toggleLike = this.toggleLike.bind(this)
     this.putFocusOnTextArea = this.putFocusOnTextArea.bind(this)
-    this.toggleFollow = this.toggleFollow.bind(this);
+    this.toggleFollow = this.toggleFollow.bind(this)
     // this.saveImage = this.saveImage.bind(this);
   }
 
@@ -40,7 +40,7 @@ class PopUpImageElem extends React.Component {
     this.submitFollowToggle()
   }
   async submitFollowToggle () {
-    const slug = this.state.mainImg.author.username;
+    const slug = this.state.mainImg.author.username
     const { jwttoken } = localStorage
     const url = `http://localhost:4000/api/profiles/${slug}/follow`
     const isFollowed = this.state.mainImg.author.following
@@ -239,9 +239,8 @@ class PopUpImageElem extends React.Component {
       })
       const data = await response.json()
       if (!data.errors && data.imagepost) {
-        this.setState({ mainImg:data.imagepost})
+        this.setState({ mainImg: data.imagepost })
       }
-
     } catch (error) {
       console.error('Error: ' + error)
     }
@@ -252,19 +251,17 @@ class PopUpImageElem extends React.Component {
     return timeAgo.format(date)
   }
   async componentDidMount () {
-   this.saveImage()
-   this.saveComments();
+    this.saveImage()
+    this.saveComments()
   }
   async componentDidUpdate (prevProps, prevState) {
     if (this.state.isUpdated !== prevState.isUpdated) {
-      this.saveImage();
-      this.saveComments();
+      this.saveImage()
+      this.saveComments()
     }
   }
-  componentWillUnmount(){
+  componentWillUnmount () {}
 
-  }
-  
   render () {
     const {
       mainImg,
@@ -277,11 +274,10 @@ class PopUpImageElem extends React.Component {
       animationFollow,
       durationFollow,
       visibleFollow
-    } = this.state;
+    } = this.state
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
 
     return (
-      
       <Card
         className='popup-image-card'
         style={{
@@ -296,18 +292,28 @@ class PopUpImageElem extends React.Component {
         </span>
         <div className='pop-up-container'>
           <div className='pop-up-grid'>
-            {mainImg &&loggedInUser? (
-              <Image
-                className='popup-image-elem'
-                src={`${mainImg.filename}`} 
-              />
+            {mainImg && loggedInUser ? (
+              mainImg.isImage ? (
+                <Image
+                  className='popup-image-elem'
+                  src={`${mainImg.filename}`}
+                />
+              ) : (
+                <video
+                  controls
+                  src={`${mainImg.filename}`}
+                  type='video/mp4'
+                  poster='https://imgur.com/IK3qPhT'
+                  loop
+                ></video>
+              )
             ) : (
               <p>Loading</p>
             )}
 
             <div className='pop-up-des-div'>
               <Card.Content className='popup-image-author-content'>
-                {loggedInUser&&mainImg && comments &&mainImg.author? (
+                {loggedInUser && mainImg && comments && mainImg.author ? (
                   <div className='popup-image-author-profile'>
                     <Image
                       className='popup-image-author-image'
@@ -319,41 +325,41 @@ class PopUpImageElem extends React.Component {
                       {mainImg.author.username}
                     </span>
                     <span>
-                    {mainImg.author.usernmae!==loggedInUser.username&&
-                        
+                      {mainImg.author.usernmae !== loggedInUser.username && (
                         <>
-
-                        {mainImg.author.following ? (
-                          <Transition
-                            animation={animationFollow}
-                            duration={durationFollow}
-                            visible={visibleFollow}
-                          >
-                          <Button
-                            className='pop-up-unfollow-btn'
-                            onClick={this.toggleFollow}
-                            color='instagram'
-                            style={{ borderRadius: 8 }}
-                          >
-                            Following
-                          </Button></Transition>
-                        ) : mainImg.author.username !==
-                          loggedInUser.username ? (
+                          {mainImg.author.following ? (
                             <Transition
-                            animation={animationFollow}
-                            duration={durationFollow}
-                            visible={visibleFollow}
-                          >
-                          <Button
-                            className='pop-up-follow-btn'
-                            onClick={this.toggleFollow}
-                            style={{ borderRadius: 8 }}
-                          >
-                            Follow
-                          </Button></Transition>
-                        ) : null}
+                              animation={animationFollow}
+                              duration={durationFollow}
+                              visible={visibleFollow}
+                            >
+                              <Button
+                                className='pop-up-unfollow-btn'
+                                onClick={this.toggleFollow}
+                                color='instagram'
+                                style={{ borderRadius: 8 }}
+                              >
+                                Following
+                              </Button>
+                            </Transition>
+                          ) : mainImg.author.username !==
+                            loggedInUser.username ? (
+                            <Transition
+                              animation={animationFollow}
+                              duration={durationFollow}
+                              visible={visibleFollow}
+                            >
+                              <Button
+                                className='pop-up-follow-btn'
+                                onClick={this.toggleFollow}
+                                style={{ borderRadius: 8 }}
+                              >
+                                Follow
+                              </Button>
+                            </Transition>
+                          ) : null}
                         </>
-                    }
+                      )}
                     </span>
                   </div>
                 ) : (
@@ -364,8 +370,8 @@ class PopUpImageElem extends React.Component {
                   <Icon name='ellipsis horizontal' />{' '}
                 </span>
               </Card.Content>
-               <Card.Content>
-                {loggedInUser&&comments &&mainImg &&mainImg.author? (
+              <Card.Content>
+                {loggedInUser && comments && mainImg && mainImg.author ? (
                   <div className='pop-up-image-comment-complete-div'>
                     <Card.Description className='popup-common-des  popup-comment-elem-single'>
                       <Image
@@ -377,9 +383,12 @@ class PopUpImageElem extends React.Component {
                       {mainImg.description}
                     </Card.Description>
                     {comments &&
-                      comments.map((comment,index) => {
+                      comments.map((comment, index) => {
                         return (
-                          <Card.Description key= {index} className='popup-common-des popup-comment-elem-single'>
+                          <Card.Description
+                            key={index}
+                            className='popup-common-des popup-comment-elem-single'
+                          >
                             <Image
                               size='mini'
                               className='popup-comment-comment-user-img'
@@ -389,15 +398,12 @@ class PopUpImageElem extends React.Component {
                             {comment.body}
                           </Card.Description>
                         )
-                      })
-                      }
+                      })}
 
                     <Card.Meta className='popup-common-des popup-more-comment-anchor'>
                       {mainImg.commentsCount !== 0
                         ? `View All ${mainImg.commentsCount} ${
-                            mainImg.commentsCount !== 1
-                              ? 'comments'
-                              : 'comment'
+                            mainImg.commentsCount !== 1 ? 'comments' : 'comment'
                           }`
                         : `Be the first one to respond`}
                     </Card.Meta>
@@ -418,11 +424,9 @@ class PopUpImageElem extends React.Component {
                             <Icon
                               className='popup-action-elem'
                               name={
-                                mainImg.favorited
-                                  ? 'heart'
-                                  : 'heart outline'
+                                mainImg.favorited ? 'heart' : 'heart outline'
                               }
-                              color={mainImg.favorited?'red':'black'}
+                              color={mainImg.favorited ? 'red' : 'black'}
                               size='large'
                               onClick={this.toggleLike}
                             />
@@ -463,9 +467,7 @@ class PopUpImageElem extends React.Component {
                       <p className='popup-image-like-count'>
                         {mainImg.favoritesCount !== 0
                           ? `${mainImg.favoritesCount} ${
-                            mainImg.favoritesCount !== 1
-                                ? 'likes'
-                                : 'like'
+                              mainImg.favoritesCount !== 1 ? 'likes' : 'like'
                             }`
                           : `Be the first one to like`}
                       </p>
@@ -508,7 +510,7 @@ class PopUpImageElem extends React.Component {
                     POST
                   </Button>
                 </Form>
-              </div> 
+              </div>
             </div>
           </div>
         </div>

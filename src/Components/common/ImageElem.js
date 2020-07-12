@@ -24,10 +24,9 @@ class ImageElem extends React.Component {
       commentsCount,
       favoritesCount,
       filename,
-      filenamesPL
+      filenamesPL,
+      isImage
     } = this.props.img
-    const fileNamesStr = filenamesPL.join(', ')
-    // console.log('PL;: ', filenamesPL, filename);
     return (
       <Popup
         on='click'
@@ -49,19 +48,31 @@ class ImageElem extends React.Component {
           <div className='explore-item'>
             <div className='content'>
               <div className='link-img' href='#' target='_blank'>
-                
-                <ProgressiveImage
-                  src={`${filename}`}
-                  placeholder={`${filenamesPL[0]}`}
-                >
-                  {(src, loading) => (
-                    <img
-                      style={{ opacity: loading ? 0.5 : 1 }}
-                      src={src}
-                      alt='an image'
-                    />
-                  )}
-                </ProgressiveImage>
+                {isImage ? (
+                  <ProgressiveImage
+                    src={`${filename}`}
+                    placeholder={`${filenamesPL[0]}`}
+                  >
+                    {(src, loading) => (
+                      <img
+                        style={{ opacity: loading ? 0.5 : 1 }}
+                        src={src}
+                        alt='an image'
+                      />
+                    )}
+                  </ProgressiveImage>
+                ) : (
+                  <video
+                    controls
+                    width='300'
+                    height='300'
+                    src={`${filename}`}
+                    type='video/mp4'
+                    poster='https://imgur.com/IK3qPhT'
+                    
+                    loop
+                  ></video>
+                )}
                 {/* <img src={`${filename}`} alt=' '></img> */}
                 <div className='content-overlay'></div>
                 <div className='content-details fadeIn-bottom'>
