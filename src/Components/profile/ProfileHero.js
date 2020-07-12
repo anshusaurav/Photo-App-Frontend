@@ -89,7 +89,7 @@ class ProfileHero extends React.Component {
           <div className='profile-details-outer-div'>
             <div className='profile-details-div-one'>
               <h2>{this.state.profile.username}</h2>
-              <Link to='/settings'><Button >Edit Profile</Button></Link>
+              <Link to='/settings'><Button className='edit-profile-btn'>Edit Profile</Button></Link>
             </div>
             <div className='profile-details-div-one'>
               <p className='first-p'>

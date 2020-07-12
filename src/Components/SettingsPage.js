@@ -15,9 +15,16 @@ export default class SettingsPage extends React.Component {
       <div className='full-container'>
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
         <div className='settings-user-profile-main container'>
-          <Grid style={{paddingTop: 16,paddingBottom: 16, border: '1px solid #D4D4D5', borderRadius: 1}}> 
-            <Grid.Column width={3} style={{paddingLeft: 0,paddingRight: 0}}>
-              <Menu fluid vertical tabular style={{minHeight: '85vh'}}>
+          <Grid
+            style={{
+              paddingTop: 16,
+              paddingBottom: 16,
+              border: '1px solid #D4D4D5',
+              borderRadius: 1
+            }}
+          >
+            <Grid.Column width={3} style={{ paddingLeft: 0, paddingRight: 0 }}>
+              <Menu fluid vertical tabular style={{ minHeight: '85vh' }}>
                 <Menu.Item
                   name='Edit Profile'
                   active={activeItem === 'Edit Profile'}
@@ -42,7 +49,9 @@ export default class SettingsPage extends React.Component {
               style={{ width: '80%' }}
             >
               {activeItem === 'Edit Profile' ? (
-                <Segment style={{border: 'none', minHeight: '85vh'}}>Edit Profile</Segment>
+                <Segment style={{ border: 'none', minHeight: '85vh' }}>
+                  Edit Profile
+                </Segment>
               ) : activeItem === 'Change Password' ? (
                 <Segment>Change Password</Segment>
               ) : (
