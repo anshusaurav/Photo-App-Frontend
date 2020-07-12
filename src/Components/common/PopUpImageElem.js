@@ -293,19 +293,23 @@ class PopUpImageElem extends React.Component {
         <div className='pop-up-container'>
           <div className='pop-up-grid'>
             {mainImg && loggedInUser ? (
-              mainImg.isImage ? (
+              mainImg.isImage===1 ? (
                 <Image
                   className='popup-image-elem'
                   src={`${mainImg.filename}`}
                 />
               ) : (
-                <video
+                <div className='popup-video-container'>
+                <video className='popup-main-video'
                   controls
                   src={`${mainImg.filename}`}
                   type='video/mp4'
                   poster='https://imgur.com/IK3qPhT'
-                  loop
+                 
+                  autoplay={true}
+                  style={{maxHeight: 660, minHeight:400, width: '100%'}}
                 ></video>
+                </div>
               )
             ) : (
               <p>Loading</p>
