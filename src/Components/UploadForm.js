@@ -1,7 +1,16 @@
 import React, { createRef } from 'react'
-import { Form, Button, Image, Transition, Progress } from 'semantic-ui-react'
+import {
+  Form,
+  Button,
+  Image,
+  Transition,
+  Progress,
+  Embed
+} from 'semantic-ui-react'
 import imageCompression from 'browser-image-compression'
 import axios from 'axios'
+import mime from 'mime-types'
+import path from 'path'
 import HeaderNav from './common/HeaderNav'
 class UploadForm extends React.Component {
   constructor (props) {
@@ -12,10 +21,12 @@ class UploadForm extends React.Component {
       filenameld: null,
       filenamehd: null,
       filenamemd: null,
+      videoPreviewUrl: '',
       imagePreviewUrl: '',
       description: '',
       tagList: '',
       location: '',
+      isImage: 1,
       loaded: 0,
       visible: true,
       isUploadingToCloud: false
@@ -26,72 +37,99 @@ class UploadForm extends React.Component {
   }
   async onImageChange (event) {
     event.preventDefault()
-    try {
-      const imageFile = event.target.files[0]
-      const type = `${imageFile.type}`
-      const optionsOne = {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 1920,
-        useWebWorker: true,
-        fileType: type
+    const selectedFile = event.target.files[0]
+    const typeFull = selectedFile.type
+    const specificType = mime.extensions[typeFull][0]
+    if (specificType === 'mp4') this.setState({ isImage: 0 })
+    else this.setState({ isImage: 1 })
+    console.log(typeFull, specificType)
+    if (specificType === 'mp4') {
+      try {
+        const videoFile = event.target.files[0]
+        const type = `${videoFile.type}`
+        // let fileOne = compressedFileOne
+        let reader = new FileReader(videoFile)
+        reader.onloadend = () => {
+          console.log('read file');
+          this.setState(
+            { filename: videoFile, videoPreviewUrl: reader.result },
+            function () {
+              // this.setState(prevState => ({ visible: !prevState.visible }))
+            }
+          )
+        }
+        reader.readAsDataURL(videoFile)
+      } catch (error) {
+        console.log(error)
       }
-      const optionsTwo = {
-        maxSizeMB: 0.6,
-        maxWidthOrHeight: 1200,
-        useWebWorker: true,
-        fileType: type
-      }
-      const optionsThree = {
-        maxSizeMB: 0.2,
-        maxWidthOrHeight: 880,
-        useWebWorker: true,
-        fileType: type
-      }
-      const compressedFileOne = await imageCompression(imageFile, optionsOne)
-      const compressedFileTwo = await imageCompression(imageFile, optionsTwo)
-      const compressedFileThree = await imageCompression(
-        imageFile,
-        optionsThree
-      )
-      console.log(
-        'compressedFile instanceof Blob',
-        compressedFileOne instanceof Blob
-      )
-      let fileOne = compressedFileOne
-      let readerOne = new FileReader(fileOne)
+    } else {
+      try {
+        const imageFile = event.target.files[0]
+        const type = `${imageFile.type}`
+        const optionsOne = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+          fileType: type
+        }
+        const optionsTwo = {
+          maxSizeMB: 0.6,
+          maxWidthOrHeight: 1200,
+          useWebWorker: true,
+          fileType: type
+        }
+        const optionsThree = {
+          maxSizeMB: 0.2,
+          maxWidthOrHeight: 880,
+          useWebWorker: true,
+          fileType: type
+        }
+        const compressedFileOne = await imageCompression(imageFile, optionsOne)
+        const compressedFileTwo = await imageCompression(imageFile, optionsTwo)
+        const compressedFileThree = await imageCompression(
+          imageFile,
+          optionsThree
+        )
+        console.log(
+          'compressedFile instanceof Blob',
+          compressedFileOne instanceof Blob
+        )
+        let fileOne = compressedFileOne
+        let readerOne = new FileReader(fileOne)
 
-      let fileTwo = compressedFileTwo
-      let readerTwo = new FileReader(fileTwo)
+        let fileTwo = compressedFileTwo
+        let readerTwo = new FileReader(fileTwo)
 
-      let fileThree = compressedFileThree
-      let readerThree = new FileReader(fileThree)
+        let fileThree = compressedFileThree
+        let readerThree = new FileReader(fileThree)
 
-      this.setState(prevState => ({ visible: !prevState.visible }))
-      this.setState({ imagePreviewUrl: '' })
-      readerOne.onloadend = () => {
-        readerTwo.onloadend = () => {
-          readerThree.onloadend = () => {
-            this.setState(
-              {
-                filename: imageFile,
-                filenamehd: fileOne,
-                filenamemd: fileTwo,
-                filenameld: fileThree,
-                imagePreviewUrl: readerOne.result
-              },
-              function () {
-                this.setState(prevState => ({ visible: !prevState.visible }))
-              }
-            )
+        this.setState(prevState => ({ visible: !prevState.visible }))
+        this.setState({ imagePreviewUrl: '' })
+        readerOne.onloadend = () => {
+          readerTwo.onloadend = () => {
+            readerThree.onloadend = () => {
+              this.setState(
+                {
+                  filename: imageFile,
+                  filenamehd: fileOne,
+                  filenamemd: fileTwo,
+                  filenameld: fileThree,
+                  imagePreviewUrl: readerOne.result
+                },
+                function () {
+                  this.setState(prevState => ({ visible: !prevState.visible }))
+                }
+              )
+            }
           }
         }
-      }
 
-      readerOne.readAsDataURL(fileOne)
-      readerTwo.readAsDataURL(fileTwo)
-      readerThree.readAsDataURL(fileThree)
-    } catch (error) {
-      console.log(error)
+        readerOne.readAsDataURL(fileOne)
+        readerTwo.readAsDataURL(fileTwo)
+        readerThree.readAsDataURL(fileThree)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
   onChangeHandler (event) {
@@ -121,12 +159,14 @@ class UploadForm extends React.Component {
       tagList,
       filenamehd,
       filenameld,
-      filenamemd
+      filenamemd,
+      isImage
     } = this.state
     const { jwttoken } = localStorage
     formData.append('description', description)
     formData.append('location', location)
     formData.append('tags', JSON.stringify(tagList))
+    formData.append('isImage', isImage)
     formData.append('filename', filename)
     formData.append('filenameld', filenameld)
     formData.append('filenamehd', filenamemd)
@@ -138,7 +178,7 @@ class UploadForm extends React.Component {
       'Content-Type': 'multipart/form-data',
       Authorization: `Token ${jwttoken}`
     }
-    this.setState({isUploadingToCloud: true})
+    this.setState({ isUploadingToCloud: true })
     axios
       .post(url, formData, {
         headers: headers,
@@ -150,7 +190,7 @@ class UploadForm extends React.Component {
         }
       })
       .then(res => {
-        this.setState({isUploadingToCloud: false})
+        this.setState({ isUploadingToCloud: false })
         console.log(res.statusText)
       })
   }
@@ -161,8 +201,12 @@ class UploadForm extends React.Component {
       location,
       tagList,
       visible,
-      isUploadingToCloud
-    } = this.state
+      isImage,
+      isUploadingToCloud,
+      imagePreviewUrl,
+      videoPreviewUrl
+    } = this.state;
+    console.log('videopreviewURL', videoPreviewUrl)
     const { toggleLoggedIn } = this.props
     return (
       <div className='full-container'>
@@ -178,16 +222,29 @@ class UploadForm extends React.Component {
                       animation='scale'
                       duration={500}
                     >
-                      <Image
-                        src={
-                          this.state.imagePreviewUrl
-                            ? this.state.imagePreviewUrl
-                            : 'https://react.semantic-ui.com/images/wireframe/square-image.png'
-                        }
-                        size='medium'
-                        rounded
-                        fluid
-                      />
+                      {isImage === 1 ? (
+                        <Image
+                          src={
+                            imagePreviewUrl
+                              ? imagePreviewUrl
+                              : 'https://react.semantic-ui.com/images/wireframe/square-image.png'
+                          }
+                          size='medium'
+                          rounded
+                          fluid
+                        />
+                      ) : (
+                        <video controls width='300' height='300' src={
+                              videoPreviewUrl
+                                ? videoPreviewUrl
+                                : ''
+                            }
+                            type='video/mp4'
+                            poster='https://imgur.com/IK3qPhT' >
+                            loop={true}
+                            autoplay={true}
+                        </video>
+                      )}
                     </Transition>
                   </div>
                 </div>
