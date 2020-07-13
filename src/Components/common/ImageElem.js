@@ -62,16 +62,19 @@ class ImageElem extends React.Component {
                     )}
                   </ProgressiveImage>
                 ) : (
-                  <video
-                    controls
-                    width='300'
-                    height='300'
-                    src={`${filename}`}
-                    type='video/mp4'
-                    poster='https://imgur.com/IK3qPhT'
-                    
-                    loop
-                  ></video>
+                  <ProgressiveImage
+                    src={`${filenamesPL[0]}`}
+                    placeholder={`${filenamesPL[0]}`}
+                  >
+                    {(src, loading) => (
+                      <img
+                        style={{ opacity: loading ? 0.5 : 1 }}
+                        src={src}
+                        alt='an image'
+                      />
+                    )}
+                  </ProgressiveImage>
+                  
                 )}
                 {/* <img src={`${filename}`} alt=' '></img> */}
                 <div className='content-overlay'></div>
