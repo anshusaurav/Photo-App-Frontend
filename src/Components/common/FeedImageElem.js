@@ -317,7 +317,11 @@ class FeedImageElem extends React.Component {
             ) : (
               <div
                 className='popup-imagevideo-container'
-                style={{ backgroundColor: this.state.img.bgColor }}
+                style={{
+                  backgroundColor: this.state.img.bgColor,
+                  position: 'relative'
+                }}
+                onClick={this.togglePlayVideo}
               >
                 <video
                   className='popup-main-video'
@@ -325,17 +329,23 @@ class FeedImageElem extends React.Component {
                   src={`${this.state.img.filename}`}
                   type='video/mp4'
                   poster={this.state.img.filenamesPL[0]}
-                  width={600}
-                  style={{ maxHeight: 720, minHeight: 400}}
+                  // width=
+                  style={{ maxHeight: 720, minHeight: 400, width:'100%' }}
                 ></video>
+                <Icon
+                  disabled
+                  name='play'
+                  size='huge'
+                  color='black'
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                />
               </div>
             )}
-            {/* <Image
-              className='feed-image-elem'
-              src={`${this.state.img.filename}`}
-              wrapped
-              ui={true}
-            /> */}
 
             <Card.Content>
               <Card.Description className='feed-image-inter-content'>
