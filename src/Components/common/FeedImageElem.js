@@ -268,7 +268,8 @@ class FeedImageElem extends React.Component {
       animation,
       duration,
       visible
-    } = this.state
+    } = this.state;
+    const bgColor = 'black';
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
     return (
       <Card className='feed-image-card'>
@@ -294,12 +295,13 @@ class FeedImageElem extends React.Component {
             </Card.Content>
             {
               this.state.img.isImage===1?(
-            
+            <div className='popup-imagevideo-container' style={{backgroundColor: bgColor}}>
             <ProgressiveImage
               src={`${this.state.img.filename}`}
               placeholder={`${this.state.img.filenamesPL[0]}`}
             >
               {(src, loading) => (
+
                 <Image
                   className='feed-image-elem'
                   style={{ opacity: loading ? 0.5 : 1 }}
@@ -309,7 +311,7 @@ class FeedImageElem extends React.Component {
                   alt='an image'
                 />
               )}
-            </ProgressiveImage>):( <div className='popup-imagevideo-container' style={{backgroundColor: 'black'}}>
+            </ProgressiveImage></div>):( <div className='popup-imagevideo-container' style={{backgroundColor: 'black'}}>
                   <video
                     className='popup-main-video'
                     controls
@@ -317,7 +319,7 @@ class FeedImageElem extends React.Component {
                     type='video/mp4'
                     poster={this.state.img.filenamesPL[0]}
                     width={600}
-                    style={{ maxHeight: 660, minHeight: 400}}
+                    // style={{ maxHeight: 660, minHeight: 400}}
                   ></video>
                 </div>)
             }

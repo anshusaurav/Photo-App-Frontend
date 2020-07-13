@@ -601,6 +601,11 @@ table {
     }
     .feed-image-card {
       width: 100%;
+      .popup-imagevideo-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       // padding: 1rem !important;
       .feed-image-author-content {
         display: grid;
@@ -627,7 +632,7 @@ table {
       .feed-image-elem {
         border-top: 1px solid #efefef;
         background: transparent;
-        padding-top: 1rem;
+        // padding-top: 1rem;
         object-fit: cover;
       }
 
