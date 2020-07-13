@@ -11,6 +11,7 @@ import {
 import TimeAgo from 'javascript-time-ago'
 import FastAverageColor from 'fast-average-color'
 import en from 'javascript-time-ago/locale/en'
+
 class PopUpImageElem extends React.Component {
   constructor (props) {
     super(props)
@@ -276,10 +277,9 @@ class PopUpImageElem extends React.Component {
       visible,
       animationFollow,
       durationFollow,
-      visibleFollow,
-      bgColor
-    } = this.state;
-    
+      visibleFollow
+    } = this.state
+
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
 
     return (
@@ -299,14 +299,20 @@ class PopUpImageElem extends React.Component {
           <div className='pop-up-grid'>
             {mainImg && loggedInUser ? (
               mainImg.isImage === 1 ? (
-                <div className='popup-imagevideo-container' style={{backgroundColor: bgColor}}>
+                <div
+                  className='popup-imagevideo-container'
+                  style={{ backgroundColor: mainImg.bgColor }}
+                >
                   <Image
                     className='popup-image-elem'
                     src={`${mainImg.filename}`}
                   />
                 </div>
               ) : (
-                <div className='popup-imagevideo-container' style={{backgroundColor: bgColor}}>
+                <div
+                  className='popup-imagevideo-container'
+                  style={{ backgroundColor: mainImg.bgColor }}
+                >
                   <video
                     className='popup-main-video'
                     controls

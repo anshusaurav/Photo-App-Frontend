@@ -1,5 +1,5 @@
 import React from 'react'
-import { Popup } from 'semantic-ui-react'
+import { Popup, Icon } from 'semantic-ui-react'
 import PopUpImageElem from './PopUpImageElem'
 import ProgressiveImage from 'react-progressive-image'
 import { Placeholder } from 'semantic-ui-react'
@@ -48,7 +48,7 @@ class ImageElem extends React.Component {
           <div className='explore-item'>
             <div className='content'>
               <div className='link-img' href='#' target='_blank'>
-                {isImage ? (
+                {isImage===1 ? (
                   <ProgressiveImage
                     src={`${filename}`}
                     placeholder={`${filenamesPL[0]}`}
@@ -62,6 +62,7 @@ class ImageElem extends React.Component {
                     )}
                   </ProgressiveImage>
                 ) : (
+                  <div style={{position:'relative'}}>
                   <ProgressiveImage
                     src={`${filenamesPL[0]}`}
                     placeholder={`${filenamesPL[0]}`}
@@ -74,7 +75,8 @@ class ImageElem extends React.Component {
                       />
                     )}
                   </ProgressiveImage>
-                  
+                  <Icon disabled name='video' size='large' style={{position: 'absolute', top: 8, right: 8}}/>
+                  </div>
                 )}
                 {/* <img src={`${filename}`} alt=' '></img> */}
                 <div className='content-overlay'></div>

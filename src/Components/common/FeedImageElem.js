@@ -295,7 +295,7 @@ class FeedImageElem extends React.Component {
             </Card.Content>
             {
               this.state.img.isImage===1?(
-            <div className='popup-imagevideo-container' style={{backgroundColor: bgColor}}>
+            <div className='popup-imagevideo-container' style={{backgroundColor: this.state.img.bgColor}}>
             <ProgressiveImage
               src={`${this.state.img.filename}`}
               placeholder={`${this.state.img.filenamesPL[0]}`}
@@ -311,7 +311,7 @@ class FeedImageElem extends React.Component {
                   alt='an image'
                 />
               )}
-            </ProgressiveImage></div>):( <div className='popup-imagevideo-container' style={{backgroundColor: 'black'}}>
+            </ProgressiveImage></div>):( <div className='popup-imagevideo-container' style={{backgroundColor: this.state.img.bgColor}}>
                   <video
                     className='popup-main-video'
                     controls
