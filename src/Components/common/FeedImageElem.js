@@ -292,6 +292,9 @@ class FeedImageElem extends React.Component {
                 <Icon name='ellipsis horizontal' />{' '}
               </span>
             </Card.Content>
+            {
+              this.state.img.isImage===1?(
+            
             <ProgressiveImage
               src={`${this.state.img.filename}`}
               placeholder={`${this.state.img.filenamesPL[0]}`}
@@ -306,7 +309,18 @@ class FeedImageElem extends React.Component {
                   alt='an image'
                 />
               )}
-            </ProgressiveImage>
+            </ProgressiveImage>):( <div className='popup-imagevideo-container' style={{backgroundColor: 'black'}}>
+                  <video
+                    className='popup-main-video'
+                    controls
+                    src={`${this.state.img.filename}`}
+                    type='video/mp4'
+                    poster={this.state.img.filenamesPL[0]}
+                    width={600}
+                    style={{ maxHeight: 660, minHeight: 400}}
+                  ></video>
+                </div>)
+            }
             {/* <Image
               className='feed-image-elem'
               src={`${this.state.img.filename}`}

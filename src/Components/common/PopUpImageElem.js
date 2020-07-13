@@ -9,6 +9,7 @@ import {
   Transition
 } from 'semantic-ui-react'
 import TimeAgo from 'javascript-time-ago'
+import FastAverageColor from 'fast-average-color'
 import en from 'javascript-time-ago/locale/en'
 class PopUpImageElem extends React.Component {
   constructor (props) {
@@ -24,7 +25,8 @@ class PopUpImageElem extends React.Component {
       visible: true,
       animationFollow: 'pulse',
       durationFollow: 600,
-      visibleFollow: true
+      visibleFollow: true,
+      bgColor: 'black'
     }
     this.textAreaRef = createRef()
     this.changeHandler = this.changeHandler.bind(this)
@@ -229,6 +231,7 @@ class PopUpImageElem extends React.Component {
     const slug = this.props.img
     const { jwttoken } = localStorage
     const url = `http://localhost:4000/api/p/${slug}`
+    const fac = new FastAverageColor()
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -273,8 +276,10 @@ class PopUpImageElem extends React.Component {
       visible,
       animationFollow,
       durationFollow,
-      visibleFollow
-    } = this.state
+      visibleFollow,
+      bgColor
+    } = this.state;
+    
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
 
     return (
@@ -293,22 +298,24 @@ class PopUpImageElem extends React.Component {
         <div className='pop-up-container'>
           <div className='pop-up-grid'>
             {mainImg && loggedInUser ? (
-              mainImg.isImage===1 ? (
-                <Image
-                  className='popup-image-elem'
-                  src={`${mainImg.filename}`}
-                />
+              mainImg.isImage === 1 ? (
+                <div className='popup-imagevideo-container' style={{backgroundColor: bgColor}}>
+                  <Image
+                    className='popup-image-elem'
+                    src={`${mainImg.filename}`}
+                  />
+                </div>
               ) : (
-                <div className='popup-video-container'>
-                <video className='popup-main-video'
-                  controls
-                  src={`${mainImg.filename}`}
-                  type='video/mp4'
-                  poster='https://imgur.com/IK3qPhT'
-                 
-                  autoplay={true}
-                  style={{maxHeight: 660, minHeight:400, width: '100%'}}
-                ></video>
+                <div className='popup-imagevideo-container' style={{backgroundColor: bgColor}}>
+                  <video
+                    className='popup-main-video'
+                    controls
+                    src={`${mainImg.filename}`}
+                    type='video/mp4'
+                    poster='https://imgur.com/IK3qPhT'
+                    autoPlay={true}
+                    style={{ maxHeight: 660, minHeight: 400, width: '100%' }}
+                  ></video>
                 </div>
               )
             ) : (

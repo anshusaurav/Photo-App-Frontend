@@ -1,7 +1,7 @@
 import React from 'react'
 
 import HeaderNav from './common/HeaderNav'
-import { Button,Card } from 'semantic-ui-react'
+import { Button, Card } from 'semantic-ui-react'
 import FeedImageElem from './common/FeedImageElem'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {
@@ -35,13 +35,12 @@ class HomePage extends React.Component {
         headers: headers
       })
       .then(res => {
-        this.setState({ imagepostList: res.data.imageposts }, function(){
-          this.setState({ totalImages: res.data.imagepostCount }, function(){
+        this.setState({ imagepostList: res.data.imageposts }, function () {
+          this.setState({ totalImages: res.data.imagepostCount }, function () {
             if (offset + limit >= res.data.imagepostCount)
-            this.setState({ hasMoreImages: false })
+              this.setState({ hasMoreImages: false })
           })
         })
-        
       })
   }
   fetchImages = () => {
@@ -63,6 +62,7 @@ class HomePage extends React.Component {
         }
       )
       .then(res => {
+        console.log(res);
         this.setState(prevState => ({
           imagepostList: prevState.imagepostList.concat(res.data.imageposts)
         }))
@@ -92,7 +92,8 @@ class HomePage extends React.Component {
       }
     ]
     const { toggleLoggedIn } = this.props
-    const { imagepostList } = this.state
+    const { imagepostList } = this.state;
+    console.log(imagepostList);
     return (
       <div className='full-container'>
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
@@ -100,30 +101,30 @@ class HomePage extends React.Component {
           <div className='container'>
             <div className='home-page-div'>
               <div className='feed-images-div'>
-              {this.state.imagepostList.length > 0 &&
-                <InfiniteScroll
-                  dataLength={this.state.imagepostList.length}
-                  next={this.fetchImages}
-                  hasMore={this.state.hasMoreImages}
-                  loader={
-                    <>
-                      <Card className='feed-image-card'>
-                        <FeedHeaderLoader />
-                      </Card>
-                      <Card className='feed-image-card'>
-                        <FeedHeaderLoader />
-                      </Card>
-                      <Card className='feed-image-card'>
-                        <FeedHeaderLoader />
-                      </Card>
-                    </>
-                  }
-                >
-                  {imagepostList.map((img,index) => {
-                    return <FeedImageElem img={img.slug} key={index} />
-                  })}
-                </InfiniteScroll>
-              }
+                {this.state.imagepostList.length > 0 && (
+                  <InfiniteScroll
+                    dataLength={this.state.imagepostList.length}
+                    next={this.fetchImages}
+                    hasMore={this.state.hasMoreImages}
+                    loader={
+                      <>
+                        <Card className='feed-image-card'>
+                          <FeedHeaderLoader />
+                        </Card>
+                        <Card className='feed-image-card'>
+                          <FeedHeaderLoader />
+                        </Card>
+                        <Card className='feed-image-card'>
+                          <FeedHeaderLoader />
+                        </Card>
+                      </>
+                    }
+                  >
+                    {imagepostList.map((img, index) => {
+                      return <FeedImageElem img={img.slug} key={index} />
+                    })}
+                  </InfiniteScroll>
+                )}
               </div>
               <div className='feed-suggestions-div'>
                 <div className='feed-suggestion-inner-div'>
@@ -136,7 +137,10 @@ class HomePage extends React.Component {
                   <div className='feed-suggestion-profile-div'>
                     {suggestions.map((elem, index) => {
                       return (
-                        <div className='feed-suggestion-profile-inner-div' key={index}>
+                        <div
+                          className='feed-suggestion-profile-inner-div'
+                          key={index}
+                        >
                           <div className='feed-sugg-profile-user'>
                             <div className='feed-sugg-profile-img-div'>
                               <img src={elem.image} alt=''></img>

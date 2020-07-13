@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "browser-image-compression": "^1.0.12",
+    "fast-average-color": "^6.0.2",
     "fluent-ffmpeg": "^2.1.2",
     "javascript-time-ago": "^2.0.8",
     "lodash.clonedeep": "^4.5.0",
