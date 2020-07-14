@@ -48,7 +48,7 @@ class ImageElem extends React.Component {
           <div className='explore-item'>
             <div className='content'>
               <div className='link-img' href='#' target='_blank'>
-                {isImage===1 ? (
+                {isImage === 1 ? (
                   <ProgressiveImage
                     src={`${filename}`}
                     placeholder={`${filenamesPL[0]}`}
@@ -62,20 +62,25 @@ class ImageElem extends React.Component {
                     )}
                   </ProgressiveImage>
                 ) : (
-                  <div style={{position:'relative'}}>
-                  <ProgressiveImage
-                    src={`${filenamesPL[0]}`}
-                    placeholder={`${filenamesPL[0]}`}
-                  >
-                    {(src, loading) => (
-                      <img
-                        style={{ opacity: loading ? 0.5 : 1 }}
-                        src={src}
-                        alt='an image'
-                      />
-                    )}
-                  </ProgressiveImage>
-                  <Icon disabled name='video' size='large' style={{position: 'absolute', top: 8, right: 8}}/>
+                  <div style={{ position: 'relative' }}>
+                    <ProgressiveImage
+                      src={`${filenamesPL[0]}`}
+                      placeholder={`${filenamesPL[0]}`}
+                    >
+                      {(src, loading) => (
+                        <img
+                          style={{ opacity: loading ? 0.5 : 1 }}
+                          src={src}
+                          alt='an image'
+                        />
+                      )}
+                    </ProgressiveImage>
+                    <Icon
+                      disabled
+                      name='video'
+                      size='large'
+                      style={{ position: 'absolute', top: 8, right: 8 }}
+                    />
                   </div>
                 )}
                 {/* <img src={`${filename}`} alt=' '></img> */}

@@ -1,4 +1,4 @@
-import React, { createRef } from 'react'
+  import React, { createRef } from 'react'
 import {
   Card,
   Icon,
@@ -6,13 +6,14 @@ import {
   Form,
   TextArea,
   Button,
-  Transition,
-  List
+  Transition
 } from 'semantic-ui-react'
 import { FeedHeaderLoader } from './../loaders/loaders'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ProgressiveImage from 'react-progressive-image'
+import './../../../node_modules/video-react/dist/video-react.css'
+import { Player, BigPlayButton } from 'video-react'
 class FeedImageElem extends React.Component {
   constructor (props) {
     super(props)
@@ -27,6 +28,7 @@ class FeedImageElem extends React.Component {
       visible: true
     }
     this.textAreaRef = createRef()
+    this.videoRef = createRef()
     this.changeHandler = this.changeHandler.bind(this)
     this.submitHandler = this.submitHandler.bind(this)
     this.toggleLike = this.toggleLike.bind(this)
@@ -261,16 +263,7 @@ class FeedImageElem extends React.Component {
     return timeAgo.format(date)
   }
   render () {
-    const {
-      isSubmitable,
-      body,
-      comments,
-      animation,
-      duration,
-      visible
-    } = this.state
-    const bgColor = 'black'
-    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
+    const { isSubmitable, comments, animation, duration, visible } = this.state
     return (
       <Card className='feed-image-card'>
         {this.state.img && this.state.comments ? (
@@ -295,7 +288,7 @@ class FeedImageElem extends React.Component {
             </Card.Content>
             {this.state.img.isImage === 1 ? (
               <div
-                className='popup-imagevideo-container'
+                className='feed-imagevideo-container'
                 style={{ backgroundColor: this.state.img.bgColor }}
               >
                 <ProgressiveImage
@@ -316,34 +309,22 @@ class FeedImageElem extends React.Component {
               </div>
             ) : (
               <div
-                className='popup-imagevideo-container'
+                className='feed-imagevideo-container'
                 style={{
-                  backgroundColor: this.state.img.bgColor,
-                  position: 'relative'
+                  backgroundColor: this.state.img.bgColor
                 }}
                 onClick={this.togglePlayVideo}
               >
-                <video
-                  className='popup-main-video'
-                  controls
-                  src={`${this.state.img.filename}`}
-                  type='video/mp4'
+                <Player
+                  playsInline
                   poster={this.state.img.filenamesPL[0]}
-                  // width=
-                  style={{ maxHeight: 720, minHeight: 400, width:'100%' }}
-                ></video>
-                <Icon
-                  disabled
-                  name='play'
-                  size='huge'
-                  color='black'
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)'
-                  }}
-                />
+                  src={`${this.state.img.filename}`}
+                  fluid={true}
+                  // style={{maxHeight: 400, minHeight: 400, width: '100%'}}
+                  // aspectRatio={'9:12'}
+                >
+                <BigPlayButton position="center" />
+                </Player>
               </div>
             )}
 
