@@ -320,8 +320,8 @@ class FeedImageElem extends React.Component {
                   poster={this.state.img.filenamesPL[0]}
                   src={`${this.state.img.filename}`}
                   fluid={true}
-                  // style={{maxHeight: 400, minHeight: 400, width: '100%'}}
-                  // aspectRatio={'9:12'}
+
+                  aspectRatio={'4:5'}
                 >
                 <BigPlayButton position="center" />
                 </Player>

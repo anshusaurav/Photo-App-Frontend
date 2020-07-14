@@ -144,7 +144,7 @@ class LoginForm extends React.Component {
             <Divider horizontal>Or</Divider>
             <div className='login-facebook-btn-div'>
               <Button>
-                <Icon name='facebook square' color='blue'></Icon>Log in with
+                <Icon name='facebook square' color='blue'/>Log in with
                 Facebook
               </Button>
             </div>

@@ -6,8 +6,6 @@ import FeedImageElem from './common/FeedImageElem'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {
   FeedHeaderLoader,
-  FeedMainLoader,
-  FeedFooterLoader
 } from './loaders/loaders'
 import axios from 'axios'
 class HomePage extends React.Component {
