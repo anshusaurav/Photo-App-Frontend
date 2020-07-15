@@ -2,7 +2,6 @@ import React from 'react'
 import { Popup, Icon } from 'semantic-ui-react'
 import PopUpImageElem from './PopUpImageElem'
 import ProgressiveImage from 'react-progressive-image'
-import { Placeholder } from 'semantic-ui-react'
 class ImageElem extends React.Component {
   constructor (props) {
     super(props)
@@ -57,7 +56,7 @@ class ImageElem extends React.Component {
                       <img
                         style={{ opacity: loading ? 0.5 : 1 }}
                         src={src}
-                        alt='an image'
+                        alt='Posted By User'
                       />
                     )}
                   </ProgressiveImage>
@@ -71,7 +70,7 @@ class ImageElem extends React.Component {
                         <img
                           style={{ opacity: loading ? 0.5 : 1 }}
                           src={src}
-                          alt='an image'
+                          alt='Posted By User'
                         />
                       )}
                     </ProgressiveImage>

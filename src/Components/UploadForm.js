@@ -4,13 +4,11 @@ import {
   Button,
   Image,
   Transition,
-  Progress,
-  Embed
+  Progress
 } from 'semantic-ui-react'
 import imageCompression from 'browser-image-compression'
 import axios from 'axios'
 import mime from 'mime-types'
-import path from 'path'
 import HeaderNav from './common/HeaderNav'
 class UploadForm extends React.Component {
   constructor (props) {
@@ -46,16 +44,11 @@ class UploadForm extends React.Component {
     if (specificType === 'mp4') {
       try {
         const videoFile = event.target.files[0]
-        const type = `${videoFile.type}`
-        // let fileOne = compressedFileOne
         let reader = new FileReader(videoFile)
         reader.onloadend = () => {
           console.log('read file');
           this.setState(
-            { filename: videoFile, videoPreviewUrl: reader.result },
-            function () {
-              // this.setState(prevState => ({ visible: !prevState.visible }))
-            }
+            { filename: videoFile, videoPreviewUrl: reader.result }
           )
         }
         reader.readAsDataURL(videoFile)
@@ -180,7 +173,7 @@ class UploadForm extends React.Component {
       axios
         .post(url, formData, {
           headers: headers,
-  
+
           onUploadProgress: ProgressEvent => {
             this.setState({
               loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
@@ -191,7 +184,7 @@ class UploadForm extends React.Component {
           this.setState({ isUploadingToCloud: false })
           console.log(res.statusText)
         })
-      
+
     }
     else{
     formData.append('description', description)
@@ -202,9 +195,7 @@ class UploadForm extends React.Component {
     formData.append('filenameld', filenameld)
     formData.append('filenamehd', filenamemd)
     formData.append('filenamemd', filenamehd)
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1])
-    }
+
     const headers = {
       'Content-Type': 'multipart/form-data',
       Authorization: `Token ${jwttoken}`
@@ -272,10 +263,10 @@ class UploadForm extends React.Component {
                                 : ''
                             }
                             type='video/mp4'
-                            poster='https://imgur.com/IK3qPhT' 
+                            poster='https://imgur.com/IK3qPhT'
                             autoPlay={true}
                             loop>
-                            
+
                         </video>
                       )}
                     </Transition>

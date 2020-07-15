@@ -220,7 +220,7 @@ table {
   position: sticky;
   top: -1px;
   z-index: 1000;
-  background: white;
+  background: #ffffff;
   color: black;
   display: flex;
   justify-content: center;
@@ -817,12 +817,12 @@ table {
     grid-template-columns: 1.5fr 1fr;
     // grid-gap: 1rem;
     background-color: white;
-    
+
     .popup-imagevideo-container{
       display: flex;
       justify-content: center;
       // background-color: black;
-      
+
     }
     .popup-main-video{
       border: none;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Grid, Menu, Segment } from 'semantic-ui-react'
 import HeaderNav from './common/HeaderNav'
 export default class SettingsPage extends React.Component {

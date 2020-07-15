@@ -9,7 +9,6 @@ import {
   Transition
 } from 'semantic-ui-react'
 import TimeAgo from 'javascript-time-ago'
-import FastAverageColor from 'fast-average-color'
 import en from 'javascript-time-ago/locale/en'
 
 class PopUpImageElem extends React.Component {
@@ -229,10 +228,9 @@ class PopUpImageElem extends React.Component {
     }
   }
   async saveImage () {
-    const slug = this.props.img
-    const { jwttoken } = localStorage
-    const url = `http://localhost:4000/api/p/${slug}`
-    const fac = new FastAverageColor()
+    const slug = this.props.img;
+    const { jwttoken } = localStorage;
+    const url = `http://localhost:4000/api/p/${slug}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -392,10 +390,10 @@ class PopUpImageElem extends React.Component {
                   <div className='pop-up-image-comment-complete-div'>
                     <Card.Description className='popup-common-des  popup-comment-elem-single'>
                       <Image
-                        size='mini'
-                        className='popup-comment-comment-user-img'
-                        src={mainImg.author.image}
-                      ></Image>
+    size='mini'
+    className='popup-comment-comment-user-img'
+    src={mainImg.author.image}
+    />
                       <strong>{mainImg.author.username} </strong>
                       {mainImg.description}
                     </Card.Description>
@@ -407,10 +405,10 @@ class PopUpImageElem extends React.Component {
                             className='popup-common-des popup-comment-elem-single'
                           >
                             <Image
-                              size='mini'
-                              className='popup-comment-comment-user-img'
-                              src={comment.author.image}
-                            ></Image>
+    size='mini'
+    className='popup-comment-comment-user-img'
+    src={comment.author.image}
+    />
                             <strong>{comment.author.username}</strong>
                             {comment.body}
                           </Card.Description>

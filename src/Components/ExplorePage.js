@@ -4,9 +4,7 @@ import ImageElem from './common/ImageElem'
 import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {
-  ExploreCompleteLoader,
-  SingleImageLoaderLarge,
-  TempExploreLoader
+  ExploreCompleteLoader
 } from './loaders/loaders'
 class ExplorePage extends React.Component {
   constructor (props) {
@@ -65,19 +63,19 @@ class ExplorePage extends React.Component {
     const { toggleLoggedIn } = this.props
     return (
       <div className='full-container'>
-        
+
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
         <div>
           <div>
             {this.state.imagepostList.length > 0 ? (
               <InfiniteScroll
-              
+
                 className='explore-img-div container'
                 dataLength={this.state.imagepostList.length}
                 next={this.fetchImages}
                 hasMore={this.state.hasMoreImages}
                 loader={
-                  
+
                   <ExploreCompleteLoader/>
                 }
               >

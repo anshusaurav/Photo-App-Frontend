@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Placeholder, Grid, Segment } from 'semantic-ui-react'
+import { Card, Placeholder, Segment } from 'semantic-ui-react'
 
 export function SingleImageLoaderMedium () {
   return (

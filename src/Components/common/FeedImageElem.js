@@ -319,7 +319,8 @@ class FeedImageElem extends React.Component {
                   playsInline
                   poster={this.state.img.filenamesPL[0]}
                   src={`${this.state.img.filename}`}
-                  fluid={true}
+                  fluid={false}
+                  style={{width: '100%'}}
 
                   aspectRatio={'4:5'}
                 >
