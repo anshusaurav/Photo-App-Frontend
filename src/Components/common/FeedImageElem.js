@@ -317,12 +317,12 @@ class FeedImageElem extends React.Component {
               >
                 <Player
                   playsInline
-                  poster={this.state.img.filenamesPL[0]}
+                  // poster={this.state.img.filenamesPL[0]}
                   src={`${this.state.img.filename}`}
-                  fluid={false}
-                  style={{width: '100%'}}
+                  fluid={true}
+                  // style={{width: '100%'}}
 
-                  aspectRatio={'4:5'}
+                  // aspectRatio={'4:5'}
                 >
                 <BigPlayButton position="center" />
                 </Player>

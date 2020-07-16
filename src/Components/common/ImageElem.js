@@ -68,7 +68,7 @@ class ImageElem extends React.Component {
                     >
                       {(src, loading) => (
                         <img
-                          style={{ opacity: loading ? 0.5 : 1 }}
+                          style={{ opacity: loading ? 0.5 : 1, objectFit: 'cover' }}
                           src={src}
                           alt='Posted By User'
                         />

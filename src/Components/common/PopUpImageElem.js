@@ -312,14 +312,14 @@ class PopUpImageElem extends React.Component {
                   style={{ backgroundColor: mainImg.bgColor }}
                 >
                   <video
-                    className='popup-main-video'
-                    controls
-                    src={`${mainImg.filename}`}
-                    type='video/mp4'
-                    poster='https://imgur.com/IK3qPhT'
-                    autoPlay={true}
-                    style={{ maxHeight: 660, minHeight: 400, width: '100%' }}
-                  ></video>
+    className='popup-main-video'
+    controls
+    src={`${mainImg.filename}`}
+    type='video/mp4'
+    poster='https://imgur.com/IK3qPhT'
+    autoPlay={true}
+    style={{maxHeight: 660, minHeight: 400, width: '100%'}}
+    />
                 </div>
               )
             ) : (
@@ -501,20 +501,20 @@ class PopUpImageElem extends React.Component {
                   onSubmit={this.submitHandler}
                 >
                   <TextArea
-                    rows={1}
-                    className='popup-add-comment-input-text'
-                    placeholder='Add a comment...'
-                    name='body'
-                    onChange={this.changeHandler}
-                    value={body}
-                    style={{
-                      border: 0,
-                      overflow: 'hidden',
-                      width: '100%',
-                      resize: 'none'
-                    }}
-                    ref={this.textAreaRef}
-                  ></TextArea>
+    rows={1}
+    className='popup-add-comment-input-text'
+    placeholder='Add a comment...'
+    name='body'
+    onChange={this.changeHandler}
+    value={body}
+    style={{
+      border: 0,
+      overflow: 'hidden',
+      width: '100%',
+      resize: 'none'
+    }}
+    ref={this.textAreaRef}
+    />
 
                   <Button
                     className='popup-elem-add-comment-btn'
