@@ -285,7 +285,7 @@ class UploadForm extends React.Component {
                 ) : (
                   ''
                 )}
-                <div className='ui horizontal divider'>Image Preview</div>
+                <div className='ui horizontal divider'>{isImage===1?'Image Preview':'Video Preview'}</div>
 
                 <div className='file-select-input-div'>
                   <input
