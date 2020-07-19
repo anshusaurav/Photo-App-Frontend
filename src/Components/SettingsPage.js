@@ -22,21 +22,24 @@ export default class SettingsPage extends React.Component {
             }}
           >
             <div className='settings-user-nav'>
-              <Menu fluid vertical tabular style={{ minHeight: '85vh' }}>
+              <Menu fluid vertical tabular>
                 <Menu.Item
                   name='Edit Profile'
                   active={activeItem === 'Edit Profile'}
                   onClick={this.handleItemClick}
+                  style={{borderRadius: 0}}
                 />
                 <Menu.Item
                   name='Change Password'
                   active={activeItem === 'Change Password'}
                   onClick={this.handleItemClick}
+                  style={{borderRadius: 0}}
                 />
                 <Menu.Item
                   name='Uploads'
                   active={activeItem === 'Uploads'}
                   onClick={this.handleItemClick}
+                  style={{borderRadius: 0}}
                 />
               </Menu>
             </div>

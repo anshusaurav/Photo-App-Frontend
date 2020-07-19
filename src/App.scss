@@ -1110,6 +1110,7 @@ table {
   min-height: 100vh;
   border: 1px solid #dbdbdb;
   border-radius: 1px;
+  margin-bottom: 1rem;
 }
 
 .settings-user-inner-div{
@@ -1117,8 +1118,23 @@ table {
   grid-template-columns: 2fr 8fr;
   .settings-user-nav{
     background-color: white;
+    min-height: 100vh;
+     border-right: 1px solid #d4d4d5;
+    .menu{
+      border-right: none !important;
+    }
     .active{
       margin-right: 0 !important;
+      border: none !important;
+      box-shadow: -2px 0 0 #000 !important;
+      border-radius: 0 !important;
+    }
+    .item{
+      &:hover{
+        background-color: rgb(250, 250, 250) !important;
+        border-radius: none !important;
+        box-sizing: content-box !important;
+      }
     }
     
   }
@@ -1126,13 +1142,14 @@ table {
 .settings-main-section{
   margin-left: 0 !important;
   margin-right: 0 !important;
-  background-color: #FAFAFA;
+  background-color: #ffffff;
 }
 
 
 
 .edit-profile-form{
   margin-top: 2rem;
+  min-height: 100vh;
   .edit-profile-section{
     display: flex;
     flex-shrink: 0;
@@ -1155,6 +1172,15 @@ table {
       flex-basis: 355px;
       flex-grow: 1;
       flex-shrink: 0;
+      padding-right: 60px;
+      .edit-profile-right-inner{
+        width: 100%;
+        max-width: 355px;
+        align-items: stretch;
+        align-content: stretch;
+        justify-content: flex-start;
+        vertical-align: baseline;
+      }
     }
   }
 }

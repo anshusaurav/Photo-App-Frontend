@@ -9,7 +9,9 @@ class EditProfile extends React.Component {
             <label>Name</label>
           </div>
           <div className='edit-profile-section-right'>
-            <Input placeholder='First Name' />
+            <div className='edit-profile-right-inner'>
+            <Input placeholder='First Name' fluid/>
+            </div>
           </div>
         </div>
         <div className='edit-profile-section'>
@@ -17,7 +19,9 @@ class EditProfile extends React.Component {
             <label>Username</label>
           </div>
           <div className='edit-profile-section-right'>
-            <Input placeholder='anshusaurav' />
+          <div className='edit-profile-right-inner'>
+            <Input placeholder='anshusaurav' fluid/>
+            </div>
           </div>
         </div>
         <div className='edit-profile-section'>
@@ -25,7 +29,9 @@ class EditProfile extends React.Component {
             <label inline>Bio</label>
           </div>
           <div className='edit-profile-section-right'>
-            <TextArea placeholder='Last Name' style={{ minHeight: 100 }}/>
+          <div className='edit-profile-right-inner'>
+            <TextArea placeholder='Bio' style={{ minHeight: 100 }}/>
+            </div>
           </div>
         </div>
         <div className='edit-profile-section'>
@@ -33,7 +39,9 @@ class EditProfile extends React.Component {
             <label>Email</label>
           </div>
           <div className='edit-profile-section-right'>
-            <Input placeholder='anshu.saurav@gmail.com' />
+          <div className='edit-profile-right-inner'>
+            <Input placeholder='anshu.saurav@gmail.com' fluid/>
+            </div>
           </div>
         </div>
         <div className='edit-profile-section'>
