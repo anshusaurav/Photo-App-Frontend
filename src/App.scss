@@ -1129,4 +1129,34 @@ table {
   background-color: #FAFAFA;
 }
 
+
+
+.edit-profile-form{
+  margin-top: 2rem;
+  .edit-profile-section{
+    display: flex;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+    line-height: 18px;
+    align-items: stretch;
+    font-stretch: 100%;
+    .edit-profile-section-left{
+      flex-basis: 194px;
+      font-weight: 600;
+      text-align: right;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      margin-top: 6px;
+    }
+    .edit-profile-section-right{
+      display: flex;
+      flex-direction: row;
+      flex-basis: 355px;
+      flex-grow: 1;
+      flex-shrink: 0;
+    }
+  }
+}
 //Settings page ends here
+
