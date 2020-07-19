@@ -1,6 +1,7 @@
 import React from 'react'
-import { Grid, Menu, Segment } from 'semantic-ui-react'
+import { Menu, Segment } from 'semantic-ui-react'
 import HeaderNav from './common/HeaderNav'
+import EditProfile from './profile/EditProfile'
 export default class SettingsPage extends React.Component {
   constructor (props) {
     super(props)
@@ -15,15 +16,12 @@ export default class SettingsPage extends React.Component {
       <div className='full-container'>
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
         <div className='settings-user-profile-main container'>
-          <Grid
+          <div className='settings-user-inner-div'
             style={{
-              paddingTop: 16,
-              paddingBottom: 16,
-              border: '1px solid #D4D4D5',
               borderRadius: 1
             }}
           >
-            <Grid.Column width={3} style={{ paddingLeft: 0, paddingRight: 0 }}>
+            <div className='settings-user-nav'>
               <Menu fluid vertical tabular style={{ minHeight: '85vh' }}>
                 <Menu.Item
                   name='Edit Profile'
@@ -41,24 +39,20 @@ export default class SettingsPage extends React.Component {
                   onClick={this.handleItemClick}
                 />
               </Menu>
-            </Grid.Column>
+            </div>
 
-            <Grid.Column
-              stretched
+            <div
               className='settings-main-section'
-              style={{ width: '80%' }}
             >
               {activeItem === 'Edit Profile' ? (
-                <Segment style={{ border: 'none', minHeight: '85vh' }}>
-                  Edit Profile
-                </Segment>
+                <EditProfile/>
               ) : activeItem === 'Change Password' ? (
                 <Segment>Change Password</Segment>
               ) : (
                 <Segment>Uploads</Segment>
               )}
-            </Grid.Column>
-          </Grid>
+            </div>
+          </div>
         </div>
       </div>
     )

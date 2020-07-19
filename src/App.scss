@@ -1108,10 +1108,25 @@ table {
 .settings-user-profile-main{
   margin-top: 1rem;
   min-height: 100vh;
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
 }
 
+.settings-user-inner-div{
+  display: grid;
+  grid-template-columns: 2fr 8fr;
+  .settings-user-nav{
+    background-color: white;
+    .active{
+      margin-right: 0 !important;
+    }
+    
+  }
+}
 .settings-main-section{
-  width: 80%;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  background-color: #FAFAFA;
 }
 
 //Settings page ends here
