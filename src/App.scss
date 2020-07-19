@@ -405,8 +405,8 @@ table {
         flex-wrap: nowrap;
         // grid-template-columns: 1fr 1fr;
         justify-content: start;
-        .edit-profile-btn{
-          line-height: 2.0 !important;
+        .edit-profile-btn {
+          line-height: 2 !important;
           color: #262626 !important;
         }
         h2 {
@@ -602,7 +602,7 @@ table {
     }
     .feed-image-card {
       width: 100%;
-      .feed-imagevideo-container{
+      .feed-imagevideo-container {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -818,13 +818,12 @@ table {
     // grid-gap: 1rem;
     background-color: white;
 
-    .popup-imagevideo-container{
+    .popup-imagevideo-container {
       display: flex;
       justify-content: center;
       // background-color: black;
-
     }
-    .popup-main-video{
+    .popup-main-video {
       border: none;
       outline: none;
     }
@@ -1101,11 +1100,9 @@ table {
 
 //Explore Loader ends here
 
-
-
 //Settings page starts here
 
-.settings-user-profile-main{
+.settings-user-profile-main {
   margin-top: 1rem;
   min-height: 100vh;
   border: 1px solid #dbdbdb;
@@ -1113,44 +1110,41 @@ table {
   margin-bottom: 1rem;
 }
 
-.settings-user-inner-div{
+.settings-user-inner-div {
   display: grid;
   grid-template-columns: 2fr 8fr;
-  .settings-user-nav{
+  .settings-user-nav {
     background-color: white;
     min-height: 100vh;
-     border-right: 1px solid #d4d4d5;
-    .menu{
+    border-right: 1px solid #d4d4d5;
+    .menu {
       border-right: none !important;
     }
-    .active{
+    .active {
       margin-right: 0 !important;
       border: none !important;
       box-shadow: -2px 0 0 #000 !important;
       border-radius: 0 !important;
     }
-    .item{
-      &:hover{
+    .item {
+      &:hover {
         background-color: rgb(250, 250, 250) !important;
         border-radius: none !important;
         box-sizing: content-box !important;
       }
     }
-    
   }
 }
-.settings-main-section{
+.settings-main-section {
   margin-left: 0 !important;
   margin-right: 0 !important;
   background-color: #ffffff;
 }
 
-
-
-.edit-profile-form{
+.edit-profile-main-container {
   margin-top: 2rem;
   min-height: 100vh;
-  .edit-profile-section{
+  .edit-profile-section {
     display: flex;
     flex-shrink: 0;
     justify-content: flex-start;
@@ -1158,22 +1152,23 @@ table {
     line-height: 18px;
     align-items: stretch;
     font-stretch: 100%;
-    .edit-profile-section-left{
+    .edit-profile-section-left {
       flex-basis: 194px;
       font-weight: 600;
       text-align: right;
       padding-left: 2rem;
       padding-right: 2rem;
       margin-top: 6px;
+      position: relative;
     }
-    .edit-profile-section-right{
+    .edit-profile-section-right {
       display: flex;
       flex-direction: row;
       flex-basis: 355px;
       flex-grow: 1;
       flex-shrink: 0;
       padding-right: 60px;
-      .edit-profile-right-inner{
+      .edit-profile-right-inner {
         width: 100%;
         max-width: 355px;
         align-items: stretch;
@@ -1183,6 +1178,26 @@ table {
       }
     }
   }
+  .edit-profile-photo-pic {
+    height: 38px;
+    width: 38px;
+    border-radius: 50%;
+    position: absolute;
+    right: 2rem;
+    .edit-profile-photo-btn {
+      word-spacing: 0;
+      border: 0;
+      cursor: pointer;
+      height: 100%;
+      padding: 0;
+      width: 100%;
+      border-radius: 50%;
+    }
+    .edit-profile-photo {
+      width: 100%;
+      border-radius: 50%;
+    }
+  }
 }
-//Settings page ends here
 
+//Settings page ends here
