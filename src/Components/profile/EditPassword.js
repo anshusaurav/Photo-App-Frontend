@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button, TextArea, Input, Form, Image } from 'semantic-ui-react'
-class EditProfile extends React.Component {
+import { Button, Input, Form, Image } from 'semantic-ui-react'
+class EditPassword extends React.Component {
   render () {
     return (
       <div className='edit-profile-main-container'>
@@ -19,7 +19,6 @@ class EditProfile extends React.Component {
             <div className='edit-profile-right-inner'>
             <div className='edit-profile-right-header'>
              <p>anshusaurav</p>
-             <p className='change-profile-photo'>Change Profile Photo</p>
              </div>
             </div>
           </div>
@@ -27,41 +26,32 @@ class EditProfile extends React.Component {
         <Form className='edit-profile-form'>
           <div className='edit-profile-section'>
             <div className='edit-profile-section-left'>
-              <label>Name</label>
+              <label>Old Password</label>
             </div>
             <div className='edit-profile-section-right'>
               <div className='edit-profile-right-inner'>
-                <Input placeholder='First Name' fluid />
+                <Input fluid />
               </div>
             </div>
           </div>
           <div className='edit-profile-section'>
             <div className='edit-profile-section-left'>
-              <label>Username</label>
+              <label>New Password</label>
             </div>
             <div className='edit-profile-section-right'>
               <div className='edit-profile-right-inner'>
-                <Input placeholder='anshusaurav' fluid />
+                <Input  fluid />
               </div>
             </div>
           </div>
+         
           <div className='edit-profile-section'>
             <div className='edit-profile-section-left'>
-              <label inline>Bio</label>
+              <label>Confirm New Password</label>
             </div>
             <div className='edit-profile-section-right'>
               <div className='edit-profile-right-inner'>
-                <TextArea placeholder='Bio' style={{ minHeight: 100 }} />
-              </div>
-            </div>
-          </div>
-          <div className='edit-profile-section'>
-            <div className='edit-profile-section-left'>
-              <label>Email</label>
-            </div>
-            <div className='edit-profile-section-right'>
-              <div className='edit-profile-right-inner'>
-                <Input placeholder='anshu.saurav@gmail.com' fluid />
+                <Input  fluid />
               </div>
             </div>
           </div>
@@ -78,4 +68,4 @@ class EditProfile extends React.Component {
     )
   }
 }
-export default EditProfile
+export default EditPassword

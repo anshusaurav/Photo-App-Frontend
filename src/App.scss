@@ -1159,6 +1159,7 @@ table {
       padding-left: 2rem;
       padding-right: 2rem;
       margin-top: 6px;
+      font-size: 20px;
       position: relative;
     }
     .edit-profile-section-right {
@@ -1175,6 +1176,35 @@ table {
         align-content: stretch;
         justify-content: flex-start;
         vertical-align: baseline;
+        .edit-profile-right-header{
+          display: grid;
+          grid-template-columns: 1fr;
+          p{
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 4px;
+          }
+          .change-profile-photo {
+            background-color: transparent;
+            font-size: 18px;
+            font-weight: 500;
+
+            cursor: pointer;
+            color: #0B99F6;
+            &:active {
+              background-color: transparent;
+            }
+            &:hover {
+              background-color: transparent;
+            }
+            &:visited {
+              background-color: transparent;
+            }
+            &:focus {
+              background-color: transparent;
+            }
+          }
+        }
       }
     }
   }
@@ -1185,6 +1215,7 @@ table {
     position: absolute;
     right: 2rem;
     .edit-profile-photo-btn {
+      // outline: -webkit-focus-ring-color auto 1px;
       word-spacing: 0;
       border: 0;
       cursor: pointer;
@@ -1192,10 +1223,14 @@ table {
       padding: 0;
       width: 100%;
       border-radius: 50%;
+      &:focus{
+        outline: 0;
+      }
     }
     .edit-profile-photo {
       width: 100%;
       border-radius: 50%;
+      
     }
   }
 }
