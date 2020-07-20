@@ -4,7 +4,7 @@ class EditProfile extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: 'Anshu Saurabh',
+      fullname: 'Anshu Saurabh',
       username: 'anshusaurav',
       bio: '',
       email: '',
@@ -19,7 +19,7 @@ class EditProfile extends React.Component {
     event.preventDefault()
     const { email, username, fullname, bio } = this.state
     const user = { user: { email, username, fullname, bio } }
-    const url = 'http://localhost:4000/api/users/'
+    const url = 'http://localhost:4000/api/user/'
     const { jwttoken } = localStorage
     try {
       const response = await fetch(url, {
@@ -48,6 +48,7 @@ class EditProfile extends React.Component {
     }
   }
   changeHandler (event, { name, value }) {
+    console.log(name, value);
     this.setState({ [name]: value })
   }
   async saveSettings () {
@@ -121,7 +122,7 @@ class EditProfile extends React.Component {
                   fluid
                   name='fullname'
                   value={fullname}
-                  onChange={this.handleChange}
+                  onChange={this.changeHandler}
                 />
               </div>
             </div>
@@ -137,7 +138,7 @@ class EditProfile extends React.Component {
                   fluid
                   name='username'
                   value={username}
-                  onChange={this.handleChange}
+                  onChange={this.changeHandler}
                 />
               </div>
             </div>
@@ -152,7 +153,7 @@ class EditProfile extends React.Component {
                   placeholder='Bio'
                   style={{ minHeight: 100 }}
                   name='bio'
-                  onChange={this.handleChange}
+                  onChange={this.changeHandler}
                   defaultValue={bio}
                 >
                 </TextArea>
@@ -170,7 +171,7 @@ class EditProfile extends React.Component {
                   fluid
                   value={email}
                   name='email'
-                  onChange={this.handleChange}
+                  onChange={this.changeHandler}
                 />
               </div>
             </div>
