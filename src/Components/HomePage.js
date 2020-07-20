@@ -60,7 +60,7 @@ class HomePage extends React.Component {
         }
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.setState(prevState => ({
           imagepostList: prevState.imagepostList.concat(res.data.imageposts)
         }))
@@ -91,7 +91,7 @@ class HomePage extends React.Component {
     ]
     const { toggleLoggedIn } = this.props
     const { imagepostList } = this.state;
-    console.log(imagepostList);
+    // console.log(imagepostList);
     return (
       <div className='full-container'>
         <HeaderNav toggleLoggedIn={toggleLoggedIn} />
