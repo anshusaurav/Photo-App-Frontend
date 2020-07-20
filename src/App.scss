@@ -259,6 +259,21 @@ table {
         }
       }
     }
+    .results {
+      width: 200px !important;
+    }
+    .result{
+      .image{
+        width: 32px !important;
+          height:32px !important;
+        img{
+          width: 100% !important;
+          height:100% !important;
+          
+        border-radius: 50% !important;
+        }
+      }
+    }
   }
 }
 .explore-img-div {
