@@ -36,7 +36,8 @@ class HeaderNav extends React.Component {
           let data = await response.json()
           console.log(data)
           if (!data.errors) {
-            this.setState({results: data.users})
+            let arr = data.users.map(user => ( {title: user.username, description: user.fullname, image: user.image}))
+            this.setState({results: arr})
             this.setState({isLoading: false})
           }
         } catch (error) {
