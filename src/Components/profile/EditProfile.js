@@ -1,6 +1,51 @@
 import React from 'react'
 import { Button, TextArea, Input, Form, Image } from 'semantic-ui-react'
 class EditProfile extends React.Component {
+  constructor(props){
+    super(props);
+    this.state= {
+      name: 'Anshu Saurabh',
+      username: 'anshusaurav',
+      bio: '',
+      email: '',
+      isSubmitable: false,
+      errorMsgs: null
+    }
+    this.saveHandler = this.saveHandler.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
+  }
+  async saveHandler(event){
+    const {email, username, fullname, bio} = this.state;
+    const user = {user: {email, username, fullname, bio}};
+    const url = 'http://localhost:4000/api/users/';
+    try{
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(user)
+      })
+      let data = await response.json();
+      if(data.errors) {
+        //Entry saved shwo new values
+      }
+      else{
+        const errors = [];
+        for(const [key, value] of Object.entries(data.errors)) {
+          errors.push(`${key} ${value}`);
+        }
+        this.setState({errorMsgs: errors});
+      }
+    }
+    catch(error) {
+      console.error('Error: ', error);
+      const errors = [];
+      errors.push(error.toString());
+      this.setState({errorMsgs: errors});
+    }
+  }
+  changeHandler(event, {name, value}){
+    this.setState({[name]: value});
+  }
   render () {
     return (
       <div className='edit-profile-main-container'>
@@ -68,7 +113,7 @@ class EditProfile extends React.Component {
           <div className='edit-profile-section'>
             <div className='edit-profile-section-left'></div>
             <div className='edit-profile-section-right'>
-              <Button type='submit' primary>
+              <Button type='submit' primary onClick={this.saveHandler}>
                 Submit
               </Button>
             </div>

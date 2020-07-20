@@ -1127,6 +1127,8 @@ table {
       border-radius: 0 !important;
     }
     .item {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
       &:hover {
         background-color: rgb(250, 250, 250) !important;
         border-radius: none !important;
