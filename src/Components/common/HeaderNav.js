@@ -1,41 +1,48 @@
 import HeaderUl from './HeaderUl'
 import React from 'react'
+import {Search} from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import GlobalFonts from './../../fonts/fonts'
 import PageHeaderCustom from './../PageHeaderCustom'
+import _ from 'lodash'
 class HeaderNav extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      searchText: ''
+      searchQuery: '',
+      isLoading: false,
+      results:[]
     }
     this.handleChange = this.handleChange.bind(this)
   }
   async handleChange (event) {
+    this.setState({isLoading: true})
     if (event.keyCode === 13) {
     } else {
-      this.setState({ searchText: event.target.value }, async() => {
-      
-        const url = 'http://localhost:4000/api/search/';
-        const searchQuery = this.state.searchText;
-        const {jwttoken} = localStorage;
-
+      this.setState({ searchQuery: event.target.value }, async () => {
+        const url = 'http://localhost:4000/api/search/'
+        const searchQuery = this.state.searchQuery;
+        const { jwttoken } = localStorage
+        console.log(searchQuery);
         try {
           const response = await fetch(url, {
             method: 'POST',
-            headers: {'Content-Typee': 'application/json', Authorization: `Token ${jwttoken}`},
-            body: JSON.stringify({searchQuery})
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Token ${jwttoken}`
+            },
+            body:JSON.stringify({ searchQuery })
           })
-          let data = await response.json();
-          console.log(data);
-          if(!data.errors) {
-
+          let data = await response.json()
+          console.log(data)
+          if (!data.errors) {
+            this.setState({results: data.users})
+            this.setState({isLoading: false})
           }
-
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Error:', error)
           const errors = []
-          errors.push(error.toString());
+          errors.push(error.toString())
           this.setState({ errorMsgs: errors })
         }
       })
@@ -43,7 +50,7 @@ class HeaderNav extends React.Component {
   }
   render () {
     const { toggleLoggedIn } = this.props
-    const { searchText } = this.state
+    const { searchQuery, isLoading, results } = this.state
     return (
       <div className='header-nav'>
         <div className='header-inner-div'>
@@ -53,13 +60,16 @@ class HeaderNav extends React.Component {
           </Link>
           <div className='ui search'>
             <div className='ui icon input'>
-              <input
-                type='text'
-                tabIndex='0'
-                className='prompt'
-                autoComplete='off'
-                value={searchText}
-                onChange={this.handleChange}
+              <Search
+                
+                 loading={isLoading}
+            onResultSelect={this.handleResultSelect}
+            onSearchChange={_.debounce(this.handleChange, 500, {
+              leading: true,
+            })}
+            results={results}
+            value={searchQuery}
+            {...this.props}
               />
               <i aria-hidden='true' className='search icon'></i>
             </div>

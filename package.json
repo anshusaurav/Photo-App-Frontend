@@ -11,6 +11,7 @@
     "fast-average-color": "^6.0.2",
     "fluent-ffmpeg": "^2.1.2",
     "javascript-time-ago": "^2.0.8",
+    "lodash": "^4.17.19",
     "lodash.clonedeep": "^4.5.0",
     "mime-types": "^2.1.27",
     "node-sass": "^4.14.1",
