@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, TextArea, Input, Form, Image } from 'semantic-ui-react'
+import { Button, TextArea, Input, Form, Image, Message } from 'semantic-ui-react'
 class EditProfile extends React.Component {
   constructor (props) {
     super(props)
@@ -85,7 +85,7 @@ class EditProfile extends React.Component {
   }
   componentDidUpdate () {}
   render () {
-    const { username, fullname, bio, email, image } = this.state;
+    const { username, fullname, bio, email, image, errorMsgs } = this.state;
     console.log(image);
     return (
       <div className='edit-profile-main-container'>
@@ -185,6 +185,12 @@ class EditProfile extends React.Component {
             </div>
           </div>
         </Form>
+        {errorMsgs &&
+              errorMsgs.map((msg, index) => (
+                <Message key={index} color='red'>
+                  {msg}
+                </Message>
+              ))}
       </div>
     )
   }
