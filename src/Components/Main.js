@@ -6,6 +6,7 @@ import ProfilePage from './ProfilePage'
 import UploadForm from './UploadForm'
 import HomePage from './HomePage'
 import SettingsPage from './SettingsPage'
+import OtherUserPage from './OtherUserPage'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Redirect } from 'react-router'
 class Main extends React.Component {
@@ -31,51 +32,58 @@ class Main extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route path='/login'>
+          <Route exact path='/login'>
             {!jwttoken ? (
               <LoginForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/'  />
             )}
           </Route>
-          <Route path='/signup'>
+          <Route exact path='/signup'>
             {!jwttoken ? (
               <SignupForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/' />
             )}
           </Route>
-          <Route path='/explore'>
+          <Route exact path='/explore'>
             {jwttoken ? (
               <ExplorePage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login' />
             )}
           </Route>
-          <Route path='/user'>
+          <Route exact path='/user'>
             {jwttoken ? (
               <ProfilePage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login'/>
             )}
           </Route>
-          <Route path='/upload'>
+          <Route exact path='/upload'>
             {jwttoken ? (
               <UploadForm toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login' />
             )}
           </Route>
-          <Route path='/' exact={true}>
+          <Route exact path='/'>
             {jwttoken ? (
               <HomePage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login' />
             )}
           </Route>
-          <Route path='/settings' >
+          <Route exact path='/settings' >
             {jwttoken ? (
               <SettingsPage toggleLoggedIn={this.toggleLoggedIn} />
+            ) : (
+              <Redirect to='/login' />
+            )}
+          </Route>
+          <Route exact path='/:username' >
+            {jwttoken ? (
+              <OtherUserPage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
               <Redirect to='/login' />
             )}
