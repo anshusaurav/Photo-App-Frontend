@@ -65,8 +65,8 @@ class ProfileImages extends React.Component {
       })
   }
   render () {
-    const { imagepostList } = this.state;
-    console.log(imagepostList);
+    const { imagepostList } = this.state
+    console.log(imagepostList)
     return (
       <>
         {imagepostList.length > 0 ? (

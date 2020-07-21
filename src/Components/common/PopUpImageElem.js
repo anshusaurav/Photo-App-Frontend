@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-
+import { Link } from 'react-router-dom'
 class PopUpImageElem extends React.Component {
   constructor (props) {
     super(props)
@@ -228,9 +228,9 @@ class PopUpImageElem extends React.Component {
     }
   }
   async saveImage () {
-    const slug = this.props.img;
-    const { jwttoken } = localStorage;
-    const url = `http://localhost:4000/api/p/${slug}`;
+    const slug = this.props.img
+    const { jwttoken } = localStorage
+    const url = `http://localhost:4000/api/p/${slug}`
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -312,14 +312,14 @@ class PopUpImageElem extends React.Component {
                   style={{ backgroundColor: mainImg.bgColor }}
                 >
                   <video
-    className='popup-main-video'
-    controls
-    src={`${mainImg.filename}`}
-    type='video/mp4'
-    poster='https://imgur.com/IK3qPhT'
-    autoPlay={true}
-    style={{maxHeight: 660, minHeight: 400, width: '100%'}}
-    />
+                    className='popup-main-video'
+                    controls
+                    src={`${mainImg.filename}`}
+                    type='video/mp4'
+                    poster='https://imgur.com/IK3qPhT'
+                    autoPlay={true}
+                    style={{ maxHeight: 660, minHeight: 400, width: '100%' }}
+                  />
                 </div>
               )
             ) : (
@@ -336,11 +336,13 @@ class PopUpImageElem extends React.Component {
                       size='mini'
                       circular
                     />
-                    <span className='popup-image-author-username'>
-                      {mainImg.author.username}
-                    </span>
+                    <Link to={`/${mainImg.author.username}`}>
+                      <span className='popup-image-author-username'>
+                        {mainImg.author.username}
+                      </span>
+                    </Link>
                     <span>
-                      {mainImg.author.usernmae !== loggedInUser.username && (
+                      {mainImg.author.username !== loggedInUser.username && (
                         <>
                           {mainImg.author.following ? (
                             <Transition
@@ -390,11 +392,13 @@ class PopUpImageElem extends React.Component {
                   <div className='pop-up-image-comment-complete-div'>
                     <Card.Description className='popup-common-des  popup-comment-elem-single'>
                       <Image
-    size='mini'
-    className='popup-comment-comment-user-img'
-    src={mainImg.author.image}
-    />
-                      <strong>{mainImg.author.username} </strong>
+                        size='mini'
+                        className='popup-comment-comment-user-img'
+                        src={mainImg.author.image}
+                      />
+                      <Link to={`/${mainImg.author.username}`}>
+                        <strong style={{color: 'rgba(0,0,0,0.85)'}}>{mainImg.author.username} </strong>
+                      </Link>
                       {mainImg.description}
                     </Card.Description>
                     {comments &&
@@ -405,11 +409,13 @@ class PopUpImageElem extends React.Component {
                             className='popup-common-des popup-comment-elem-single'
                           >
                             <Image
-    size='mini'
-    className='popup-comment-comment-user-img'
-    src={comment.author.image}
-    />
-                            <strong>{comment.author.username}</strong>
+                              size='mini'
+                              className='popup-comment-comment-user-img'
+                              src={comment.author.image}
+                            />
+                            <Link to={`/${comment.author.username}`}>
+                              <strong style={{color: 'rgba(0,0,0,0.85)'}}>{comment.author.username}</strong>
+                            </Link>
                             {comment.body}
                           </Card.Description>
                         )
@@ -501,20 +507,20 @@ class PopUpImageElem extends React.Component {
                   onSubmit={this.submitHandler}
                 >
                   <TextArea
-    rows={1}
-    className='popup-add-comment-input-text'
-    placeholder='Add a comment...'
-    name='body'
-    onChange={this.changeHandler}
-    value={body}
-    style={{
-      border: 0,
-      overflow: 'hidden',
-      width: '100%',
-      resize: 'none'
-    }}
-    ref={this.textAreaRef}
-    />
+                    rows={1}
+                    className='popup-add-comment-input-text'
+                    placeholder='Add a comment...'
+                    name='body'
+                    onChange={this.changeHandler}
+                    value={body}
+                    style={{
+                      border: 0,
+                      overflow: 'hidden',
+                      width: '100%',
+                      resize: 'none'
+                    }}
+                    ref={this.textAreaRef}
+                  />
 
                   <Button
                     className='popup-elem-add-comment-btn'

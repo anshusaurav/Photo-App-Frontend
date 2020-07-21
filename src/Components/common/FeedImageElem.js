@@ -1,4 +1,4 @@
-  import React, { createRef } from 'react'
+import React, { createRef } from 'react'
 import {
   Card,
   Icon,
@@ -13,6 +13,7 @@ import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ProgressiveImage from 'react-progressive-image'
 import './../../../node_modules/video-react/dist/video-react.css'
+import { Link } from 'react-router-dom'
 import { Player, BigPlayButton } from 'video-react'
 class FeedImageElem extends React.Component {
   constructor (props) {
@@ -269,18 +270,19 @@ class FeedImageElem extends React.Component {
         {this.state.img && this.state.comments ? (
           <>
             <Card.Content className='feed-image-author-content'>
-              <div className='feed-image-author-profile'>
-                <Image
-                  className='feed-image-author-image'
-                  src={this.state.img.author.image}
-                  size='mini'
-                  circular
-                />
-
-                <span className='feed-image-author-username'>
-                  {this.state.img.author.username}
-                </span>
-              </div>
+              <Link to={`/${this.state.img.author.username}`}>
+                <div className='feed-image-author-profile'>
+                  <Image
+                    className='feed-image-author-image'
+                    src={this.state.img.author.image}
+                    size='mini'
+                    circular
+                  />
+                  <span className='feed-image-author-username'>
+                    {this.state.img.author.username}
+                  </span>
+                </div>
+              </Link>
               <span>
                 {' '}
                 <Icon name='ellipsis horizontal' />{' '}
@@ -324,7 +326,7 @@ class FeedImageElem extends React.Component {
 
                   // aspectRatio={'4:5'}
                 >
-                <BigPlayButton position="center" />
+                  <BigPlayButton position='center' />
                 </Player>
               </div>
             )}
@@ -399,19 +401,25 @@ class FeedImageElem extends React.Component {
                   : `Be the first one to respond`}
               </Card.Meta>
               <Card.Description>
-                <strong>{this.state.img.author.username} </strong>
+                <Link to={`/${this.state.img.author.username}`}>
+                  <strong style={{color: 'rgba(0,0,0,0.85'}}>{this.state.img.author.username} </strong>
+                </Link>
                 {this.state.img.description}
               </Card.Description>
 
               {comments &&
                 comments.map((comment, index) => {
                   return (
+
                     <Card.Description key={index}>
+                     <Link to={`/${comment.author.username}`}>
                       <strong
                         style={{ fontSize: 14, color: 'rgba(0,0,0,0.68)' }}
                       >
+                      
                         {comment.author.username}{' '}
                       </strong>
+                      </Link>
                       {comment.body}
                     </Card.Description>
                   )
