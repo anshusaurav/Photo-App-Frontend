@@ -1,25 +1,113 @@
 import React from 'react'
 import { Button, Input, Form, Image } from 'semantic-ui-react'
 class EditPassword extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      image: '',
+      username: '',
+      oldPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+      errorMsgs: null,
+      loading: true,
+    }
+
+    this.saveHandler = this.saveHandler.bind(this)
+    this.changeHandler = this.changeHandler.bind(this)
+  }
+  async saveHandler (event) {
+    event.preventDefault()
+    const { oldPassword, newPassword, confirmNewPassword } = this.state
+    
+    if (newPassword !== confirmNewPassword) {
+      this.setState(prevState => ({
+        errorMsgs: prevState.errorMsgs.concat('New passwords dont match')
+      }))
+      return;
+
+    }
+
+   
+    const user = { user: { password: newPassword } }
+    const url = 'http://localhost:4000/api/user/'
+    const { jwttoken } = localStorage
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${jwttoken}`
+        },
+        body: JSON.stringify(user)
+      })
+      let data = await response.json()
+      if (!data.errors) {
+        //Entry saved shwo new values
+      } else {
+        const errors = []
+        for (const [key, value] of Object.entries(data.errors)) {
+          errors.push(`${key} ${value}`)
+        }
+        this.setState({ errorMsgs: errors })
+      }
+    } catch (error) {
+      console.error('Error: ', error)
+      const errors = []
+      errors.push(error.toString())
+      this.setState({ errorMsgs: errors })
+    }
+  }
+  changeHandler (event, { name, value }) {
+    console.log(name, value)
+    this.setState({ [name]: value })
+  }
+  async saveSettings () {
+    const url = 'http://localhost:4000/api/user'
+    const { jwttoken } = localStorage
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${jwttoken}`
+        }
+      })
+      const data = await response.json()
+      console.log(data)
+      if (!data.errors) {
+        this.setState({
+          image: data.user.image,
+          loading: false
+        })
+      }
+    } catch (error) {
+      console.error('Error: ', error)
+      const errors = []
+      errors.push(error.toString())
+      this.setState({ errorMsgs: errors })
+    }
+  }
+  componentDidMount () {
+    this.saveSettings()
+  }
   render () {
+    const { username, image, loading, errorMsgs } = this.state;
     return (
       <div className='edit-profile-main-container'>
         <div className='edit-profile-section'>
           <div className='edit-profile-section-left'>
             <div className='edit-profile-photo-pic'>
               <button className='edit-profile-photo-btn'>
-                <Image className='edit-profile-photo'
-                  alt='Change Profile Photo'
-                  src='https://instagram.fjai5-1.fna.fbcdn.net/v/t51.2885-19/s150x150/106043545_300476081329527_2893810601093728306_n.jpg?_nc_ht=instagram.fjai5-1.fna.fbcdn.net&_nc_ohc=3rAjWpwzX-IAX-HIckk&oh=5b8474a1a73b8b8c82f521faa28e1468&oe=5F3F9510'
-                />
+                <Image className='edit-profile-photo' src={image} />
               </button>
             </div>
           </div>
           <div className='edit-profile-section-right'>
             <div className='edit-profile-right-inner'>
-            <div className='edit-profile-right-header'>
-             <p>anshusaurav</p>
-             </div>
+              <div className='edit-profile-right-header'>
+                <p>anshusaurav</p>
+              </div>
             </div>
           </div>
         </div>
@@ -40,18 +128,18 @@ class EditPassword extends React.Component {
             </div>
             <div className='edit-profile-section-right'>
               <div className='edit-profile-right-inner'>
-                <Input  fluid />
+                <Input fluid />
               </div>
             </div>
           </div>
-         
+
           <div className='edit-profile-section'>
             <div className='edit-profile-section-left'>
               <label>Confirm New Password</label>
             </div>
             <div className='edit-profile-section-right'>
               <div className='edit-profile-right-inner'>
-                <Input  fluid />
+                <Input fluid />
               </div>
             </div>
           </div>

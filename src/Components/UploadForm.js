@@ -1,11 +1,5 @@
 import React, { createRef } from 'react'
-import {
-  Form,
-  Button,
-  Image,
-  Transition,
-  Progress
-} from 'semantic-ui-react'
+import { Form, Button, Image, Transition, Progress } from 'semantic-ui-react'
 import imageCompression from 'browser-image-compression'
 import axios from 'axios'
 import mime from 'mime-types'
@@ -46,10 +40,8 @@ class UploadForm extends React.Component {
         const videoFile = event.target.files[0]
         let reader = new FileReader(videoFile)
         reader.onloadend = () => {
-          console.log('read file');
-          this.setState(
-            { filename: videoFile, videoPreviewUrl: reader.result }
-          )
+          console.log('read file')
+          this.setState({ filename: videoFile, videoPreviewUrl: reader.result })
         }
         reader.readAsDataURL(videoFile)
       } catch (error) {
@@ -155,8 +147,8 @@ class UploadForm extends React.Component {
       filenamemd,
       isImage
     } = this.state
-    const { jwttoken } = localStorage;
-    if(isImage ===0){
+    const { jwttoken } = localStorage
+    if (isImage === 0) {
       formData.append('description', description)
       formData.append('location', location)
       formData.append('tags', JSON.stringify(tagList))
@@ -184,37 +176,35 @@ class UploadForm extends React.Component {
           this.setState({ isUploadingToCloud: false })
           console.log(res.statusText)
         })
+    } else {
+      formData.append('description', description)
+      formData.append('location', location)
+      formData.append('tags', JSON.stringify(tagList))
+      formData.append('isImage', isImage)
+      formData.append('filename', filename)
+      formData.append('filenameld', filenameld)
+      formData.append('filenamehd', filenamemd)
+      formData.append('filenamemd', filenamehd)
 
-    }
-    else{
-    formData.append('description', description)
-    formData.append('location', location)
-    formData.append('tags', JSON.stringify(tagList))
-    formData.append('isImage', isImage)
-    formData.append('filename', filename)
-    formData.append('filenameld', filenameld)
-    formData.append('filenamehd', filenamemd)
-    formData.append('filenamemd', filenamehd)
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Token ${jwttoken}`
+      }
+      this.setState({ isUploadingToCloud: true })
+      axios
+        .post(url, formData, {
+          headers: headers,
 
-    const headers = {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Token ${jwttoken}`
-    }
-    this.setState({ isUploadingToCloud: true })
-    axios
-      .post(url, formData, {
-        headers: headers,
-
-        onUploadProgress: ProgressEvent => {
-          this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-          })
-        }
-      })
-      .then(res => {
-        this.setState({ isUploadingToCloud: false })
-        console.log(res.statusText)
-      })
+          onUploadProgress: ProgressEvent => {
+            this.setState({
+              loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+            })
+          }
+        })
+        .then(res => {
+          this.setState({ isUploadingToCloud: false })
+          console.log(res.statusText)
+        })
     }
   }
 
@@ -228,7 +218,7 @@ class UploadForm extends React.Component {
       isUploadingToCloud,
       imagePreviewUrl,
       videoPreviewUrl
-    } = this.state;
+    } = this.state
     console.log('videopreviewURL', videoPreviewUrl)
     const { toggleLoggedIn } = this.props
     return (
@@ -257,17 +247,16 @@ class UploadForm extends React.Component {
                           fluid
                         />
                       ) : (
-                        <video controls width='300' height='300' src={
-                              videoPreviewUrl
-                                ? videoPreviewUrl
-                                : ''
-                            }
-                            type='video/mp4'
-                            poster='https://imgur.com/IK3qPhT'
-                            autoPlay={true}
-                            loop>
-
-                        </video>
+                        <video
+                          controls
+                          width='300'
+                          height='300'
+                          src={videoPreviewUrl ? videoPreviewUrl : ''}
+                          type='video/mp4'
+                          poster='https://imgur.com/IK3qPhT'
+                          autoPlay={true}
+                          loop
+                        ></video>
                       )}
                     </Transition>
                   </div>
@@ -285,7 +274,9 @@ class UploadForm extends React.Component {
                 ) : (
                   ''
                 )}
-                <div className='ui horizontal divider'>{isImage===1?'Image Preview':'Video Preview'}</div>
+                <div className='ui horizontal divider'>
+                  {isImage === 1 ? 'Image Preview' : 'Video Preview'}
+                </div>
 
                 <div className='file-select-input-div'>
                   <input

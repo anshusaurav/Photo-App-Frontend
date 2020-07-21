@@ -1,6 +1,6 @@
 import HeaderUl from './HeaderUl'
 import React from 'react'
-import {Search} from 'semantic-ui-react'
+import { Search } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import GlobalFonts from './../../fonts/fonts'
 import PageHeaderCustom from './../PageHeaderCustom'
@@ -11,19 +11,19 @@ class HeaderNav extends React.Component {
     this.state = {
       searchQuery: '',
       isLoading: false,
-      results:[]
+      results: []
     }
     this.handleChange = this.handleChange.bind(this)
   }
   async handleChange (event) {
-    this.setState({isLoading: true})
+    this.setState({ isLoading: true })
     if (event.keyCode === 13) {
     } else {
       this.setState({ searchQuery: event.target.value }, async () => {
         const url = 'http://localhost:4000/api/search/'
-        const searchQuery = this.state.searchQuery;
+        const searchQuery = this.state.searchQuery
         const { jwttoken } = localStorage
-        console.log(searchQuery);
+        console.log(searchQuery)
         try {
           const response = await fetch(url, {
             method: 'POST',
@@ -31,14 +31,18 @@ class HeaderNav extends React.Component {
               'Content-Type': 'application/json',
               Authorization: `Token ${jwttoken}`
             },
-            body:JSON.stringify({ searchQuery })
+            body: JSON.stringify({ searchQuery })
           })
           let data = await response.json()
           console.log(data)
           if (!data.errors) {
-            let arr = data.users.map(user => ( {title: user.username, description: user.fullname, image: user.image}))
-            this.setState({results: arr})
-            this.setState({isLoading: false})
+            let arr = data.users.map(user => ({
+              title: user.username,
+              description: user.fullname,
+              image: user.image
+            }))
+            this.setState({ results: arr })
+            this.setState({ isLoading: false })
           }
         } catch (error) {
           console.error('Error:', error)
@@ -62,15 +66,14 @@ class HeaderNav extends React.Component {
           <div className='ui search'>
             <div className='ui icon input'>
               <Search
-                
-                 loading={isLoading}
-            onResultSelect={this.handleResultSelect}
-            onSearchChange={_.debounce(this.handleChange, 500, {
-              leading: true,
-            })}
-            results={results}
-            value={searchQuery}
-            {...this.props}
+                loading={isLoading}
+                onResultSelect={this.handleResultSelect}
+                onSearchChange={_.debounce(this.handleChange, 500, {
+                  leading: true
+                })}
+                results={results}
+                value={searchQuery}
+                {...this.props}
               />
               <i aria-hidden='true' className='search icon'></i>
             </div>

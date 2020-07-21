@@ -1,16 +1,24 @@
 import React from 'react'
-import { Button, TextArea, Input, Form, Image, Message } from 'semantic-ui-react'
+import {
+  Button,
+  TextArea,
+  Input,
+  Form,
+  Image,
+  Message
+} from 'semantic-ui-react'
 class EditProfile extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      fullname: 'Anshu Saurabh',
-      username: 'anshusaurav',
+      fullname: '',
+      username: '',
       bio: '',
       email: '',
       image: '',
       isSubmitable: false,
-      errorMsgs: null
+      errorMsgs: null,
+      loading: true
     }
     this.saveHandler = this.saveHandler.bind(this)
     this.changeHandler = this.changeHandler.bind(this)
@@ -48,7 +56,7 @@ class EditProfile extends React.Component {
     }
   }
   changeHandler (event, { name, value }) {
-    console.log(name, value);
+    console.log(name, value)
     this.setState({ [name]: value })
   }
   async saveSettings () {
@@ -62,15 +70,16 @@ class EditProfile extends React.Component {
           Authorization: `Token ${jwttoken}`
         }
       })
-      const data = await response.json();
-      console.log(data);
+      const data = await response.json()
+      console.log(data)
       if (!data.errors) {
         this.setState({
           email: data.user.email,
           username: data.user.username,
           fullname: data.user.fullname,
           image: data.user.image,
-          bio: data.user.bio
+          bio: data.user.bio,
+          loading: false
         })
       }
     } catch (error) {
@@ -85,8 +94,16 @@ class EditProfile extends React.Component {
   }
   componentDidUpdate () {}
   render () {
-    const { username, fullname, bio, email, image, errorMsgs } = this.state;
-    console.log(image);
+    const {
+      username,
+      fullname,
+      bio,
+      email,
+      image,
+      errorMsgs,
+      loading
+    } = this.state
+    console.log(image)
     return (
       <div className='edit-profile-main-container'>
         <div className='edit-profile-section'>
@@ -110,7 +127,11 @@ class EditProfile extends React.Component {
             </div>
           </div>
         </div>
-        <Form className='edit-profile-form' onSubmit={this.saveHandler}>
+        <Form
+          className='edit-profile-form'
+          onSubmit={this.saveHandler}
+          loading={loading}
+        >
           <div className='edit-profile-section'>
             <div className='edit-profile-section-left'>
               <label>Name</label>
@@ -155,8 +176,7 @@ class EditProfile extends React.Component {
                   name='bio'
                   onChange={this.changeHandler}
                   defaultValue={bio}
-                >
-                </TextArea>
+                ></TextArea>
               </div>
             </div>
           </div>
@@ -186,11 +206,11 @@ class EditProfile extends React.Component {
           </div>
         </Form>
         {errorMsgs &&
-              errorMsgs.map((msg, index) => (
-                <Message key={index} color='red'>
-                  {msg}
-                </Message>
-              ))}
+          errorMsgs.map((msg, index) => (
+            <Message key={index} color='red'>
+              {msg}
+            </Message>
+          ))}
       </div>
     )
   }
