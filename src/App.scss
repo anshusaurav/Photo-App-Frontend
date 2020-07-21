@@ -1188,6 +1188,9 @@ table {
       flex-grow: 1;
       flex-shrink: 0;
       padding-right: 60px;
+      textarea{
+        font-family: inherit;
+      }
       .edit-profile-right-inner {
         width: 100%;
         max-width: 355px;

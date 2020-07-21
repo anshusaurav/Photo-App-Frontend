@@ -40,7 +40,7 @@ class EditProfile extends React.Component {
         body: JSON.stringify(user)
       })
       let data = await response.json()
-      if (data.errors) {
+      if (!data.errors) {
         this.setState({ successMsg: 'Profile Updated Successfully' })
       } else {
         const errors = []
