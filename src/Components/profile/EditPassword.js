@@ -6,12 +6,13 @@ class EditPassword extends React.Component {
     this.state = {
       image: '',
       username: '',
-      email:'',
+      email: '',
       oldPassword: '',
       newPassword: '',
       confirmNewPassword: '',
       errorMsgs: [],
-      loading: true,
+      successMsg: '',
+      loading: true
     }
 
     this.saveHandler = this.saveHandler.bind(this)
@@ -20,25 +21,24 @@ class EditPassword extends React.Component {
   async saveHandler (event) {
     event.preventDefault()
     const { newPassword, confirmNewPassword } = this.state
-    
+
     if (newPassword !== confirmNewPassword) {
       this.setState(prevState => ({
         errorMsgs: ['New passwords dont match']
       }))
-      return;
-
+      return
     }
-    const verifyOldPassword= await this.checkOldPassword();
-    console.log(verifyOldPassword);
-    if(!verifyOldPassword) {
-      this.setState(prevState =>{
-        return ({
+    const verifyOldPassword = await this.checkOldPassword()
+    console.log(verifyOldPassword)
+    if (!verifyOldPassword) {
+      this.setState(prevState => {
+        return {
           errorMsgs: ['Old password is incorrect']
-        })
+        }
       })
-      return;
+      return
     }
-   
+
     const user = { user: { password: newPassword } }
     const url = 'http://localhost:4000/api/user/'
     const { jwttoken } = localStorage
@@ -53,7 +53,13 @@ class EditPassword extends React.Component {
       })
       let data = await response.json()
       if (!data.errors) {
-        //Entry saved shwo new values
+        this.setState({
+          oldPassword: '',
+          newPassword: '',
+          confirmNewPassword: '',
+          errorMsgs: [],
+          successMsg: 'Password Changed Successfully'
+        })
       } else {
         const errors = []
         for (const [key, value] of Object.entries(data.errors)) {
@@ -68,7 +74,7 @@ class EditPassword extends React.Component {
       this.setState({ errorMsgs: errors })
     }
   }
-  async checkOldPassword() {
+  async checkOldPassword () {
     const { email, oldPassword } = this.state
     const user = { user: { email, password: oldPassword } }
     const url = 'http://localhost:4000/api/users/login'
@@ -82,12 +88,12 @@ class EditPassword extends React.Component {
       let data = await response.json()
       // console.log(data)
       if (!data.errors) {
-       return true;
+        return true
       } else {
-        return false;
+        return false
       }
     } catch (error) {
-      return false;
+      return false
     }
   }
   changeHandler (event, { name, value }) {
@@ -126,73 +132,109 @@ class EditPassword extends React.Component {
     this.saveSettings()
   }
   render () {
-    const { username, image, loading, errorMsgs } = this.state;
+    const {
+      username,
+      image,
+      loading,
+      oldPassword,
+      newPassword,
+      confirmNewPassword,
+      errorMsgs,
+      successMsg
+    } = this.state
     return (
-      <div className='edit-profile-main-container'>
-        <div className='edit-profile-section'>
-          <div className='edit-profile-section-left'>
-            <div className='edit-profile-photo-pic'>
-              <button className='edit-profile-photo-btn'>
-                <Image className='edit-profile-photo' src={image} />
-              </button>
-            </div>
-          </div>
-          <div className='edit-profile-section-right'>
-            <div className='edit-profile-right-inner'>
-              <div className='edit-profile-right-header'>
-                <p>{username}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <Form className='edit-profile-form' onSubmit={this.saveHandler}>
+      <>
+        <div className='edit-profile-main-container'>
           <div className='edit-profile-section'>
             <div className='edit-profile-section-left'>
-              <label>Old Password</label>
+              <div className='edit-profile-photo-pic'>
+                <button className='edit-profile-photo-btn'>
+                  <Image className='edit-profile-photo' src={image} />
+                </button>
+              </div>
             </div>
             <div className='edit-profile-section-right'>
               <div className='edit-profile-right-inner'>
-                <Input fluid />
+                <div className='edit-profile-right-header'>
+                  <p>{username}</p>
+                </div>
               </div>
             </div>
           </div>
-          <div className='edit-profile-section'>
-            <div className='edit-profile-section-left'>
-              <label>New Password</label>
-            </div>
-            <div className='edit-profile-section-right'>
-              <div className='edit-profile-right-inner'>
-                <Input fluid />
+          <Form
+            className='edit-profile-form'
+            onSubmit={this.saveHandler}
+            loading={loading}
+          >
+            <div className='edit-profile-section'>
+              <div className='edit-profile-section-left'>
+                <label>Old Password</label>
+              </div>
+              <div className='edit-profile-section-right'>
+                <div className='edit-profile-right-inner'>
+                  <Input
+                    fluid
+                    placeholder='old password'
+                    name='oldPassword'
+                    value={oldPassword}
+                    onChange={this.changeHandler}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+            <div className='edit-profile-section'>
+              <div className='edit-profile-section-left'>
+                <label>New Password</label>
+              </div>
+              <div className='edit-profile-section-right'>
+                <div className='edit-profile-right-inner'>
+                  <Input
+                    fluid
+                    placeholder='new password'
+                    name='newPassword'
+                    value={newPassword}
+                    onChange={this.changeHandler}
+                  />
+                </div>
+              </div>
+            </div>
 
-          <div className='edit-profile-section'>
-            <div className='edit-profile-section-left'>
-              <label>Confirm New Password</label>
-            </div>
-            <div className='edit-profile-section-right'>
-              <div className='edit-profile-right-inner'>
-                <Input fluid />
+            <div className='edit-profile-section'>
+              <div className='edit-profile-section-left'>
+                <label>Confirm New Password</label>
+              </div>
+              <div className='edit-profile-section-right'>
+                <div className='edit-profile-right-inner'>
+                  <Input
+                    fluid
+                    placeholder='confirm new password'
+                    name='confirmNewPassword'
+                    value={confirmNewPassword}
+                    onChange={this.changeHandler}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className='edit-profile-section'>
-            <div className='edit-profile-section-left'></div>
-            <div className='edit-profile-section-right'>
-              <Button type='submit' primary onClick={this.saveHandler}>
-                Submit
-              </Button>
+            <div className='edit-profile-section'>
+              <div className='edit-profile-section-left'></div>
+              <div className='edit-profile-section-right'>
+                <Button type='submit' primary onClick={this.saveHandler}>
+                  Submit
+                </Button>
+              </div>
             </div>
-          </div>
-        </Form>
-        {errorMsgs &&
-          errorMsgs.map((msg, index) => (
-            <Message key={index} color='red'>
-              {msg}
-            </Message>
-          ))}
-      </div>
+          </Form>
+          {errorMsgs &&
+            errorMsgs.map((msg, index) => (
+              <Message key={index} color='black'>
+                {msg}
+              </Message>
+            ))}
+          {successMsg.length > 0 && (
+            <Message color='black'>{successMsg}</Message>
+          )}
+        </div>
+      </>
     )
   }
 }

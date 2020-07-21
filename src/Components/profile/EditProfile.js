@@ -18,6 +18,7 @@ class EditProfile extends React.Component {
       image: '',
       isSubmitable: false,
       errorMsgs: null,
+      successMsg: '',
       loading: true
     }
     this.saveHandler = this.saveHandler.bind(this)
@@ -40,7 +41,7 @@ class EditProfile extends React.Component {
       })
       let data = await response.json()
       if (data.errors) {
-        //Entry saved shwo new values
+        this.setState({ successMsg: 'Profile Updated Successfully' })
       } else {
         const errors = []
         for (const [key, value] of Object.entries(data.errors)) {
@@ -101,7 +102,8 @@ class EditProfile extends React.Component {
       email,
       image,
       errorMsgs,
-      loading
+      loading,
+      successMsg
     } = this.state
     console.log(image)
     return (
@@ -207,10 +209,11 @@ class EditProfile extends React.Component {
         </Form>
         {errorMsgs &&
           errorMsgs.map((msg, index) => (
-            <Message key={index} color='red'>
+            <Message key={index} color='black'>
               {msg}
             </Message>
           ))}
+        {successMsg.length > 0 && <Message color='black'>{successMsg}</Message>}
       </div>
     )
   }
