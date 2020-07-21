@@ -1,15 +1,16 @@
 import React from 'react'
-import { Button, Input, Form, Image } from 'semantic-ui-react'
+import { Button, Input, Form, Image, Message } from 'semantic-ui-react'
 class EditPassword extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       image: '',
       username: '',
+      email:'',
       oldPassword: '',
       newPassword: '',
       confirmNewPassword: '',
-      errorMsgs: null,
+      errorMsgs: [],
       loading: true,
     }
 
@@ -18,16 +19,25 @@ class EditPassword extends React.Component {
   }
   async saveHandler (event) {
     event.preventDefault()
-    const { oldPassword, newPassword, confirmNewPassword } = this.state
+    const { newPassword, confirmNewPassword } = this.state
     
     if (newPassword !== confirmNewPassword) {
       this.setState(prevState => ({
-        errorMsgs: prevState.errorMsgs.concat('New passwords dont match')
+        errorMsgs: ['New passwords dont match']
       }))
       return;
 
     }
-
+    const verifyOldPassword= await this.checkOldPassword();
+    console.log(verifyOldPassword);
+    if(!verifyOldPassword) {
+      this.setState(prevState =>{
+        return ({
+          errorMsgs: ['Old password is incorrect']
+        })
+      })
+      return;
+    }
    
     const user = { user: { password: newPassword } }
     const url = 'http://localhost:4000/api/user/'
@@ -58,6 +68,28 @@ class EditPassword extends React.Component {
       this.setState({ errorMsgs: errors })
     }
   }
+  async checkOldPassword() {
+    const { email, oldPassword } = this.state
+    const user = { user: { email, password: oldPassword } }
+    const url = 'http://localhost:4000/api/users/login'
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      })
+      let data = await response.json()
+      // console.log(data)
+      if (!data.errors) {
+       return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
   changeHandler (event, { name, value }) {
     console.log(name, value)
     this.setState({ [name]: value })
@@ -78,6 +110,8 @@ class EditPassword extends React.Component {
       if (!data.errors) {
         this.setState({
           image: data.user.image,
+          email: data.user.email,
+          username: data.user.username,
           loading: false
         })
       }
@@ -106,12 +140,12 @@ class EditPassword extends React.Component {
           <div className='edit-profile-section-right'>
             <div className='edit-profile-right-inner'>
               <div className='edit-profile-right-header'>
-                <p>anshusaurav</p>
+                <p>{username}</p>
               </div>
             </div>
           </div>
         </div>
-        <Form className='edit-profile-form'>
+        <Form className='edit-profile-form' onSubmit={this.saveHandler}>
           <div className='edit-profile-section'>
             <div className='edit-profile-section-left'>
               <label>Old Password</label>
@@ -146,12 +180,18 @@ class EditPassword extends React.Component {
           <div className='edit-profile-section'>
             <div className='edit-profile-section-left'></div>
             <div className='edit-profile-section-right'>
-              <Button type='submit' primary>
+              <Button type='submit' primary onClick={this.saveHandler}>
                 Submit
               </Button>
             </div>
           </div>
         </Form>
+        {errorMsgs &&
+          errorMsgs.map((msg, index) => (
+            <Message key={index} color='red'>
+              {msg}
+            </Message>
+          ))}
       </div>
     )
   }
