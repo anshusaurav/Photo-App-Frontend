@@ -119,30 +119,36 @@ class UserHero extends React.Component {
       <div className="profile-user-inner-div">
         <div className="profile-picture-outer-div">
           {this.state.profile && this.state.profile.image ? (
-            <div className="profile-picture-inner-div">
-              <Popup
-                on="click"
-                open={this.state.isProfilePicturePopupOpen}
-                onOpen={this.handleOpen}
-                className="change-profile-picture-pop-up"
-                style={{
-                  position: "fixed",
-                  minWidth: "100vw",
-                  minHeight: "100vh",
-                  top: "0vh",
-                  left: "0vw",
-                  transform: "none",
-                  marginTop: 0,
-                  backgroundColor: "rgba(0,0,0,0.5)",
-                }}
-                trigger={<img src={this.state.profile.image} alt=" "></img>}
-              >
-                <ProfilePicturePopUp
-                  handleClose={this.handleClose}
-                  toggleUpdate={this.toggleUpdate}
-                />
-              </Popup>
-            </div>
+            this.state.loggedInUser.username === this.state.profile.username ? (
+              <div className="profile-picture-inner-div">
+                <Popup
+                  on="click"
+                  open={this.state.isProfilePicturePopupOpen}
+                  onOpen={this.handleOpen}
+                  className="change-profile-picture-pop-up"
+                  style={{
+                    position: "fixed",
+                    minWidth: "100vw",
+                    minHeight: "100vh",
+                    top: "0vh",
+                    left: "0vw",
+                    transform: "none",
+                    marginTop: 0,
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                  }}
+                  trigger={<img src={this.state.profile.image} alt=" "></img>}
+                >
+                  <ProfilePicturePopUp
+                    handleClose={this.handleClose}
+                    toggleUpdate={this.toggleUpdate}
+                  />
+                </Popup>
+              </div>
+            ) : (
+              <div className="profile-picture-inner-div">
+                <img src={this.state.profile.image} alt=" " />
+              </div>
+            )
           ) : (
             <SingleImageLoaderMediumRounded />
           )}
