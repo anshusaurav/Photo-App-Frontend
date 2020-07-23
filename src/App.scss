@@ -1265,14 +1265,11 @@ table {
 .uploads-img-div {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  // width: 975px;
-  // min-height: 80vh;
   border-top: 1px solid #dbdbdb;
   padding-top: 8px;
   margin: 0 auto;
   display: grid;
   grid-gap: 16px;
-  // grid-auto-flow: dense;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 200px;
 }
