@@ -1,8 +1,9 @@
 import React from 'react'
-import { Menu, Segment } from 'semantic-ui-react'
+import { Menu} from 'semantic-ui-react'
 import HeaderNav from './common/HeaderNav'
 import EditProfile from './profile/EditProfile'
 import EditPassword from './profile/EditPassword'
+import Uploads from './profile/Uploads'
 export default class SettingsPage extends React.Component {
   constructor (props) {
     super(props)
@@ -50,7 +51,7 @@ export default class SettingsPage extends React.Component {
               ) : activeItem === 'Change Password' ? (
                 <EditPassword/>
               ) : (
-                <Segment>Uploads</Segment>
+                <Uploads/>
               )}
             </div>
           </div>

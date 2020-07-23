@@ -49,7 +49,7 @@ class FeedImageElem extends React.Component {
       let response
       if (isFollowed) {
         response = await fetch(url, {
-          method: 'DELETE',
+          method: 'DELETE', 
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Token ${jwttoken}`
@@ -322,9 +322,6 @@ class FeedImageElem extends React.Component {
                   // poster={this.state.img.filenamesPL[0]}
                   src={`${this.state.img.filename}`}
                   fluid={true}
-                  // style={{width: '100%'}}
-
-                  // aspectRatio={'4:5'}
                 >
                   <BigPlayButton position='center' />
                 </Player>
