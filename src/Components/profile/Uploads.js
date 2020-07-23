@@ -1,5 +1,5 @@
 import React from "react";
-import UploadImageElem from "./../common/ImageElem";
+import UploadImageElem from "./../common/UploadImageElem";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SingleImageLoaderLarge } from "./../loaders/loaders";
@@ -14,9 +14,13 @@ class Uploads extends React.Component {
       hasMoreImages: true,
       totalImages: 0,
     };
-  }
 
-  componentDidMount() {
+    this.toggleUpdate = this.toggleUpdate.bind(this);
+  }
+  toggleUpdate() {
+    this.setState({ isUpdated: !this.state.isUpdated });
+  }
+  startFetching() {
     const { jwttoken } = localStorage;
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     const headers = {
@@ -37,6 +41,9 @@ class Uploads extends React.Component {
         if (offset + limit >= res.data.imagepostCount)
           this.setState({ hasMoreImages: false });
       });
+  }
+  componentDidMount() {
+    this.startFetching();
   }
   fetchImages = () => {
     const { jwttoken } = localStorage;
@@ -64,6 +71,21 @@ class Uploads extends React.Component {
         }));
       });
   };
+  componentDidUpdate(_prevProps, prevState) {
+    if (this.state.isUpdated !== prevState.isUpdated) {
+      this.setState(
+        {
+          imagepostList: [],
+          limit: 6,
+          offset: 0,
+          hasMoreImages: true,
+          totalImages: 0,
+        },
+        () => this.startFetching()
+      );
+      // this.fetchImages();
+    }
+  }
   render() {
     const { imagepostList } = this.state;
     console.log(imagepostList);
@@ -75,6 +97,12 @@ class Uploads extends React.Component {
             dataLength={this.state.imagepostList.length}
             next={this.fetchImages}
             hasMore={imagepostList && this.state.hasMoreImages}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3,1fr)",
+              width: "100%",
+              borderTop: "none",
+            }}
             loader={
               <div
                 style={{
@@ -90,11 +118,22 @@ class Uploads extends React.Component {
             }
           >
             {imagepostList.map((img) => {
-              return <UploadImageElem img={img} key={img.id} />;
+              return (
+                <UploadImageElem
+                  img={img}
+                  key={img.id}
+                  toggleUpdate={this.toggleUpdate}
+                />
+              );
             })}
           </InfiniteScroll>
         ) : (
-          <div className="uploads-img-div"> </div>
+          <div
+            className="uploads-img-div"
+            style={{ width: "100%", borderTop: "none" }}
+          >
+            {" "}
+          </div>
         )}
       </>
     );

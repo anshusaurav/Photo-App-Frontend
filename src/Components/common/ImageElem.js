@@ -80,6 +80,7 @@ class ImageElem extends React.Component {
                       size='large'
                       style={{ position: 'absolute', top: 8, right: 8 }}
                     />
+                    
                   </div>
                 )}
                 {/* <img src={`${filename}`} alt=' '></img> */}
