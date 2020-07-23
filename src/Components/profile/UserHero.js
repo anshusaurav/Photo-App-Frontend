@@ -18,6 +18,7 @@ class UserHero extends React.Component {
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.toggleUpdate = this.toggleUpdate.bind(this);
+    this.toggleFollow = this.toggleFollow.bind(this);
   }
   handleOpen() {
     this.setState({ isProfilePicturePopupOpen: true });
@@ -49,6 +50,58 @@ class UserHero extends React.Component {
       console.error("Error: " + error);
     }
   }
+  toggleFollow(event) {
+    event.preventDefault();
+    this.submitFollowToggle();
+  }
+  async submitFollowToggle() {
+    const slug = this.state.profile.username;
+    const { jwttoken } = localStorage;
+    const url = `http://localhost:4000/api/profiles/${slug}/follow`;
+    const isFollowed = this.state.profile.following;
+    try {
+      let response;
+      if (isFollowed) {
+        response = await fetch(url, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${jwttoken}`,
+          },
+        });
+      } else {
+        response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${jwttoken}`,
+          },
+        });
+      }
+      let data = await response.json();
+      console.log(data);
+      if (!data.errors) {
+        this.setState({ isUpdated: !this.state.isUpdated });
+        this.toggleVisibilityFollow();
+      } else {
+        const errors = [];
+        for (const [key, value] of Object.entries(data.errors)) {
+          errors.push(`${key} ${value}`);
+        }
+        this.setState({ errorMsgs: errors });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      const errors = [];
+      errors.push(error.toString());
+      this.setState({ errorMsgs: errors });
+    }
+  }
+  toggleVisibilityFollow = () =>
+    this.setState((prevState) => ({ visibleFollow: !prevState.visibleFollow }));
+  toggleVisibility = () =>
+    this.setState((prevState) => ({ visible: !prevState.visible }));
+
   componentDidMount() {
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     this.setState({ loggedInUser });
@@ -59,6 +112,7 @@ class UserHero extends React.Component {
       this.saveProfile();
     }
   }
+
   render() {
     const { animationFollow, durationFollow, visibleFollow } = this.state;
     return (
