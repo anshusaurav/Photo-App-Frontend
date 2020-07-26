@@ -1,93 +1,101 @@
-import HeaderUl from './HeaderUl'
-import React from 'react'
-import { Search } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
-import GlobalFonts from './../../fonts/fonts'
-import PageHeaderCustom from './../PageHeaderCustom'
-import _ from 'lodash'
+import HeaderUl from "./HeaderUl";
+import React from "react";
+import { Search } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import GlobalFonts from "./../../fonts/fonts";
+import PageHeaderCustom from "./../PageHeaderCustom";
+import _ from "lodash";
 class HeaderNav extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      searchQuery: '',
+      searchQuery: "",
       isLoading: false,
-      results: []
-    }
-    this.handleChange = this.handleChange.bind(this)
+      results: [],
+    };
+    this.handleChange = this.handleChange.bind(this);
   }
-  async handleChange (event) {
-    this.setState({ isLoading: true })
+  async handleChange(event) {
+    this.setState({ isLoading: true });
     if (event.keyCode === 13) {
     } else {
       this.setState({ searchQuery: event.target.value }, async () => {
-        const url = 'http://localhost:4000/api/search/'
-        const searchQuery = this.state.searchQuery
-        const { jwttoken } = localStorage
-        console.log(searchQuery)
+        const url = "http://localhost:4000/api/search/";
+        const searchQuery = this.state.searchQuery;
+        const { jwttoken } = localStorage;
+        console.log(searchQuery);
         try {
           const response = await fetch(url, {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Token ${jwttoken}`
+              "Content-Type": "application/json",
+              Authorization: `Token ${jwttoken}`,
             },
-            body: JSON.stringify({ searchQuery })
-          })
-          let data = await response.json()
-          console.log(data)
+            body: JSON.stringify({ searchQuery }),
+          });
+          let data = await response.json();
+          console.log(data);
           if (!data.errors) {
-            let arr = data.users.map(user => ({
+            let arr = data.users.map((user) => ({
               title: user.username,
               description: user.fullname,
-              image: user.image
-            }))
-            this.setState({ results: arr })
-            this.setState({ isLoading: false })
+              image: user.image,
+            }));
+            arr = arr.concat(
+              data.tags.map((tag) => ({
+                title: `#${tag}`,
+              }))
+            );
+            const re = new RegExp(_.escapeRegExp(this.state.searchQuery), "i");
+            const isMatch = (result) => re.test(result.title);
+
+            this.setState({ results: _.filter(arr, isMatch) });
+            this.setState({ isLoading: false });
           }
         } catch (error) {
-          console.error('Error:', error)
-          const errors = []
-          errors.push(error.toString())
-          this.setState({ errorMsgs: errors })
+          console.error("Error:", error);
+          const errors = [];
+          errors.push(error.toString());
+          this.setState({ errorMsgs: errors });
         }
-      })
+      });
     }
   }
-  render () {
-    const { toggleLoggedIn } = this.props
-    const { searchQuery, isLoading, results } = this.state
+  render() {
+    const { toggleLoggedIn } = this.props;
+    const { searchQuery, isLoading, results } = this.state;
     return (
-      <div className='header-nav'>
-        <div className='header-inner-div'>
-          <Link to='/' exact='true'>
+      <div className="header-nav">
+        <div className="header-inner-div">
+          <Link to="/" exact="true">
             <GlobalFonts />
             <PageHeaderCustom>Instagram</PageHeaderCustom>
           </Link>
-          <div className='ui search'>
-            <div className='ui icon input'>
+          <div className="ui search">
+            <div className="ui icon input">
               <Search
                 loading={isLoading}
                 onResultSelect={this.handleResultSelect}
                 onSearchChange={_.debounce(this.handleChange, 500, {
-                  leading: true
+                  leading: true,
                 })}
                 results={results}
                 value={searchQuery}
                 {...this.props}
               />
-              <i aria-hidden='true' className='search icon'></i>
+              <i aria-hidden="true" className="search icon"></i>
             </div>
-            <div className='results transition'>
-              <div className='message empty'>
-                <div className='header'>No results found.</div>
+            <div className="results transition">
+              <div className="message empty">
+                <div className="header">No results found.</div>
               </div>
             </div>
           </div>
           <HeaderUl toggleLoggedIn={toggleLoggedIn} />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default HeaderNav
+export default HeaderNav;
