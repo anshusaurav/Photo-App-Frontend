@@ -1,7 +1,8 @@
 import HeaderUl from "./HeaderUl";
 import React from "react";
 import { Search } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+
 import GlobalFonts from "./../../fonts/fonts";
 import PageHeaderCustom from "./../PageHeaderCustom";
 import _ from "lodash";
@@ -14,6 +15,7 @@ class HeaderNav extends React.Component {
       results: [],
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleResultSelect = this.handleResultSelect.bind(this);
   }
   async handleChange(event) {
     this.setState({ isLoading: true });
@@ -40,10 +42,12 @@ class HeaderNav extends React.Component {
               title: user.username,
               description: user.fullname,
               image: user.image,
+              type: 'user'
             }));
             arr = arr.concat(
               data.tags.map((tag) => ({
                 title: `#${tag}`,
+                type: 'tag'
               }))
             );
             const re = new RegExp(_.escapeRegExp(this.state.searchQuery), "i");
@@ -60,6 +64,20 @@ class HeaderNav extends React.Component {
         }
       });
     }
+  }
+  handleResultSelect(e, { result }) {
+    console.log(result.title, result.type);
+    switch (result.type) {
+      case 'user':
+        this.props.history.push(`/${result.title}`);
+        break;
+      case 'tag':
+        this.props.history.push(`/explore`);
+        break;
+      default:
+
+    }
+
   }
   render() {
     const { toggleLoggedIn } = this.props;
@@ -98,4 +116,4 @@ class HeaderNav extends React.Component {
   }
 }
 
-export default HeaderNav;
+export default withRouter(HeaderNav);
