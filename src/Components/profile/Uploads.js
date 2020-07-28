@@ -59,7 +59,7 @@ class Uploads extends React.Component {
     axios
       .get(
         `http://localhost:4000/api/p?author=${loggedInUser.username}&offset=${
-          offset + limit
+        offset + limit
         }&limit=${limit}`,
         {
           headers: headers,
@@ -128,13 +128,13 @@ class Uploads extends React.Component {
             })}
           </InfiniteScroll>
         ) : (
-          <div
-            className="uploads-img-div"
-            style={{ width: "100%", borderTop: "none" }}
-          >
-            {" "}
-          </div>
-        )}
+            <div
+              className="uploads-img-div"
+              style={{ width: "100%", borderTop: "none" }}
+            >
+              {" "}
+            </div>
+          )}
       </>
     );
   }

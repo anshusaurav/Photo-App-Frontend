@@ -1,17 +1,18 @@
 import React from 'react'
-import { Menu} from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 import HeaderNav from './common/HeaderNav'
 import EditProfile from './profile/EditProfile'
 import EditPassword from './profile/EditPassword'
 import Uploads from './profile/Uploads'
+import Bookmarks from './profile/Bookmarks'
 export default class SettingsPage extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { activeItem: 'Edit Profile' }
   }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-  render () {
+  render() {
     const { activeItem } = this.state
     const { toggleLoggedIn } = this.props
     return (
@@ -40,6 +41,11 @@ export default class SettingsPage extends React.Component {
                   active={activeItem === 'Uploads'}
                   onClick={this.handleItemClick}
                 />
+                <Menu.Item
+                  name='Bookmarks'
+                  active={activeItem === 'Bookmarks'}
+                  onClick={this.handleItemClick}
+                />
               </Menu>
             </div>
 
@@ -47,12 +53,12 @@ export default class SettingsPage extends React.Component {
               className='settings-main-section'
             >
               {activeItem === 'Edit Profile' ? (
-                <EditProfile/>
+                <EditProfile />
               ) : activeItem === 'Change Password' ? (
-                <EditPassword/>
-              ) : (
-                <Uploads/>
-              )}
+                <EditPassword />
+              ) : activeItem === 'Uploads' ? (
+                <Uploads />
+              ) : (<Bookmarks />)}
             </div>
           </div>
         </div>

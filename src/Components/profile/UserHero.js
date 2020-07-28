@@ -145,53 +145,53 @@ class UserHero extends React.Component {
                 </Popup>
               </div>
             ) : (
-              <div className="profile-picture-inner-div">
-                <img src={this.state.profile.image} alt=" " />
-              </div>
-            )
+                <div className="profile-picture-inner-div">
+                  <img src={this.state.profile.image} alt=" " />
+                </div>
+              )
           ) : (
-            <SingleImageLoaderMediumRounded />
-          )}
+              <SingleImageLoaderMediumRounded />
+            )}
         </div>
         {this.state.profile ? (
           <div className="profile-details-outer-div">
             <div className="profile-details-div-one">
               <h2>{this.state.profile.username}</h2>
               {this.state.loggedInUser.username ===
-              this.state.profile.username ? (
-                <Link to="/settings">
-                  <Button className="edit-profile-btn">Edit Profile</Button>
-                </Link>
-              ) : this.state.profile.following ? (
-                <Transition
-                  animation={animationFollow}
-                  duration={durationFollow}
-                  visible={visibleFollow}
-                >
-                  <Button
-                    className="pop-up-unfollow-btn"
-                    onClick={this.toggleFollow}
-                    color="instagram"
-                    style={{ borderRadius: 8 }}
+                this.state.profile.username ? (
+                  <Link to="/settings">
+                    <Button className="edit-profile-btn">Settings</Button>
+                  </Link>
+                ) : this.state.profile.following ? (
+                  <Transition
+                    animation={animationFollow}
+                    duration={durationFollow}
+                    visible={visibleFollow}
                   >
-                    Following
+                    <Button
+                      className="pop-up-unfollow-btn"
+                      onClick={this.toggleFollow}
+                      color="instagram"
+                      style={{ borderRadius: 8 }}
+                    >
+                      Following
                   </Button>
-                </Transition>
-              ) : (
-                <Transition
-                  animation={animationFollow}
-                  duration={durationFollow}
-                  visible={visibleFollow}
-                >
-                  <Button
-                    className="pop-up-follow-btn"
-                    onClick={this.toggleFollow}
-                    style={{ borderRadius: 8 }}
-                  >
-                    Follow
+                  </Transition>
+                ) : (
+                    <Transition
+                      animation={animationFollow}
+                      duration={durationFollow}
+                      visible={visibleFollow}
+                    >
+                      <Button
+                        className="pop-up-follow-btn"
+                        onClick={this.toggleFollow}
+                        style={{ borderRadius: 8 }}
+                      >
+                        Follow
                   </Button>
-                </Transition>
-              )}
+                    </Transition>
+                  )}
             </div>
             <div className="profile-details-div-one">
               <p className="first-p">

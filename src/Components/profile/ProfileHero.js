@@ -4,7 +4,7 @@ import ProfilePicturePopUp from '../common/ProfilePicturePopUp'
 import { SingleImageLoaderMediumRounded } from './../loaders/loaders'
 import { Link } from 'react-router-dom'
 class ProfileHero extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       isProfilePicturePopupOpen: false,
@@ -15,16 +15,16 @@ class ProfileHero extends React.Component {
     this.handleClose = this.handleClose.bind(this)
     this.toggleUpdate = this.toggleUpdate.bind(this)
   }
-  handleOpen () {
+  handleOpen() {
     this.setState({ isProfilePicturePopupOpen: true })
   }
-  handleClose () {
+  handleClose() {
     this.setState({ isProfilePicturePopupOpen: false })
   }
-  toggleUpdate () {
+  toggleUpdate() {
     this.setState({ isUpdated: !this.state.isUpdated })
   }
-  async saveProfile () {
+  async saveProfile() {
     const url = 'http://localhost:4000/api/user'
     const { jwttoken } = localStorage
     try {
@@ -44,15 +44,15 @@ class ProfileHero extends React.Component {
       console.error('Error: ' + error)
     }
   }
-  componentDidMount () {
+  componentDidMount() {
     this.saveProfile()
   }
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevState.isUpdated !== this.state.isUpdated) {
       this.saveProfile()
     }
   }
-  render () {
+  render() {
     return (
       <div className='profile-user-inner-div'>
         <div className='profile-picture-outer-div'>
@@ -82,15 +82,15 @@ class ProfileHero extends React.Component {
               </Popup>
             </div>
           ) : (
-            <SingleImageLoaderMediumRounded />
-          )}
+              <SingleImageLoaderMediumRounded />
+            )}
         </div>
         {this.state.profile ? (
           <div className='profile-details-outer-div'>
             <div className='profile-details-div-one'>
               <h2>{this.state.profile.username}</h2>
               <Link to='/settings'>
-                <Button className='edit-profile-btn'>Edit Profile</Button>
+                <Button className='edit-profile-btn'>Settings</Button>
               </Link>
             </div>
             <div className='profile-details-div-one'>
