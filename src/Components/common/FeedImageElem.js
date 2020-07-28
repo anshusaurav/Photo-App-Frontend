@@ -27,6 +27,8 @@ class FeedImageElem extends React.Component {
       animation: "tada",
       duration: 500,
       visible: true,
+      animationSave: "pulse",
+      visibleSave: true,
     };
     this.textAreaRef = createRef();
     this.videoRef = createRef();
@@ -35,58 +37,14 @@ class FeedImageElem extends React.Component {
     this.toggleLike = this.toggleLike.bind(this);
     this.toggleSave = this.toggleSave.bind(this);
     this.putFocusOnTextArea = this.putFocusOnTextArea.bind(this);
-    this.toggleFollow = this.toggleFollow.bind(this);
+
   }
-  toggleFollow(event) {
-    event.preventDefault();
-    this.submitFollowToggle();
-  }
-  async submitFollowToggle() {
-    const slug = this.state.img.author.username;
-    const { jwttoken } = localStorage;
-    const url = `http://localhost:4000/api/profiles/${slug}/follow`;
-    const isFollowed = this.state.img.author.following;
-    try {
-      let response;
-      if (isFollowed) {
-        response = await fetch(url, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${jwttoken}`,
-          },
-        });
-      } else {
-        response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${jwttoken}`,
-          },
-        });
-      }
-      let data = await response.json();
-      // console.log(data)
-      if (!data.errors) {
-        this.setState({ isUpdated: !this.state.isUpdated });
-        this.toggleVisibility();
-      } else {
-        const errors = [];
-        for (const [key, value] of Object.entries(data.errors)) {
-          errors.push(`${key} ${value}`);
-        }
-        this.setState({ errorMsgs: errors });
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      const errors = [];
-      errors.push(error.toString());
-      this.setState({ errorMsgs: errors });
-    }
-  }
+
   toggleVisibility = () =>
     this.setState((prevState) => ({ visible: !prevState.visible }));
 
+  toggleVisibilitySave = () =>
+    this.setState((prevState) => ({ visibleSave: !prevState.visibleSave }))
   putFocusOnTextArea(event) {
     console.dir(this.textAreaRef.current);
     this.textAreaRef.current.focus();
@@ -146,7 +104,7 @@ class FeedImageElem extends React.Component {
     const slug = this.props.img;
     const { jwttoken } = localStorage;
     const url = `http://localhost:4000/api/p/${slug}/save`;
-    const isLiked = this.state.img.favorited;
+    const isLiked = this.state.img.saved;
     try {
       let response;
       if (isLiked) {
@@ -170,7 +128,7 @@ class FeedImageElem extends React.Component {
       // console.log(data)
       if (!data.errors) {
         this.setState({ isUpdated: !this.state.isUpdated });
-        this.toggleVisibility();
+        this.toggleVisibilitySave();
       } else {
         const errors = [];
         for (const [key, value] of Object.entries(data.errors)) {
@@ -312,7 +270,8 @@ class FeedImageElem extends React.Component {
     return timeAgo.format(date);
   }
   render() {
-    const { isSubmitable, comments, animation, duration, visible } = this.state;
+    const { isSubmitable, comments, animation, duration, visible, animationSave, visibleSave } = this.state;
+    console.log(this.state.img);
     return (
       <Card className="feed-image-card">
         {this.state.img && this.state.comments ? (
@@ -358,23 +317,23 @@ class FeedImageElem extends React.Component {
                 </ProgressiveImage>
               </div>
             ) : (
-              <div
-                className="feed-imagevideo-container"
-                style={{
-                  backgroundColor: this.state.img.bgColor,
-                }}
-                onClick={this.togglePlayVideo}
-              >
-                <Player
-                  playsInline
-                  // poster={this.state.img.filenamesPL[0]}
-                  src={`${this.state.img.filename}`}
-                  fluid={true}
+                <div
+                  className="feed-imagevideo-container"
+                  style={{
+                    backgroundColor: this.state.img.bgColor,
+                  }}
+                  onClick={this.togglePlayVideo}
                 >
-                  <BigPlayButton position="center" />
-                </Player>
-              </div>
-            )}
+                  <Player
+                    playsInline
+                    // poster={this.state.img.filenamesPL[0]}
+                    src={`${this.state.img.filename}`}
+                    fluid={true}
+                  >
+                    <BigPlayButton position="center" />
+                  </Player>
+                </div>
+              )}
 
             <Card.Content>
               <Card.Description className="feed-image-inter-content">
@@ -417,21 +376,21 @@ class FeedImageElem extends React.Component {
 
                 <div>
                   <span>
-                    {this.state.img.saved ? (
+                    <Transition
+                      animation={animationSave}
+                      duration={duration}
+                      visible={visibleSave}
+                    >
                       <Icon
                         className="action-elem"
-                        name="remove bookmark"
+                        name={
+                          this.state.img.saved ? "remove bookmark" : "bookmark outline"
+                        }
                         size="large"
                         onClick={this.toggleSave}
                       />
-                    ) : (
-                      <Icon
-                        className="action-elem"
-                        name="bookmark outline"
-                        size="large"
-                        onClick={this.toggleSave}
-                      />
-                    )}
+                    </Transition>
+
                   </span>
                 </div>
               </Card.Description>
@@ -440,18 +399,18 @@ class FeedImageElem extends React.Component {
                 <p className="feed-image-like-count">
                   {this.state.img.favoritesCount !== 0
                     ? `${this.state.img.favoritesCount} ${
-                        this.state.img.favoritesCount !== 1 ? "likes" : "like"
-                      }`
+                    this.state.img.favoritesCount !== 1 ? "likes" : "like"
+                    }`
                     : `Be the first one to like`}
                 </p>
               </Card.Description>
               <Card.Meta>
                 {this.state.img.commentsCount !== 0
                   ? `View All ${this.state.img.commentsCount} ${
-                      this.state.img.commentsCount !== 1
-                        ? "comments"
-                        : "comment"
-                    }`
+                  this.state.img.commentsCount !== 1
+                    ? "comments"
+                    : "comment"
+                  }`
                   : `Be the first one to respond`}
               </Card.Meta>
               <Card.Description>
@@ -512,8 +471,8 @@ class FeedImageElem extends React.Component {
             </div>
           </>
         ) : (
-          <FeedHeaderLoader className="feed-loader-full-single" />
-        )}
+            <FeedHeaderLoader className="feed-loader-full-single" />
+          )}
       </Card>
     );
   }
