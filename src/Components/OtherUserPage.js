@@ -12,15 +12,9 @@ class OtherUserPage extends React.Component {
   handleUpdate() {
     this.setState({ isUpdate: !this.state.isUpdate });
   }
-  componentDidMount() {}
 
   render() {
-    const path = this.props.history.location.pathname;
-    // console.log(path);
-    const usedPath = path.substring(1);
-    const index = usedPath.indexOf("/");
-    const uName = usedPath.substring(index + 1);
-    console.log(uName);
+    const uName = this.props.match.params.username
     const { toggleLoggedIn } = this.props;
     return (
       <div className="full-container">
