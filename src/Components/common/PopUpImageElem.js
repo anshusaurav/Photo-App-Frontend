@@ -26,6 +26,8 @@ class PopUpImageElem extends React.Component {
       animationFollow: "pulse",
       durationFollow: 600,
       visibleFollow: true,
+      animationSave: "pulse",
+      visibleSave: true,
       bgColor: "black",
     };
     this.textAreaRef = createRef();
@@ -34,6 +36,7 @@ class PopUpImageElem extends React.Component {
     this.toggleLike = this.toggleLike.bind(this);
     this.putFocusOnTextArea = this.putFocusOnTextArea.bind(this);
     this.toggleFollow = this.toggleFollow.bind(this);
+    this.toggleSave = this.toggleSave.bind(this);
     // this.saveImage = this.saveImage.bind(this);
   }
 
@@ -126,6 +129,53 @@ class PopUpImageElem extends React.Component {
       if (!data.errors) {
         this.setState({ isUpdated: !this.state.isUpdated });
         this.toggleVisibility();
+      } else {
+        const errors = [];
+        for (const [key, value] of Object.entries(data.errors)) {
+          errors.push(`${key} ${value}`);
+        }
+        this.setState({ errorMsgs: errors });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      const errors = [];
+      errors.push(error.toString());
+      this.setState({ errorMsgs: errors });
+    }
+  }
+  toggleSave(event) {
+    event.preventDefault();
+    this.submitSaveToggle();
+  }
+  async submitSaveToggle() {
+    const slug = this.state.mainImg.slug;
+    const { jwttoken } = localStorage;
+    const url = `http://localhost:4000/api/p/${slug}/save`;
+    const isLiked = this.state.mainImg.saved;
+    try {
+      let response;
+      if (isLiked) {
+        response = await fetch(url, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${jwttoken}`,
+          },
+        });
+      } else {
+        response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${jwttoken}`,
+          },
+        });
+      }
+      let data = await response.json();
+      // console.log(data)
+      if (!data.errors) {
+        this.setState({ isUpdated: !this.state.isUpdated });
+        this.toggleVisibilitySave();
       } else {
         const errors = [];
         for (const [key, value] of Object.entries(data.errors)) {
@@ -262,7 +312,7 @@ class PopUpImageElem extends React.Component {
       this.saveComments();
     }
   }
-  componentWillUnmount() {}
+  componentWillUnmount() { }
 
   render() {
     const {
@@ -276,6 +326,8 @@ class PopUpImageElem extends React.Component {
       animationFollow,
       durationFollow,
       visibleFollow,
+      animationSave,
+      visibleSave
     } = this.state;
 
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -307,24 +359,24 @@ class PopUpImageElem extends React.Component {
                   />
                 </div>
               ) : (
-                <div
-                  className="popup-imagevideo-container"
-                  style={{ backgroundColor: mainImg.bgColor }}
-                >
-                  <video
-                    className="popup-main-video"
-                    controls
-                    src={`${mainImg.filename}`}
-                    type="video/mp4"
-                    poster="https://imgur.com/IK3qPhT"
-                    autoPlay={true}
-                    style={{ maxHeight: 660, minHeight: 400, width: "100%" }}
-                  />
-                </div>
-              )
+                  <div
+                    className="popup-imagevideo-container"
+                    style={{ backgroundColor: mainImg.bgColor }}
+                  >
+                    <video
+                      className="popup-main-video"
+                      controls
+                      src={`${mainImg.filename}`}
+                      type="video/mp4"
+                      poster="https://imgur.com/IK3qPhT"
+                      autoPlay={true}
+                      style={{ maxHeight: 660, minHeight: 400, width: "100%" }}
+                    />
+                  </div>
+                )
             ) : (
-              <p>Loading</p>
-            )}
+                <p>Loading</p>
+              )}
 
             <div className="pop-up-des-div">
               <Card.Content className="popup-image-author-content">
@@ -361,27 +413,27 @@ class PopUpImageElem extends React.Component {
                             </Transition>
                           ) : mainImg.author.username !==
                             loggedInUser.username ? (
-                            <Transition
-                              animation={animationFollow}
-                              duration={durationFollow}
-                              visible={visibleFollow}
-                            >
-                              <Button
-                                className="pop-up-follow-btn"
-                                onClick={this.toggleFollow}
-                                style={{ borderRadius: 8 }}
-                              >
-                                Follow
+                                <Transition
+                                  animation={animationFollow}
+                                  duration={durationFollow}
+                                  visible={visibleFollow}
+                                >
+                                  <Button
+                                    className="pop-up-follow-btn"
+                                    onClick={this.toggleFollow}
+                                    style={{ borderRadius: 8 }}
+                                  >
+                                    Follow
                               </Button>
-                            </Transition>
-                          ) : null}
+                                </Transition>
+                              ) : null}
                         </>
                       )}
                     </span>
                   </div>
                 ) : (
-                  <p>Loading</p>
-                )}
+                    <p>Loading</p>
+                  )}
                 <span>
                   {" "}
                   <Icon name="ellipsis horizontal" />{" "}
@@ -431,14 +483,14 @@ class PopUpImageElem extends React.Component {
                     <Card.Meta className="popup-common-des popup-more-comment-anchor">
                       {mainImg.commentsCount !== 0
                         ? `View All ${mainImg.commentsCount} ${
-                            mainImg.commentsCount !== 1 ? "comments" : "comment"
-                          }`
+                        mainImg.commentsCount !== 1 ? "comments" : "comment"
+                        }`
                         : `Be the first one to respond`}
                     </Card.Meta>
                   </div>
                 ) : (
-                  <p>Loading</p>
-                )}
+                    <p>Loading</p>
+                  )}
                 {comments && mainImg ? (
                   <div className="pop-up-image-action-complete-div">
                     <Card.Description className="popup-image-inter-content">
@@ -481,12 +533,20 @@ class PopUpImageElem extends React.Component {
 
                       <div>
                         <span>
-                          {" "}
-                          <Icon
-                            className="popup-action-elem"
-                            name="bookmark outline"
-                            size="large"
-                          />{" "}
+                          <Transition
+                            animation={animationSave}
+                            duration={duration}
+                            visible={visibleSave}
+                          >
+                            <Icon
+                              className="popup-action-elem"
+                              name={
+                                mainImg.saved ? "remove bookmark" : "bookmark outline"
+                              }
+                              size="large"
+                              onClick={this.toggleSave}
+                            />
+                          </Transition>
                         </span>
                       </div>
                     </Card.Description>
@@ -495,8 +555,8 @@ class PopUpImageElem extends React.Component {
                       <p className="popup-image-like-count">
                         {mainImg.favoritesCount !== 0
                           ? `${mainImg.favoritesCount} ${
-                              mainImg.favoritesCount !== 1 ? "likes" : "like"
-                            }`
+                          mainImg.favoritesCount !== 1 ? "likes" : "like"
+                          }`
                           : `Be the first one to like`}
                       </p>
                     </Card.Description>
@@ -505,8 +565,8 @@ class PopUpImageElem extends React.Component {
                     </Card.Description>
                   </div>
                 ) : (
-                  <p>Loading</p>
-                )}
+                    <p>Loading</p>
+                  )}
               </Card.Content>
               <div className="popup-comment-form-outer-div">
                 <Form
