@@ -363,6 +363,7 @@ class PopUpImageElem extends React.Component {
                     className="popup-imagevideo-container"
                     style={{ backgroundColor: mainImg.bgColor }}
                   >
+
                     <video
                       className="popup-main-video"
                       controls

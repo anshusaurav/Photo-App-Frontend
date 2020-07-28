@@ -41,6 +41,7 @@ class EditProfile extends React.Component {
       });
       let data = await response.json();
       if (!data.errors) {
+        localStorage.setItem('loggedInUser', JSON.stringify(data.user))
         this.setState({ successMsg: "Profile Updated Successfully" });
       } else {
         const errors = [];
@@ -82,6 +83,7 @@ class EditProfile extends React.Component {
           bio: data.user.bio,
           loading: false,
         });
+
       }
     } catch (error) {
       console.error("Error: ", error);
@@ -93,7 +95,7 @@ class EditProfile extends React.Component {
   componentDidMount() {
     this.saveSettings();
   }
-  componentDidUpdate() {}
+  componentDidUpdate() { }
   render() {
     const {
       username,
