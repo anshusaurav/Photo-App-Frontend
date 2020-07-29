@@ -389,11 +389,16 @@ class PopUpImageElem extends React.Component {
                       size="mini"
                       circular
                     />
-                    <Link to={`/${mainImg.author.username}`}>
-                      <span className="popup-image-author-username">
-                        {mainImg.author.username}
-                      </span>
-                    </Link>
+                    <div>
+                      <Link to={`/${mainImg.author.username}`}>
+                        <p className="popup-image-author-username">
+                          {mainImg.author.username}
+                        </p>
+                      </Link>
+                      <p className="popup-image-author-location">
+                        {mainImg.location || ''}
+                      </p>
+                    </div>
                     <span>
                       {mainImg.author.username !== loggedInUser.username && (
                         <>

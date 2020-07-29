@@ -285,9 +285,14 @@ class FeedImageElem extends React.Component {
                     size="mini"
                     circular
                   />
-                  <span className="feed-image-author-username">
-                    {this.state.img.author.username}
-                  </span>
+                  <div>
+                    <p className="feed-image-author-username">
+                      {this.state.img.author.username}
+                    </p>
+                    <p className="feed-image-author-location">
+                      {this.state.img.location || ''}
+                    </p>
+                  </div>
                 </div>
               </Link>
               <span>

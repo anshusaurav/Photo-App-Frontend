@@ -645,6 +645,12 @@ table {
           font-size: 1.1rem;
           font-weight: 600;
           color: rgba(0, 0, 0, 0.85);
+          margin-bottom: 0;
+        }
+        .feed-image-author-location{
+          font-size: 0.95rem;
+          font-weight: 500;
+          color: rgba(0, 0, 0, 0.7);
         }
       }
 
@@ -881,6 +887,11 @@ table {
       font-size: 1.1rem;
       font-weight: 600;
       color: rgba(0, 0, 0, 0.85);
+    }
+    .popup-image-author-location{
+      font-size: 0.95rem;
+          font-weight: 500;
+          color: rgba(0, 0, 0, 0.7);
     }
     .pop-up-follow-btn {
       background-color: transparent;

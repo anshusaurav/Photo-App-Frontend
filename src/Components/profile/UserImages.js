@@ -16,7 +16,6 @@ class UserImages extends React.Component {
   }
   saveImages() {
     const { jwttoken } = localStorage;
-    // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Token ${jwttoken}`,
