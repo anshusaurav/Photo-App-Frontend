@@ -8,15 +8,13 @@ class UserImages extends React.Component {
     super(props);
     this.state = {
       imagepostList: [],
-      isUpdated: false,
       limit: 6,
       offset: 0,
       hasMoreImages: true,
       totalImages: 0,
     };
   }
-
-  componentDidMount() {
+  saveImages() {
     const { jwttoken } = localStorage;
     // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     const headers = {
@@ -39,6 +37,7 @@ class UserImages extends React.Component {
           this.setState({ hasMoreImages: false });
       });
   }
+
   fetchImages = () => {
     const { jwttoken } = localStorage;
     // const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -54,7 +53,7 @@ class UserImages extends React.Component {
     axios
       .get(
         `http://localhost:4000/api/p?author=${username}&offset=${
-          offset + limit
+        offset + limit
         }&limit=${limit}`,
         {
           headers: headers,
@@ -66,6 +65,21 @@ class UserImages extends React.Component {
         }));
       });
   };
+  componentDidMount() {
+    this.saveImages();
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.username !== prevProps.username) {
+      this.setState({
+        imagepostList: [],
+        limit: 6,
+        offset: 0,
+        hasMoreImages: true,
+        totalImages: 0,
+      })
+      this.saveImages();
+    }
+  }
   render() {
     const { imagepostList } = this.state;
     // console.log(imagepostList);
@@ -96,8 +110,8 @@ class UserImages extends React.Component {
             })}
           </InfiniteScroll>
         ) : (
-          <div className="profile-img-div"> </div>
-        )}
+            <div className="profile-img-div"> </div>
+          )}
       </>
     );
   }

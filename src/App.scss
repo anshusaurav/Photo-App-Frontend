@@ -260,7 +260,7 @@ table {
       }
     }
     .results {
-      width: 200px !important;
+      width: 240px !important;
     }
     .result {
       .image {
@@ -727,6 +727,10 @@ table {
   }
 
   .feed-suggestions-div {
+    .feed-suggestion-inner-div{
+      position: sticky;
+      top:88px;
+    }
     .feed-profile-picture-img {
       border-radius: 50%;
     }

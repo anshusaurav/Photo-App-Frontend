@@ -30,6 +30,7 @@ class UserHero extends React.Component {
     this.setState({ isUpdated: !this.state.isUpdated });
   }
   async saveProfile() {
+    console.log("fetching user")
     const { username } = this.props;
     const url = `http://localhost:4000/api/profiles/${username}`;
     const { jwttoken } = localStorage;
@@ -108,7 +109,7 @@ class UserHero extends React.Component {
     this.saveProfile();
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.isUpdated !== this.state.isUpdated) {
+    if (prevProps.username !== this.props.username) {
       this.saveProfile();
     }
   }
