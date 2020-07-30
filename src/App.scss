@@ -238,7 +238,7 @@ table {
     }
     ul {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       grid-gap: 1rem;
       justify-content: space-evenly;
       li {
@@ -647,7 +647,7 @@ table {
           color: rgba(0, 0, 0, 0.85);
           margin-bottom: 0;
         }
-        .feed-image-author-location{
+        .feed-image-author-location {
           font-size: 0.95rem;
           font-weight: 500;
           color: rgba(0, 0, 0, 0.7);
@@ -733,9 +733,9 @@ table {
   }
 
   .feed-suggestions-div {
-    .feed-suggestion-inner-div{
+    .feed-suggestion-inner-div {
       position: sticky;
-      top:88px;
+      top: 88px;
     }
     .feed-profile-picture-img {
       border-radius: 50%;
@@ -888,10 +888,10 @@ table {
       font-weight: 600;
       color: rgba(0, 0, 0, 0.85);
     }
-    .popup-image-author-location{
+    .popup-image-author-location {
       font-size: 0.95rem;
-          font-weight: 500;
-          color: rgba(0, 0, 0, 0.7);
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.7);
     }
     .pop-up-follow-btn {
       background-color: transparent;

@@ -7,6 +7,7 @@ import UploadForm from './UploadForm'
 import HomePage from './HomePage'
 import SettingsPage from './SettingsPage'
 import OtherUserPage from './OtherUserPage'
+import MessagesPage from './MessagesPage'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Redirect } from 'react-router'
 class Main extends React.Component {
@@ -56,6 +57,13 @@ class Main extends React.Component {
           <Route exact path='/user'>
             {jwttoken ? (
               <ProfilePage toggleLoggedIn={this.toggleLoggedIn} />
+            ) : (
+                <Redirect to='/login' />
+              )}
+          </Route>
+          <Route exact path='/messages'>
+            {jwttoken ? (
+              <MessagesPage toggleLoggedIn={this.toggleLoggedIn} />
             ) : (
                 <Redirect to='/login' />
               )}

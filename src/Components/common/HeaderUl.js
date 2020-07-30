@@ -3,12 +3,12 @@ import { NavLink, withRouter } from 'react-router-dom'
 import { Button, Icon } from 'semantic-ui-react'
 
 class HeaderUl extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.clickHandler = this.clickHandler.bind(this)
   }
 
-  clickHandler (event) {
+  clickHandler(event) {
     event.preventDefault()
     const { history } = this.props
 
@@ -18,7 +18,7 @@ class HeaderUl extends React.Component {
     history.push('/')
   }
 
-  render () {
+  render() {
     return (
       <ul>
         <li>
@@ -29,6 +29,11 @@ class HeaderUl extends React.Component {
         <li>
           <NavLink to='/explore' activeClassName='active-nav-link'>
             <i aria-hidden='true' className='compass outline large icon' />
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/messages' activeClassName='active-nav-link'>
+            <i aria-hidden='true' className='paper plane outline large icon' />
           </NavLink>
         </li>
         <li>

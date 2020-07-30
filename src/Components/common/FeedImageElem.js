@@ -373,7 +373,7 @@ class FeedImageElem extends React.Component {
                     {" "}
                     <Icon
                       className="action-elem"
-                      name="send"
+                      name="paper plane outline"
                       size="large"
                     />{" "}
                   </span>
