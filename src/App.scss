@@ -1291,9 +1291,74 @@ table {
 //Settings page ends here
 
 //Inbox page starts here
+.message-user-profile-main {
+  margin-top: 1rem;
+  min-height: 100vh;
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
+  margin-bottom: 1rem;
+}
+
+.message-user-inner-div {
+  display: grid;
+  grid-template-columns: 4fr 7fr;
+  .message-user-nav {
+    background-color: white;
+    min-height: 100vh;
+    border-right: 1px solid #d4d4d5;
+    .message-user-header {
+      padding: 1rem;
+      padding-bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      p {
+        display: flex;
+        margin-bottom: 0;
+        // align-self: center;
+        // justify-self: center;
+      }
+      div {
+        position: absolute;
+        right: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        justify-self: flex-end;
+      }
+    }
+    .menu {
+      border-right: none !important;
+    }
+    .active {
+      margin-right: 0 !important;
+      // border: none !important;
+      // box-shadow: -2px 0 0 #000 !important;
+      // border-radius: 0 !important;
+    }
+    .item {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      padding-left: 1rem;
+      font-size: 18px;
+      &:hover {
+        background-color: rgb(250, 250, 250) !important;
+        border-radius: none !important;
+        box-sizing: content-box !important;
+      }
+    }
+  }
+}
+.message-main-section {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  background-color: #ffffff;
+}
 
 .message-direct-header {
   text-align: center;
-  font-size: 24px;
+  font-size: 18px;
+  font-weight: 600;
 }
 //Inbox page ends here
