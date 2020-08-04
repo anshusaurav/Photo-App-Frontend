@@ -6,7 +6,7 @@ import UserCard from './messages/UserCard'
 class MessagesPage extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { activeItem: 'Edit Profile', users: [] }
+        this.state = { activeItem: '', users: [] }
     }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
     async saveUsers() {
@@ -72,7 +72,10 @@ class MessagesPage extends React.Component {
                         <div
                             className='message-main-section'
                         >
-                            <SingleThread user={activeItem} />
+                            {
+                                activeItem === '' ? <p>Start a conversation</p> : <SingleThread user={activeItem} />
+                            }
+
 
                         </div>
                     </div>

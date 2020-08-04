@@ -1395,4 +1395,16 @@ table {
     }
   }
 }
+
+.thread-main-div {
+  .thread-main-header {
+    padding: 1rem;
+    .thread-main-inner-div {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}
 //Inbox page ends here
