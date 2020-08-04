@@ -28,7 +28,8 @@ class MessagesPage extends React.Component {
                         }}
                     >
                         <div className='settings-user-nav'>
-                            <Menu fluid vertical tabular>
+                            <p className='message-direct-header'>Direct</p>
+                            <Menu fluid vertical>
                                 <Menu.Item
                                     name='Edit Profile'
                                     active={activeItem === 'Edit Profile'}

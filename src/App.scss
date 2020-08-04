@@ -1155,9 +1155,9 @@ table {
     }
     .active {
       margin-right: 0 !important;
-      border: none !important;
-      box-shadow: -2px 0 0 #000 !important;
-      border-radius: 0 !important;
+      // border: none !important;
+      // box-shadow: -2px 0 0 #000 !important;
+      // border-radius: 0 !important;
     }
     .item {
       padding-top: 0.5rem;
@@ -1289,3 +1289,11 @@ table {
   grid-auto-rows: 200px;
 }
 //Settings page ends here
+
+//Inbox page starts here
+
+.message-direct-header {
+  text-align: center;
+  font-size: 24px;
+}
+//Inbox page ends here
