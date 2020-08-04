@@ -1,10 +1,7 @@
 import React from 'react'
 import { Menu } from 'semantic-ui-react'
 import HeaderNav from './common/HeaderNav'
-import EditProfile from './profile/EditProfile'
-import EditPassword from './profile/EditPassword'
-import Uploads from './profile/Uploads'
-import Bookmarks from './profile/Bookmarks'
+import SingleThread from './messages/SingleThread'
 import UserCard from './messages/UserCard'
 class MessagesPage extends React.Component {
     constructor(props) {
@@ -75,13 +72,8 @@ class MessagesPage extends React.Component {
                         <div
                             className='message-main-section'
                         >
-                            {activeItem === 'Edit Profile' ? (
-                                <EditProfile />
-                            ) : activeItem === 'Change Password' ? (
-                                <EditPassword />
-                            ) : activeItem === 'Uploads' ? (
-                                <Uploads />
-                            ) : (<Bookmarks />)}
+                            <SingleThread user={activeItem} />
+
                         </div>
                     </div>
                 </div>

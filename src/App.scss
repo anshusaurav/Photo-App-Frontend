@@ -1357,4 +1357,42 @@ table {
   font-size: 18px;
   font-weight: 600;
 }
+.inbox-user-card {
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr;
+  grid-gap: 1rem;
+  .inbox-user-image {
+    width: 64px;
+    height: 64px;
+    img {
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .inbox-user-details {
+    .inbox-usercard-name {
+      // margin-bottom: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 18px;
+      margin: 0 !important;
+    }
+    .inbox-usercard-time {
+      margin-bottom: 0;
+      color: #8e8e8e;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 18px;
+      margin: 0 !important;
+    }
+  }
+}
 //Inbox page ends here
