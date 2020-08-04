@@ -25,7 +25,7 @@ export default class SettingsPage extends React.Component {
             }}
           >
             <div className='settings-user-nav'>
-              <Menu fluid vertical tabular>
+              <Menu fluid vertical pointing secondary>
                 <Menu.Item
                   name='Edit Profile'
                   active={activeItem === 'Edit Profile'}
@@ -58,7 +58,8 @@ export default class SettingsPage extends React.Component {
                 <EditPassword />
               ) : activeItem === 'Uploads' ? (
                 <Uploads />
-              ) : (<Bookmarks />)}
+              ) : activeItem === 'Bookmarks' ?
+                      (<Bookmarks />) : null}
             </div>
           </div>
         </div>

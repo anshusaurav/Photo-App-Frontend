@@ -80,6 +80,8 @@ class BookMarks extends React.Component {
                             gridTemplateColumns: "repeat(3,1fr)",
                             width: "100%",
                             borderTop: "none",
+                            paddingLeft: '0.5rem',
+                            paddingRight: '0.5rem'
                         }}
                         loader={
                             <div

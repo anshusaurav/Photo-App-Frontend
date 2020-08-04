@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Icon } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 import HeaderNav from './common/HeaderNav'
 import EditProfile from './profile/EditProfile'
 import EditPassword from './profile/EditPassword'
@@ -55,7 +55,7 @@ class MessagesPage extends React.Component {
                                 </div>
                             </div>
 
-                            <Menu fluid vertical>
+                            <Menu fluid vertical pointing secondary>
                                 {
                                     users && users.map(elem => {
                                         return <Menu.Item
