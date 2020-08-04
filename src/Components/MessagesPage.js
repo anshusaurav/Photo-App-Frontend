@@ -5,6 +5,7 @@ import EditProfile from './profile/EditProfile'
 import EditPassword from './profile/EditPassword'
 import Uploads from './profile/Uploads'
 import Bookmarks from './profile/Bookmarks'
+import UserCard from './messages/UserCard'
 class MessagesPage extends React.Component {
     constructor(props) {
         super(props)
@@ -61,8 +62,10 @@ class MessagesPage extends React.Component {
                                         return <Menu.Item
                                             name={elem.username}
                                             active={activeItem === elem.username}
-                                            onClick={this.handleItemClick}
-                                        />
+                                            onClick={this.handleItemClick}>
+                                            <UserCard user={elem} />
+                                        </Menu.Item>
+
                                     })
                                 }
 
